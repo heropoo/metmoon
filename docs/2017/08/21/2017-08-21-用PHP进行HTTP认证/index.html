@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>用PHP进行HTTP认证 | 满江风雪</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP的HTTP认证机制，就是用header()函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量PHP_AUTH_USER，PHP_AUTH_PW和AUTH_TYPE被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 $_SERVER 或者">
+<meta name="keywords" content="PHP,HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用PHP进行HTTP认证">
+<meta property="og:url" content="http://metmoon.com/2017/08/21/2017-08-21-用PHP进行HTTP认证/index.html">
+<meta property="og:site_name" content="满江风雪">
+<meta property="og:description" content="PHP的HTTP认证机制，就是用header()函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量PHP_AUTH_USER，PHP_AUTH_PW和AUTH_TYPE被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 $_SERVER 或者">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://metmoon.com/assets/images/20170821120459.png">
+<meta property="og:updated_time" content="2018-09-19T11:54:38.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用PHP进行HTTP认证">
+<meta name="twitter:description" content="PHP的HTTP认证机制，就是用header()函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量PHP_AUTH_USER，PHP_AUTH_PW和AUTH_TYPE被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 $_SERVER 或者">
+<meta name="twitter:image" content="http://metmoon.com/assets/images/20170821120459.png">
+  
+    <link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">满江风雪</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://metmoon.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2017-08-21-用PHP进行HTTP认证" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/21/2017-08-21-用PHP进行HTTP认证/" class="article-date">
+  <time datetime="2017-08-21T11:54:14.000Z" itemprop="datePublished">2017-08-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用PHP进行HTTP认证
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PHP的HTTP认证机制，就是用<code>header()</code>函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量<code>PHP_AUTH_USER</code>，<code>PHP_AUTH_PW</code>和<code>AUTH_TYPE</code>被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 <code>$_SERVER</code> 或者 <code>$HTTP_SERVER_VARS</code> 数组中。支持“Basic”和“Digest”（自 PHP 5.1.0 起）认证方法。这是php官网的解释。<br>大家看示例体会。😁</p>
+<p>参考连接：<a href="http://php.net/manual/zh/features.http-auth.php" target="_blank" rel="noopener">http://php.net/manual/zh/features.http-auth.php</a></p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>])) &#123;</span><br><span class="line">    header(<span class="string">'WWW-Authenticate: Basic realm="My Realm"'</span>);</span><br><span class="line">    header(<span class="string">'HTTP/1.0 401 Unauthorized'</span>);</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'401 Unauthorized'</span>.<span class="string">'&lt;br&gt; &lt;button onclick="window.location.reload();"&gt;Login Again&lt;/button&gt;'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>] !== <span class="string">'James Bond'</span> || $_SERVER[<span class="string">'PHP_AUTH_PW'</span>] !== <span class="string">'007'</span>)&#123;</span><br><span class="line">        header(<span class="string">'WWW-Authenticate: Basic realm="My Realm"'</span>);</span><br><span class="line">        header(<span class="string">'HTTP/1.0 401 Unauthorized'</span>);</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'401 Unauthorized'</span>.<span class="string">'&lt;br&gt; &lt;button onclick="window.location.reload();"&gt;Login Again&lt;/button&gt;'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面是你的业务代码</span></span><br></pre></td></tr></table></figure>
+<p><img src="/assets/images/20170821120459.png" alt="example-pic"></p>
+<p>这样就会弹出一个登陆框，输入用户名：<code>James Bond</code> 密码：<code>007</code> 登陆吧！</p>
+<p>成功了没，哈哈，大家觉得是不是很好玩~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://metmoon.com/2017/08/21/2017-08-21-用PHP进行HTTP认证/" data-id="cjm93b7f20004ckruatluqf78" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/06/2017-09-06-九月，加油/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          九月，加油！
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/16/2017-08-16-一个简单的api授权流程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一个简单的API授权流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Composer/">Composer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Composer/PHP/">PHP</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/PHP/">PHP</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/PHP/">PHP</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/HTML5/">HTML5</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Git/">Git</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Rust/">Rust</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/互联网/">互联网</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/听风雨/">听风雨</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/岁月静好/">岁月静好</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/搜索引擎/">搜索引擎</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/">资源</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archlinux/">Archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Composer/">Composer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EFI/">EFI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSYS2/">MSYS2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/">Rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UEditor/">UEditor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webhook/">Webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10/">Win10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/互联网/">互联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/听风雨/">听风雨</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/容器/">容器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/岁月静好/">岁月静好</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搜索引擎/">搜索引擎</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/百度地图/">百度地图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/站内搜索/">站内搜索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟化/">虚拟化</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Archlinux/" style="font-size: 10px;">Archlinux</a> <a href="/tags/Composer/" style="font-size: 10px;">Composer</a> <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/EFI/" style="font-size: 10px;">EFI</a> <a href="/tags/Git/" style="font-size: 17.5px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/MSYS2/" style="font-size: 10px;">MSYS2</a> <a href="/tags/PHP/" style="font-size: 20px;">PHP</a> <a href="/tags/Rust/" style="font-size: 10px;">Rust</a> <a href="/tags/UEditor/" style="font-size: 10px;">UEditor</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/Webhook/" style="font-size: 10px;">Webhook</a> <a href="/tags/Win10/" style="font-size: 12.5px;">Win10</a> <a href="/tags/互联网/" style="font-size: 10px;">互联网</a> <a href="/tags/听风雨/" style="font-size: 12.5px;">听风雨</a> <a href="/tags/容器/" style="font-size: 15px;">容器</a> <a href="/tags/岁月静好/" style="font-size: 12.5px;">岁月静好</a> <a href="/tags/搜索引擎/" style="font-size: 10px;">搜索引擎</a> <a href="/tags/百度地图/" style="font-size: 10px;">百度地图</a> <a href="/tags/站内搜索/" style="font-size: 10px;">站内搜索</a> <a href="/tags/虚拟化/" style="font-size: 15px;">虚拟化</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/09/18/2018-09-18-盗将行/">盗将行(转)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/16/2018-09-16-docker-container-port/">Docker容器动态添加端口</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/16/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/15/2018-09-16-bing-site-search/">使用Bing搜索引擎做站内搜索</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/02/2018-08-22-composer-mirrors/">Composer官方镜像太慢或者被墙无法使用时的几种解决方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Heropoo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
