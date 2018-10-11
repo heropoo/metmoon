@@ -4,11 +4,11 @@
 
 # Site
 title: 满江风雪
-subtitle:
-description:
-keywords:
+subtitle: Heropoo的个人博客
+description: Heropoo的个人博客
+keywords: Heropoo, metmoon, 个人博客
 author: Heropoo
-language:
+language: 
 timezone:
 
 # URL
@@ -29,7 +29,7 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
@@ -73,7 +73,20 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+#theme: landscape
+theme: brewski
+theme_config:
+  logo:
+  google_analytics: UA-XXXXXXXX-X
+  copyright:
+    since: 2016
+    name: John Doe
+    url: https://www.example.org/john-doe
+  menu:
+    Home: /
+    About: /about
+    GitHub: https://github.com/tiaanduplessis
+    RSS: /atom.xml
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

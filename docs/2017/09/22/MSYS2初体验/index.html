@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="index, follow"><title>MSYS2初体验 • 满江风雪</title><meta name="description" content="MSYS2初体验 - Heropoo"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://unpkg.com/nanoreset@3.0.1/nanoreset.min.css"><link rel="stylesheet" href="/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/atom.xml" title="满江风雪"></head><body><div class="wrap" id="barba-wrapper"><header><h1 class="branding"><a href="/" title="满江风雪">满江风雪</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link no-barba" href="/" target="_self">HOME</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="/about" target="_self">ABOUT</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="https://github.com/tiaanduplessis" target="_blank">GITHUB</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="/atom.xml" target="_self">RSS</a></li></ul></header><div class="barba-container"><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">MSYS2初体验</h1><div class="post-info"><a></a>2017-09-22</div><div class="post-content"><p>作为一名windows下面开发者，之前工作Cygwin做为辅助。前些天突然发现了一个叫MSYS2的家伙。</p>
+<p>发现这家伙还不错，这是<a href="https://baike.baidu.com/item/MSYS2" target="_blank" rel="noopener">百度百科</a>的介绍：</p>
+<blockquote>
+<p>MSYS2 （Minimal SYStem 2） 是一个MSYS的独立改写版本，主要用于 shell 命令行开发环境。同时它也是一个在Cygwin （POSIX 兼容性层） 和 MinGW-w64（从”MinGW-生成”）基础上产生的，追求更好的互操作性的 Windows 软件。<br>MSYS2 是MSYS的一个升级版,准确的说是集成了pacman(我喜欢叫吃豆人)和Mingw-w64的Cygwin升级版, 提供了bash shell等linux环境、版本控制软件（git/hg）和MinGW-w64 工具链。与MSYS最大的区别是移植了 Arch Linux的软件包管理系统 Pacman(其实是与Cygwin的区别)。</p>
+</blockquote>
+<p>看起来还不错，这是<a href="http://www.msys2.org/" target="_blank" rel="noopener">官网</a></p>
+<p>安装就下载二进制安装程序安装就可以了。</p>
+<p>安装之后急切地 <code>pacman -Sy</code> 刷新软件包数据，官网的源还有点慢。换<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">中科大</a>的源吧。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/pacman.d</span><br><span class="line">ls</span><br><span class="line">-------------------</span><br><span class="line">gnupg mirrorlist.mingw32  mirrorlist.mingw64  mirrorlist.msys</span><br></pre></td></tr></table></figure>
+<p>三个<code>mirrorlist</code>开头的文件就是源的配置文件</p>
+<p>编辑 /etc/pacman.d/mirrorlist.mingw32 ，在文件开头添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686</span><br></pre></td></tr></table></figure>
+<p>编辑 /etc/pacman.d/mirrorlist.mingw64 ，在文件开头添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64</span><br></pre></td></tr></table></figure>
+<p>编辑 /etc/pacman.d/mirrorlist.msys ，在文件开头添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch</span><br></pre></td></tr></table></figure>
+<p>然后执行 <code>pacman -Sy</code> 刷新软件包数据即可。</p>
+<p>还有一点，cygwin切换系统磁盘是<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /cygdrive/d/   <span class="comment">#比如切换到d盘</span></span><br></pre></td></tr></table></figure></p>
+<p>MYSYS2是：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d</span><br></pre></td></tr></table></figure></p>
+<p>使用windows原生命令比如ping会中文乱码，这么解决：</p>
+<p>新建 /bin/win：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="variable">$@</span> |iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure></p>
+<p>使用：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/win ping baidu.com</span><br></pre></td></tr></table></figure></p>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2017/09/29/搭建Git服务器、编写自动部署脚本/">prev</a><a class="next" href="/2017/09/17/win10子系统ubuntu更换源/">next</a></div><div class="copyright"><p>&copy; 2016 - 2018 <a href="https://www.example.org/john-doe">John Doe</a><br>Powered by <a href="https://hexo.io/" rel="noreferrer" target="_blank">Hexo</a></p></div></footer></div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+_gaq.push(['_trackPageview']);
+
+(function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script><script>document.addEventListener('DOMContentLoaded', function() {
+    Barba.Pjax.start()
+})</script></body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="index, follow"><title>Git的一些基本操作【持续更新】 • 满江风雪</title><meta name="description" content="Git的一些基本操作【持续更新】 - Heropoo"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://unpkg.com/nanoreset@3.0.1/nanoreset.min.css"><link rel="stylesheet" href="/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/atom.xml" title="满江风雪"></head><body><div class="wrap" id="barba-wrapper"><header><h1 class="branding"><a href="/" title="满江风雪">满江风雪</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link no-barba" href="/" target="_self">HOME</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="/about" target="_self">ABOUT</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="https://github.com/tiaanduplessis" target="_blank">GITHUB</a></li><li class="nav-list-item"><a class="nav-list-link no-barba" href="/atom.xml" target="_self">RSS</a></li></ul></header><div class="barba-container"><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Git的一些基本操作【持续更新】</h1><div class="post-info"><a></a>2018-03-31</div><div class="post-content"><p>经常用git，但好多命令总是记不住，每次都百度。现在整理下做个笔记吧。</p>
+<h3 id="搞定github中fork的项目与原作者同步"><a href="#搞定github中fork的项目与原作者同步" class="headerlink" title="搞定github中fork的项目与原作者同步"></a>搞定github中fork的项目与原作者同步</h3><p>假如一个项目<code>Evil-S0ul/write-doc</code>地址: <a href="https://github.com/Evil-S0ul/write-doc" target="_blank" rel="noopener">https://github.com/Evil-S0ul/write-doc</a></p>
+<p>我fork之后的项目是<code>heropoo/write-doc</code>地址: <a href="https://github.com/heropoo/write-doc" target="_blank" rel="noopener">https://github.com/heropoo/write-doc</a></p>
+<p>接下来开始操作：</p>
+<ol>
+<li><p>切换到我fork的项目目录里，然后增加源仓库地址到你项目的远程分支中</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> write-doc</span><br><span class="line">git remote add Evil-S0ul https://github.com/Evil-S0ul/write-doc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fetch刚添加的源分支到本地</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch Evil-S0ul</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合并两个版本的代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge Evil-S0ul/master</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后把合并后的代码push到你的Github项目上去就ok啦</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Git无法pull仓库refusing-to-merge-unrelated-histories"><a href="#Git无法pull仓库refusing-to-merge-unrelated-histories" class="headerlink" title="Git无法pull仓库refusing to merge unrelated histories"></a>Git无法pull仓库refusing to merge unrelated histories</h3><p>有时候我们的本地仓库添加了一个远程仓库地址，pull代码时会报<code>refusing to merge unrelated histories</code>的错。解决方法是加一个参数<code>--allow-unrelated-histories</code>。</p>
+<p>假如我们的分支是master<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master --allow-unrelated-histories</span><br></pre></td></tr></table></figure></p>
+<p>这样就搞定了（￣︶￣）↗　</p>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2018/05/01/git-webhook/">prev</a><a class="next" href="/2018/01/24/change-rust-mirrors/">next</a></div><div class="copyright"><p>&copy; 2016 - 2018 <a href="https://www.example.org/john-doe">John Doe</a><br>Powered by <a href="https://hexo.io/" rel="noreferrer" target="_blank">Hexo</a></p></div></footer></div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+_gaq.push(['_trackPageview']);
+
+(function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script><script>document.addEventListener('DOMContentLoaded', function() {
+    Barba.Pjax.start()
+})</script></body></html>
