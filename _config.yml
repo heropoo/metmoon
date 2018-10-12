@@ -4,23 +4,23 @@
 
 # Site
 title: 满江风雪
-subtitle: Heropoo的个人博客
-description: Heropoo的个人博客
-keywords: Heropoo, metmoon, 个人博客
+subtitle: 时光漫漫，何妨扬眉淡笑，心境从容？
+description: 满江风雪，Heropoo的个人博客。
+keywords: www.ioio.pw, ioio.pw, ioio, metmoon, metmoon.com,满江风雪, heropoo, 博客, 个人博客, Heropoo的个人博客, heropoo博客
 author: Heropoo
-language: 
-timezone:
+language: zh-CN
+timezone: PRC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://metmoon.com
+url: https://metmoon.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
 source_dir: source
-public_dir: docs
+public_dir: dist
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
@@ -35,7 +35,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -73,20 +73,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-#theme: landscape
-theme: brewski
-theme_config:
-  logo:
-  google_analytics: UA-XXXXXXXX-X
-  copyright:
-    since: 2016
-    name: John Doe
-    url: https://www.example.org/john-doe
-  menu:
-    Home: /
-    About: /about
-    GitHub: https://github.com/tiaanduplessis
-    RSS: /atom.xml
+theme: lanmiao
+
+#favicon: /assets/images/favicon.ico
+favicon: /image/favicon.jpg
+header-img: /assets/images/banner.jpg
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

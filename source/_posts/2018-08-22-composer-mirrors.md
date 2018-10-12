@@ -4,11 +4,11 @@ title:  "Composer官方镜像太慢或者被墙无法使用时的几种解决方
 date:   2018-08-2 12:11:06
 author: "Heropoo"
 categories: 
-    - Composer
     - PHP
+    - Composer
 tags:
+ 	- PHP
     - Composer
-    - PHP
 excerpt: "Composer官方镜像太慢或者被墙无法使用时的几种解决方案"
 ---
 Composer官方镜像太慢或者被墙无法使用时的几种解决方案

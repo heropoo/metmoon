@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="满江风雪，Heropoo的个人博客。">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/image/favicon.jpg">
+
+    
+
+    <title>
+        
+        百度UEditor自定义上传地址 |
+        
+        满江风雪
+    </title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Plugin CSS -->
+
+
+    <!-- Custom CSS -->
+    <!-- ↓这是stylus文件 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/toc.css">
+
+
+</head>
+<body></body>
+
+
+<body>
+
+<!-- Header -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header {
+     background-image: url('');
+        /*post*/
+    
+    }
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- 文章 -->
+                
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#PHP"
+                           title="PHP">PHP</a>
+                        
+                        <a class="tag" href="/tags/#UEditor"
+                           title="UEditor">UEditor</a>
+                        
+                    </div>
+                    <h1>百度UEditor自定义上传地址</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                            Posted by Heropoo on
+                        2017-10-26
+                        </span>
+                </div>
+                <!-- 非文章 -->
+                
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Nav -->
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">满江风雪</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li><a href="/">Home</a></li>
+                    
+                    <li><a href="/portfolio">Portfolio</a></li>
+                    
+                    <li><a href="/about">About</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Content -->
+<!-- Content -->
+<div class="container">
+    <div class="row">
+        <!-- Post container -->
+
+        <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+
+            <p>之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。</p>
+<p>在ue实例化的时候你服务端上传的请求地址赋值给<code>serverUrl</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ue;</span><br><span class="line">ue = UE.getEditor(<span class="string">'editor'</span>, &#123;</span><br><span class="line">    toolbars: [		<span class="comment">//这个是工具栏配置，自己定义和今天主题无关</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">'fullscreen'</span>, <span class="string">'source'</span>, <span class="string">'|'</span>, <span class="string">'undo'</span>, <span class="string">'redo'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'bold'</span>, <span class="string">'italic'</span>, <span class="string">'underline'</span>, <span class="string">'fontborder'</span>, <span class="string">'strikethrough'</span>, <span class="string">'superscript'</span>, <span class="string">'subscript'</span>, <span class="string">'removeformat'</span>, <span class="string">'formatmatch'</span>, <span class="string">'autotypeset'</span>, <span class="string">'blockquote'</span>, <span class="string">'pasteplain'</span>, <span class="string">'|'</span>, <span class="string">'forecolor'</span>, <span class="string">'backcolor'</span>, <span class="string">'insertorderedlist'</span>, <span class="string">'insertunorderedlist'</span>, <span class="string">'selectall'</span>, <span class="string">'cleardoc'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'rowspacingtop'</span>, <span class="string">'rowspacingbottom'</span>, <span class="string">'lineheight'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'customstyle'</span>, <span class="string">'paragraph'</span>, <span class="string">'fontfamily'</span>, <span class="string">'fontsize'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'directionalityltr'</span>, <span class="string">'directionalityrtl'</span>, <span class="string">'indent'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'justifyleft'</span>, <span class="string">'justifycenter'</span>, <span class="string">'justifyright'</span>, <span class="string">'justifyjustify'</span>, <span class="string">'|'</span>, <span class="string">'touppercase'</span>, <span class="string">'tolowercase'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'link'</span>, <span class="string">'unlink'</span>, <span class="string">'anchor'</span>, <span class="string">'|'</span>, <span class="string">'imagenone'</span>, <span class="string">'imageleft'</span>, <span class="string">'imageright'</span>, <span class="string">'imagecenter'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'simpleupload'</span>, <span class="string">'|'</span>, <span class="string">'pagebreak'</span>, <span class="string">'template'</span>, <span class="string">'background'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'horizontal'</span>, <span class="string">'date'</span>, <span class="string">'time'</span>, <span class="string">'spechars'</span>, <span class="string">'snapscreen'</span>, <span class="string">'wordimage'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'inserttable'</span>, <span class="string">'deletetable'</span>, <span class="string">'insertparagraphbeforetable'</span>, <span class="string">'insertrow'</span>, <span class="string">'deleterow'</span>, <span class="string">'insertcol'</span>, <span class="string">'deletecol'</span>, <span class="string">'mergecells'</span>, <span class="string">'mergeright'</span>, <span class="string">'mergedown'</span>, <span class="string">'splittocells'</span>, <span class="string">'splittorows'</span>, <span class="string">'splittocols'</span>, <span class="string">'charts'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'preview'</span></span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    serverUrl: <span class="string">'http://your-server-address'</span>  <span class="comment">//这里是你服务端上传的请求地址</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在上面自定义了服务端地址之后，我们刷新页面，ue实例化的时候会自动请求你的地址并且带着query参数，大概是这样：<code>http://your-server-address?action=config</code>。这是ue实例化会请求配置文件，简单点你可以直接返回ue插件文件夹中<code>ueditor/1.4.3.3/php/config.json</code>的内容就可以了。当然了具体配置你是可以自己按自己需求改动。</p>
+<p>接下来上传图片，随便上传一张图片，会发现ue的请求地址是<code>http://your-server-address?action=uploadimage</code>。这样是不是恍然大悟：</p>
+<blockquote>
+<p>   action参数是config，你就给他返回配置内容;<br>   action参数是uploadimage就是图片上传，你就保存图片文件，返回成功或者失败的结果。</p>
+</blockquote>
+<p>上传结果返回格式是这样的：</p>
+<p>失败的情况<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"Failed"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"error msg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>成功的情况<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">	"original": "aaa.jpg",	//图片源文件名</span><br><span class="line">	"type": ".jpg",		//图片后缀</span><br><span class="line">	"size": 10240000,	//图片大小</span><br><span class="line">	"title": "aaa",		//图片img标签上的属性title</span><br><span class="line">	"url": "/upload/fsf3r.jpg"			//图片上传之后的url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>好了就这样</p>
+
+
+
+            <!-- Pager -->
+            <ul class="pager">
+                
+                <li class="previous">
+                    <a href="/2017/11/16/使用docker玩转php开发环境/" >&larr; Previous Post</a>
+                </li>
+                
+                
+                <li class="next">
+                    <a href="/2017/10/26/Docker基础命令/" >Next Post &rarr;</a>
+                </li>
+                
+            </ul>
+
+
+
+        </div>
+        <!-- Sidebar container-->
+        <div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+            <!-- toc -->
+            <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" role="complementary">
+                <h4><i class="fa fa-bookmark"></i> Catalog</h4>
+                <ul class="nav bs-docs-sidenav">
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 满江风雪 2018
+                    <br>
+                    Theme by <a href="http://beantech.org/">Bean Tech</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="https://metmoon.com">满江风雪</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+</html>

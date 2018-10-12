@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="满江风雪，Heropoo的个人博客。">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/image/favicon.jpg">
+
+    
+
+    <title>
+        
+        Docker容器动态添加端口 |
+        
+        满江风雪
+    </title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Plugin CSS -->
+
+
+    <!-- Custom CSS -->
+    <!-- ↓这是stylus文件 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/toc.css">
+
+
+</head>
+<body></body>
+
+
+<body>
+
+<!-- Header -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header {
+     background-image: url('');
+        /*post*/
+    
+    }
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- 文章 -->
+                
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#虚拟化"
+                           title="虚拟化">虚拟化</a>
+                        
+                        <a class="tag" href="/tags/#容器"
+                           title="容器">容器</a>
+                        
+                        <a class="tag" href="/tags/#Docker"
+                           title="Docker">Docker</a>
+                        
+                    </div>
+                    <h1>Docker容器动态添加端口</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                            Posted by Heropoo on
+                        2018-09-16
+                        </span>
+                </div>
+                <!-- 非文章 -->
+                
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Nav -->
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">满江风雪</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li><a href="/">Home</a></li>
+                    
+                    <li><a href="/portfolio">Portfolio</a></li>
+                    
+                    <li><a href="/about">About</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Content -->
+<!-- Content -->
+<div class="container">
+    <div class="row">
+        <!-- Post container -->
+
+        <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+
+            <p>突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/zuoshenglo/article/details/78402772" target="_blank" rel="noopener">怎么给运行中的docker容器添加新的端口</a></li>
+<li><a href="https://blog.csdn.net/wesleyflagon/article/details/78961990" target="_blank" rel="noopener">修改docker容器端口映射的方法</a></li>
+<li><a href="https://blog.csdn.net/xfks55/article/details/50148389" target="_blank" rel="noopener">iptable规则查看，添加，删除和修改</a></li>
+</ul>
+<h2 id="方法1-修改iptables端口映射"><a href="#方法1-修改iptables端口映射" class="headerlink" title="方法1 修改iptables端口映射"></a>方法1 修改iptables端口映射</h2><blockquote>
+<p>docker的端口映射并不是在docker技术中实现的，而是通过宿主机的iptables来实现。通过控制网桥来做端口映射，类似路由器中设置路由端口映射。</p>
+</blockquote>
+<p>比如我们有一个容器的80端口映射到主机的8080端口，先查看iptables到底设置了什么规则：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -vnL</span><br></pre></td></tr></table></figure></p>
+<p>在结果中有一条：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Chain DOCKER</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">RETURN     all  --  0.0.0.0/0            0.0.0.0/0</span><br><span class="line">DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:172.17.0.3:80</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到docker创建了一个名为DOKCER的自定义的链条Chain。而我开放80端口的容器的ip是172.17.0.3</p>
+<p>也可以通过inspect命令查看容器ip<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerId |grep IPAddress</span><br></pre></td></tr></table></figure></p>
+<p>我们想再增加一个端口映射，比如<code>8081-&gt;81</code>，就在这个链条是再加一条规则：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -A  DOCKER -p tcp --dport 8081 -j DNAT --to-destination 172.17.0.3:81</span><br></pre></td></tr></table></figure></p>
+<p>如果加错了或者想修改：</p>
+<p>先显示行号查看<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -vnL DOCKER</span><br></pre></td></tr></table></figure></p>
+<p>删除规则3<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -D DOCKER 3</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法2-修改容器配置文件"><a href="#方法2-修改容器配置文件" class="headerlink" title="方法2 修改容器配置文件"></a>方法2 修改容器配置文件</h3><p>容器的配置文件<code>/var/lib/docker/containers/[containerId]</code>目录下，<code>hostconfig.json</code>和<code>config.v2.json</code></p>
+<p>(未完待续)</p>
+
+
+
+            <!-- Pager -->
+            <ul class="pager">
+                
+                <li class="previous">
+                    <a href="/2018/09/18/盗将行/" >&larr; Previous Post</a>
+                </li>
+                
+                
+                <li class="next">
+                    <a href="/2018/09/15/bing-site-search/" >Next Post &rarr;</a>
+                </li>
+                
+            </ul>
+
+
+
+        </div>
+        <!-- Sidebar container-->
+        <div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+            <!-- toc -->
+            <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" role="complementary">
+                <h4><i class="fa fa-bookmark"></i> Catalog</h4>
+                <ul class="nav bs-docs-sidenav">
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 满江风雪 2018
+                    <br>
+                    Theme by <a href="http://beantech.org/">Bean Tech</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="https://metmoon.com">满江风雪</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+</html>

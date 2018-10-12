@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="满江风雪，Heropoo的个人博客。">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/image/favicon.jpg">
+
+    
+
+    <title>
+        
+        使用PHP写Git的自动部署webhook脚本 |
+        
+        满江风雪
+    </title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Plugin CSS -->
+
+
+    <!-- Custom CSS -->
+    <!-- ↓这是stylus文件 -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/toc.css">
+
+
+</head>
+<body></body>
+
+
+<body>
+
+<!-- Header -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header {
+     background-image: url('');
+        /*post*/
+    
+    }
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- 文章 -->
+                
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#PHP"
+                           title="PHP">PHP</a>
+                        
+                        <a class="tag" href="/tags/#Git"
+                           title="Git">Git</a>
+                        
+                        <a class="tag" href="/tags/#Webhook"
+                           title="Webhook">Webhook</a>
+                        
+                    </div>
+                    <h1>使用PHP写Git的自动部署webhook脚本</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                            Posted by Heropoo on
+                        2018-05-01
+                        </span>
+                </div>
+                <!-- 非文章 -->
+                
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Nav -->
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">满江风雪</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li><a href="/">Home</a></li>
+                    
+                    <li><a href="/portfolio">Portfolio</a></li>
+                    
+                    <li><a href="/about">About</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Content -->
+<!-- Content -->
+<div class="container">
+    <div class="row">
+        <!-- Post container -->
+
+        <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+
+            <p>现在开发项目大多使用git作为版本控制器，而且现在大多数的代码托管平台都支持自定义webhook脚本。正好利用这个脚本，结合git的workflow，我们可以轻松的做到项目代码的自动发布部署。</p>
+<h3 id="最简单的流程"><a href="#最简单的流程" class="headerlink" title="最简单的流程"></a>最简单的流程</h3><p>比如你的项目有两个分支，一个是代码已经经过测试可用于部署到服务器的master分支，一个用于开发的dev分支。那么我们上线的过程就是merge dev的代码到master分支。那么我们可以设置一个代码push触发的webhook。这个webhook脚本的代码也非常简单，就是<code>git pull origin master</code>。</p>
+<h3 id="最简单的实现"><a href="#最简单的实现" class="headerlink" title="最简单的实现"></a>最简单的实现</h3><ul>
+<li>编写<code>webhook.php</code></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// todo 在此可以写校验权限密码之类的代码</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$path = dirname(<span class="keyword">__DIR__</span>);</span><br><span class="line">$log_file = $path.<span class="string">'/runtime/logs/webhook-pull-error-output.log'</span>;	<span class="comment">//错误日志文件的路径</span></span><br><span class="line"></span><br><span class="line">$descriptorspec = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(<span class="string">"pipe"</span>, <span class="string">"r"</span>),  <span class="comment">// 标准输入，子进程从此管道中读取数据</span></span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">"pipe"</span>, <span class="string">"w"</span>),  <span class="comment">// 标准输出，子进程向此管道中写入数据</span></span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">"file"</span>, $log_file, <span class="string">"a"</span>) <span class="comment">// 标准错误，写入到一个文件</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$cwd = $path;</span><br><span class="line">$env = <span class="keyword">array</span>(<span class="string">'PATH'</span> =&gt; $_SERVER[<span class="string">'PATH'</span>]);</span><br><span class="line"></span><br><span class="line">$process = proc_open(<span class="string">'sudo git pull origin master'</span>, $descriptorspec, $pipes, $cwd, $env);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;pre&gt;'</span>;</span><br><span class="line"><span class="keyword">if</span> (is_resource($process)) &#123;</span><br><span class="line">    <span class="comment">// $pipes 现在看起来是这样的：</span></span><br><span class="line">    <span class="comment">// 0 =&gt; 可以向子进程标准输入写入的句柄</span></span><br><span class="line">    <span class="comment">// 1 =&gt; 可以从子进程标准输出读取的句柄</span></span><br><span class="line">    <span class="comment">// 错误输出将被追加到文件 /tmp/error-output.txt</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> stream_get_contents($pipes[<span class="number">1</span>]);</span><br><span class="line">    fclose($pipes[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 切记：在调用 proc_close 之前关闭所有的管道以避免死锁。</span></span><br><span class="line">    $return_value = proc_close($process);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> PHP_EOL.<span class="string">"command returned $return_value\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加php脚本的执行用户sudoers中</li>
+</ul>
+<p>比如你使用nginx+php-fpm的服务器架构，你的php-fpm的用户是www-data<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">visudo</span><br><span class="line">--------------------------------</span><br><span class="line">...</span><br><span class="line"><span class="comment">#Defaults   !visiblepw   #注释掉这句 这句是限制sudo只能在命令行执行的</span></span><br><span class="line">www-data ALL=(ALL:ALL) NOPASSWD: /usr/bin/git</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>push代码到master分支测试下吧~ 登陆服务器看看代码是不是已经同步好了　</li>
+</ul>
+
+
+
+            <!-- Pager -->
+            <ul class="pager">
+                
+                <li class="previous">
+                    <a href="/2018/07/16/git-base/" >&larr; Previous Post</a>
+                </li>
+                
+                
+                <li class="next">
+                    <a href="/2018/03/31/git/" >Next Post &rarr;</a>
+                </li>
+                
+            </ul>
+
+
+
+        </div>
+        <!-- Sidebar container-->
+        <div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+            <!-- toc -->
+            <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" role="complementary">
+                <h4><i class="fa fa-bookmark"></i> Catalog</h4>
+                <ul class="nav bs-docs-sidenav">
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 满江风雪 2018
+                    <br>
+                    Theme by <a href="http://beantech.org/">Bean Tech</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="https://metmoon.com">满江风雪</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+</html>
