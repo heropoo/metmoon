@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: lanmiao
+theme: next
 
 #favicon: /assets/images/favicon.ico
 favicon: /image/favicon.jpg
