@@ -76,8 +76,11 @@ pagination_dir: page
 theme: next
 
 #favicon: /assets/images/favicon.ico
-favicon: /image/favicon.jpg
-header-img: /assets/images/banner.jpg
+favicon:
+  small: /assets/images/favicon.ico
+  medium: /assets/images/favicon.ico
+  apple_touch_icon: /assets/images/favicon.png
+  safari_pinned_tab: /assets/images/favicon.png
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
