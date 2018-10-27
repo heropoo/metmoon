@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="还是忙里偷闲研究了下怎么用docker这个东东来整php开发。做点笔记😁 先看Dockerfile:12345678# 使用基于alpine linux 的镜像，体积小，下载快FROM php:7.0-cli-alpine# 使用中科大的源加快下载速度RUN sed -i &amp;apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&amp;apos; /et">
-<meta name="keywords" content="PHP,虚拟化,容器,Docker">
+  <meta name="description" content="最近几个月博客外挂的gitment评论老是挂，也一直没时间修复。这几天想办法修好了。就说说修复的过程吧。 从我开始用gitment的评论系统，总共出现过两次问题： 1. github-issue label的字符长度限制这次导致原本默认使用网页url地址做label初始化评论的方式无法使用，url太长了超过了50个字符。而之前已经初始化好的评论（issue）不收影响。所以后来我想了个办法来改，就是">
+<meta name="keywords" content="github-issue,gitment">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用docker玩转php开发环境">
-<meta property="og:url" content="https://metmoon.com/2017/11/16/使用docker玩转php开发环境/index.html">
+<meta property="og:title" content="修复gitment评论">
+<meta property="og:url" content="https://metmoon.com/2018/10/27/fix-gitment/index.html">
 <meta property="og:site_name" content="满江风雪">
-<meta property="og:description" content="还是忙里偷闲研究了下怎么用docker这个东东来整php开发。做点笔记😁 先看Dockerfile:12345678# 使用基于alpine linux 的镜像，体积小，下载快FROM php:7.0-cli-alpine# 使用中科大的源加快下载速度RUN sed -i &amp;apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&amp;apos; /et">
+<meta property="og:description" content="最近几个月博客外挂的gitment评论老是挂，也一直没时间修复。这几天想办法修好了。就说说修复的过程吧。 从我开始用gitment的评论系统，总共出现过两次问题： 1. github-issue label的字符长度限制这次导致原本默认使用网页url地址做label初始化评论的方式无法使用，url太长了超过了50个字符。而之前已经初始化好的评论（issue）不收影响。所以后来我想了个办法来改，就是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-26T02:44:29.787Z">
+<meta property="og:updated_time" content="2018-10-27T08:41:36.436Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用docker玩转php开发环境">
-<meta name="twitter:description" content="还是忙里偷闲研究了下怎么用docker这个东东来整php开发。做点笔记😁 先看Dockerfile:12345678# 使用基于alpine linux 的镜像，体积小，下载快FROM php:7.0-cli-alpine# 使用中科大的源加快下载速度RUN sed -i &amp;apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&amp;apos; /et">
+<meta name="twitter:title" content="修复gitment评论">
+<meta name="twitter:description" content="最近几个月博客外挂的gitment评论老是挂，也一直没时间修复。这几天想办法修好了。就说说修复的过程吧。 从我开始用gitment的评论系统，总共出现过两次问题： 1. github-issue label的字符长度限制这次导致原本默认使用网页url地址做label初始化评论的方式无法使用，url太长了超过了50个字符。而之前已经初始化好的评论（issue）不收影响。所以后来我想了个办法来改，就是">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="https://metmoon.com/2017/11/16/使用docker玩转php开发环境/"/>
+  <link rel="canonical" href="https://metmoon.com/2018/10/27/fix-gitment/"/>
 
 
 
@@ -138,7 +138,7 @@
   };
 </script>
 
-  <title>使用docker玩转php开发环境 | 满江风雪</title>
+  <title>修复gitment评论 | 满江风雪</title>
   
 
 
@@ -287,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2017/11/16/使用docker玩转php开发环境/">
+    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2018/10/27/fix-gitment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heropoo">
@@ -304,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用docker玩转php开发环境
+          <h1 class="post-title" itemprop="name headline">修复gitment评论
               
             
           </h1>
@@ -329,24 +329,12 @@
                 
               
 
-              <time title="创建时间：2017-11-16 15:25:01" itemprop="dateCreated datePublished" datetime="2017-11-16T15:25:01+08:00">2017-11-16</time>
+              <time title="创建时间：2018-10-27 16:17:34 / 修改时间：16:41:36" itemprop="dateCreated datePublished" datetime="2018-10-27T16:17:34+08:00">2018-10-27</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-26 10:44:29" itemprop="dateModified" datetime="2018-05-26T10:44:29+08:00">2018-05-26</time>
               
             
           </span>
@@ -363,14 +351,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/github-issue/" itemprop="url" rel="index"><span itemprop="name">github-issue</span></a></span>
 
                 
                 
@@ -404,23 +385,12 @@
       
 
       
-        <p>还是忙里偷闲研究了下怎么用docker这个东东来整php开发。做点笔记😁</p>
-<p>先看<code>Dockerfile</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用基于alpine linux 的镜像，体积小，下载快</span><br><span class="line">FROM php:7.0-cli-alpine</span><br><span class="line"></span><br><span class="line"># 使用中科大的源加快下载速度</span><br><span class="line">RUN sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories</span><br><span class="line"></span><br><span class="line"># 安装下基本的php扩展</span><br><span class="line">RUN docker-php-ext-install pdo pdo_mysql mysqli</span><br></pre></td></tr></table></figure></p>
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t heropoo/php-cli-alpine .  <span class="comment">#先切换到你的Dockerfile目录</span></span><br></pre></td></tr></table></figure>
-<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name php-cli-server -p 8080:80  -v //c/Users/ttt/www:/usr/src/www -w /usr/src/www php:7.0-cli-alpine php -S 0.0.0.0:80</span><br></pre></td></tr></table></figure>
-<p>这句好长啊，解释下各个参数：</p>
-<blockquote>
-<p>-t在新容器内指定一个伪终端或终端</p>
-<p>-i    允许你对容器内的标准输入 (STDIN) </p>
-<p>-p 映射宿主机端口到容器的端口，上面就是宿主机的8080到容器的80</p>
-<p>-v 挂载宿主机目录到容器的目录，上面就是宿主机/c/Users/ttt/www到容器/usr/src/www    </p>
-<p>-w    设置工作目录</p>
-<p>–rm 容器运行完之后删除</p>
-<p>–name    给容器名字</p>
-<p>php -S 0.0.0.0:80 就是用php内置的服务器启动一个web服务了，简单点来 哈哈 </p>
-</blockquote>
-<p>我系统是windows，我在浏览器访问docker的web服务：<code>http://ip:8080</code>,ip是你的docker的ip,就可以了。</p>
-<p>是不是很好玩😜</p>
+        <p>最近几个月博客外挂的gitment评论老是挂，也一直没时间修复。这几天想办法修好了。就说说修复的过程吧。</p>
+<p>从我开始用gitment的评论系统，总共出现过两次问题：</p>
+<h2 id="1-github-issue-label的字符长度限制"><a href="#1-github-issue-label的字符长度限制" class="headerlink" title="1. github-issue label的字符长度限制"></a>1. github-issue label的字符长度限制</h2><p>这次导致原本默认使用网页url地址做label初始化评论的方式无法使用，url太长了超过了50个字符。而之前已经初始化好的评论（issue）不收影响。所以后来我想了个办法来改，就是用时间来初始化，并且对于为了兼容之前的评论，加了时间判断：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> page_date = <span class="string">'&#123;&#123; page.date &#125;&#125;'</span>;</span><br><span class="line"><span class="keyword">var</span> id = <span class="built_in">window</span>.location.href;</span><br><span class="line"><span class="keyword">if</span>(page_date &gt; <span class="string">'2018-04-31 00:00:00 +0000'</span>)&#123;</span><br><span class="line">    id = page_date;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> gitment = <span class="keyword">new</span> Gitment(&#123;</span><br><span class="line">    id: id, <span class="comment">// 可选。默认为 location.href</span></span><br><span class="line">    owner: <span class="string">'heropoo'</span>,</span><br><span class="line">    repo: <span class="string">'heropoo.github.io'</span>,</span><br><span class="line">    oauth: &#123;</span><br><span class="line">        client_id: <span class="string">'cccc'</span>,</span><br><span class="line">        client_secret: <span class="string">'xxxx'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">gitment.render(<span class="string">'container'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-gitment-作者提供的oauth授权服务不可用"><a href="#2-gitment-作者提供的oauth授权服务不可用" class="headerlink" title="2. gitment 作者提供的oauth授权服务不可用"></a>2. gitment 作者提供的oauth授权服务不可用</h2><p>这次好像挂了使用作者提供的js的博客全挂了😂。 解决办法就是自己搭建或者使用别人搭建的oauth授权服务了。 好吧，换个授权服务总算好了。</p>
+<h2 id="3-升级https"><a href="#3-升级https" class="headerlink" title="3. 升级https"></a>3. 升级https</h2><p>现在github-page提供强制https。升级之后发现之前兼容的使用页面url初始化的评论又不能用了。 ㄟ( ▔, ▔ )ㄏ<br>但是还得修嘛。后来仔细观察了下，原来作者是使用<code>gitment</code>和页面js中获取的id来匹配出一个issue的。所以只要去github修改issue label就可以了。把原来很长的url label改成现在的短的，比如像我一样用时间。然后页面上的兼容的js也去掉就搞定了。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> page_date = <span class="string">'&#123;&#123; page.date &#125;&#125;'</span>;</span><br><span class="line"><span class="comment">//var id = window.location.href;</span></span><br><span class="line"><span class="comment">//if(page_date &gt; '2018-04-31 00:00:00 +0000')&#123;</span></span><br><span class="line"><span class="keyword">var</span> id = page_date;</span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="keyword">var</span> gitment = <span class="keyword">new</span> Gitment(&#123;</span><br><span class="line">    id: id, <span class="comment">// 可选。默认为 location.href</span></span><br><span class="line">    owner: <span class="string">'heropoo'</span>,</span><br><span class="line">    repo: <span class="string">'heropoo.github.io'</span>,</span><br><span class="line">    oauth: &#123;</span><br><span class="line">        client_id: <span class="string">'cccc'</span>,</span><br><span class="line">        client_secret: <span class="string">'xxxx'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">gitment.render(<span class="string">'container'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>好了，搞完收工。</p>
 
       
     </div>
@@ -441,13 +411,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP/" rel="tag"># PHP</a>
+            <a href="/tags/github-issue/" rel="tag"># github-issue</a>
           
-            <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
-          
-            <a href="/tags/容器/" rel="tag"># 容器</a>
-          
-            <a href="/tags/Docker/" rel="tag"># Docker</a>
+            <a href="/tags/gitment/" rel="tag"># gitment</a>
           
         </div>
       
@@ -460,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/26/百度ueditor自定义上传地址/" rel="next" title="百度UEditor自定义上传地址">
-                <i class="fa fa-chevron-left"></i> 百度UEditor自定义上传地址
+              <a href="/2018/10/16/yii2-activerecord-to-json/" rel="next" title="关于Yii2查询数据对象ActiveRecord的json序列化问题">
+                <i class="fa fa-chevron-left"></i> 关于Yii2查询数据对象ActiveRecord的json序列化问题
               </a>
             
           </div>
@@ -469,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/01/2018-happy-new-year/" rel="prev" title="2018,新年快乐！">
-                2018,新年快乐！ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -705,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建"><span class="nav-number">1.</span> <span class="nav-text">构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行"><span class="nav-number">2.</span> <span class="nav-text">运行</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-github-issue-label的字符长度限制"><span class="nav-number">1.</span> <span class="nav-text">1. github-issue label的字符长度限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-gitment-作者提供的oauth授权服务不可用"><span class="nav-number">2.</span> <span class="nav-text">2. gitment 作者提供的oauth授权服务不可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-升级https"><span class="nav-number">3.</span> <span class="nav-text">3. 升级https</span></a></li></ol></div>
             
 
           </div>

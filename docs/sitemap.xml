@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://metmoon.com/2018/10/27/fix-gitment/</loc>
+    
+    <lastmod>2018-10-27T08:41:36.436Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://metmoon.com/2018/09/16/docker-container-port/</loc>
+    
+    <lastmod>2018-10-27T06:42:56.884Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://metmoon.com/2017/08/13/%E5%80%9A%E6%A5%BC%E5%90%AC%E9%A3%8E%E9%9B%A8%EF%BC%8C%E6%B7%A1%E7%9C%8B%E6%B1%9F%E6%B9%96%E8%B7%AF/</loc>
     
     <lastmod>2018-10-16T14:47:30.154Z</lastmod>
@@ -26,13 +40,6 @@
     <loc>https://metmoon.com/2018/09/18/%E7%9B%97%E5%B0%86%E8%A1%8C/</loc>
     
     <lastmod>2018-09-18T10:16:06.304Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://metmoon.com/2018/09/16/docker-container-port/</loc>
-    
-    <lastmod>2018-09-17T09:57:56.772Z</lastmod>
     
   </url>
   
