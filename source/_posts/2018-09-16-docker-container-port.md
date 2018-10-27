@@ -57,8 +57,20 @@ sudo iptables -t nat -vnL DOCKER
 sudo iptables -t nat -D DOCKER 3
 ```
 
-### 方法2 修改容器配置文件
+## 方法2 修改容器配置文件
 容器的配置文件`/var/lib/docker/containers/[containerId]`目录下，`hostconfig.json`和`config.v2.json`
+修改好之后，重启容器服务。
 
-(未完待续)
+## 方法3 把运行中的容器生成新的镜像，然后运行新的镜像
 
+1. 提交一个运行中的容器为镜像
+```sh
+docker commit containerid heropoo/example
+```
+
+2. 运行`heropoo/example`镜像并添加8080映射容器80端口
+```sh
+docker run -d -p 8000:80  heropoo/example /bin/sh
+```
+
+试试吧~😎
