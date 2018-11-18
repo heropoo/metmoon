@@ -287,6 +287,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2017/09/13/EFI模式下安装win10+Archlinux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heropoo">
+      <meta itemprop="description" content="满江风雪，Heropoo的个人博客。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="满江风雪">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/13/EFI模式下安装win10+Archlinux/" itemprop="url">
+                  EFI模式下安装win10+Archlinux
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-13 22:49:50" itemprop="dateCreated datePublished" datetime="2017-09-13T22:49:50+08:00">2017-09-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-01-18 13:18:40" itemprop="dateModified" datetime="2018-01-18T13:18:40+08:00">2018-01-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>就最近一次安装Archlinux做一次笔记吧。别问我为什么没事就装arch，因为他是arch  😜 </p>
+<p>Win10安装就略过了，我的电脑linux老换，win10始终稳稳的在那躺着，一动不动。。。</p>
+<p>因为win10是提前安装好的，而他是使用EFI模式安装的 我们在win10下在硬盘上给咋arch挪出点空间来，几十个GB就行。看你硬盘大小了和心情了。</p>
+<h3 id="启动liveCD"><a href="#启动liveCD" class="headerlink" title="启动liveCD"></a>启动liveCD</h3><p>用在<a href="https://www.archlinux.org/download/" target="_blank" rel="noopener">官网</a>或者<a href="http://mirrors.163.com/archlinux/iso/2017.09.01/" target="_blank" rel="noopener">163</a>源下载最新的liveCD镜像（比如最新是archlinux-2017.09.01-x86_64.iso），刻录到u盘，我喜欢用<a href="http://rufus.akeo.ie/" target="_blank" rel="noopener">rufs</a>，这个不大于1M的小工具很简单强大我喜欢。 当然了，熟悉linux的同学可以用<a href="https://wiki.archlinux.org/index.php/Core_utilities#dd" target="_blank" rel="noopener">dd</a>命令。</p>
+<p>插上u盘，重启到liveCD里面。里面也是个没桌面的shell系统。</p>
+<h3 id="看Archlinux-wiki"><a href="#看Archlinux-wiki" class="headerlink" title="看Archlinux wiki"></a>看Archlinux wiki</h3><p>在开始之前最好还是看看<a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank" rel="noopener">arch的wiki</a>Installation guide(安装指南)，写的很详细，最好看英文的，中文的翻译有点延迟。</p>
+<h3 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h3><p>如果你是有线网络，插上网线，启动<a href="https://wiki.archlinux.org/index.php/Dhcpcd" target="_blank" rel="noopener">dhcpd</a>服务（也就是动态获取ip）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start dhcpcd</span><br></pre></td></tr></table></figure></p>
+<p>无线网络用wifi-menu链接<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wifi-menu</span><br></pre></td></tr></table></figure></p>
+<p>看看链接成功了没 查看下ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br></pre></td></tr></table></figure></p>
+<p>如果没成功，或者其他的联网方式，看看<a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="noopener">arch的wiki</a></p>
+<p>其实说到这，再次提醒大家，看<a href="https://wiki.archlinux.org/" target="_blank" rel="noopener">arch的wiki</a></p>
+<p>连上网络了，开工吧!</p>
+<h3 id="分区："><a href="#分区：" class="headerlink" title="分区："></a>分区：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
+<p>进入fdisk之后按<code>p</code>，看看现有分区的情况<br>这是我的硬盘分区情况，硬盘格式<code>gpt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/dev/sda1        2048     923647    921600   450M Windows 恢复环境</span><br><span class="line">/dev/sda2      923648    1128447    204800   100M EFI 系统</span><br><span class="line">/dev/sda3     1128448    1161215     32768    16M Microsoft 保留</span><br><span class="line">/dev/sda4     1161216  209256750 208095535  99.2G Microsoft 基本数据</span><br><span class="line">/dev/sda5   209258496  210888703   1630208   796M Windows 恢复环境</span><br><span class="line">/dev/sda6   210890752  462559542 251668791   120G Microsoft 基本数据</span><br></pre></td></tr></table></figure></p>
+<p>假如我的硬盘中空闲空间100GB，用fdisk 给这100GB分一分</p>
+<p>我的方案是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/dev/sda7    /boot           ext4    500MB    #boot启动分区 500MB够用了</span><br><span class="line">/dev/sda8    swap                        8GB         #交换分区， 我的内存也8GB，我就分一样大小了</span><br><span class="line">/dev/sda9    /                   ext4                   #剩下的全给 / 根分区</span><br></pre></td></tr></table></figure></p>
+<p>根据自己的空间大小自行调整。</p>
+<p>格式化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sda7</span><br><span class="line">mkfs.ext4 /dev/sda9</span><br><span class="line">mkswap /dev/sda8</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装基础系统"><a href="#安装基础系统" class="headerlink" title="安装基础系统"></a>安装基础系统</h3><p>挂载分区：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sda9 /mnt</span><br><span class="line">mkdir /mnt/boot</span><br><span class="line">mount /dev/sda7 /mnt/boot</span><br><span class="line">mkdir /mnt/boot/EFI</span><br><span class="line">mount /dev/sda2 /mnt/boot/EFI          #这个EFI分区在分区情况里面能看到我的是sda2</span><br><span class="line">swapon /dev/sda8</span><br></pre></td></tr></table></figure></p>
+<p>修改源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure></p>
+<p>把163，ustc这几个比较好使的中国源复制到文件最上面，到时候下载安装的时候跑的快一点</p>
+<p>开始安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap -i /mnt base vim dialog wpa_supplicant</span><br></pre></td></tr></table></figure></p>
+<p>base是基础系统，dialog是上面提到的链接无线网的wifi-menu，wpa_supplicant也是手动链接无线网的包，vim 不解释 </p>
+<p>安装完成之后</p>
+<p>把分区挂载情况写入fstab中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U -p /mnt &gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure></p>
+<p>chroot进新系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt /bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>一些配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;my-archlinux&apos; &gt; /etc/hostname     #设置主机名字</span><br><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai   #设置时区</span><br><span class="line">timedatectl set-timezone Asia/Shanghai      #也可以用这个设置时区</span><br><span class="line">timedatectl set-ntp true        # 设置时间ntp同步网络时间</span><br><span class="line">vim /etc/locale.gen     # 区域设置 取消英文（en_US.UTF-8）和中文(zh_CN.UTF-8)的注释</span><br><span class="line">locale-gen      #生成设置区域设置</span><br><span class="line">echo &quot;LANG=en_US.UTF-8&quot; &gt; /etc/locale.conf #设置语言，因为先安装的是没桌面的模式，先用英文，中文会显示成小方块</span><br></pre></td></tr></table></figure></p>
+<p> 创建初始内存盘<a href="https://wiki.archlinux.org/index.php/Mkinitcpio" target="_blank" rel="noopener">mkinitcpio</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkinitcpio -p linux</span><br></pre></td></tr></table></figure></p>
+<p>设置root密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure></p>
+<p>这步忘了，你就进不去系统了，╮(╯▽╰)╭</p>
+<p>搞定启动项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub efibootmgr       #安装grub efibootmgr管理启动项</span><br><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=arch_grub --recheck</span><br><span class="line">pacman -S os-prober     #安装这个包是为了让grub-mkconfig发现win10的启动项</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg   #把启动项写到文件配置里</span><br></pre></td></tr></table></figure></p>
+<p>如果win10的启动项没有被发现，不要着急，在新的系统安装重启之后，重新执行上面<code>grub-mkconfig</code>命令就行了</p>
+<p>退出新系统,重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exit        #退出</span><br><span class="line">unmout -R /mnt  #取消挂载磁盘</span><br><span class="line">reboot   #重启</span><br></pre></td></tr></table></figure></p>
+<p>好了如果一切顺利，重启之后就能看到你的新系统了  (。・∀・)ノ </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://metmoon.com/2017/09/09/自己实现AJAX异步上传文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1412,7 +1615,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1461,7 +1664,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">分类</span>
                   
                 </div>
@@ -1532,7 +1739,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
