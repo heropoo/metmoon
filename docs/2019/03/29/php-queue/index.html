@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/assets/images/favicon.png?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近项目中用到好多用异步队列处理的后台任务，有些心得，记录一下。 下面引用百度百科的对队列的解释：  队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。简单点讲就是：先进先出  要实现一个队列，你可以根据自身服务器资源，可选数据库或者re">
+<meta name="keywords" content="PHP,Queue,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Redis实现PHP异步队列">
+<meta property="og:url" content="https://metmoon.com/2019/03/29/php-queue/index.html">
+<meta property="og:site_name" content="满江风雪">
+<meta property="og:description" content="最近项目中用到好多用异步队列处理的后台任务，有些心得，记录一下。 下面引用百度百科的对队列的解释：  队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。简单点讲就是：先进先出  要实现一个队列，你可以根据自身服务器资源，可选数据库或者re">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-09T04:18:40.335Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Redis实现PHP异步队列">
+<meta name="twitter:description" content="最近项目中用到好多用异步队列处理的后台任务，有些心得，记录一下。 下面引用百度百科的对队列的解释：  队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。简单点讲就是：先进先出  要实现一个队列，你可以根据自身服务器资源，可选数据库或者re">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://metmoon.com/2019/03/29/php-queue/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>用Redis实现PHP异步队列 | 满江风雪</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">满江风雪</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">时光漫漫，何妨扬眉淡笑，心境从容？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2019/03/29/php-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heropoo">
+      <meta itemprop="description" content="满江风雪，Heropoo的个人博客。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="满江风雪">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用Redis实现PHP异步队列
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-29 15:40:41" itemprop="dateCreated datePublished" datetime="2019-03-29T15:40:41+08:00">2019-03-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-09 12:18:40" itemprop="dateModified" datetime="2019-04-09T12:18:40+08:00">2019-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Queue/" itemprop="url" rel="index"><span itemprop="name">Queue</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Queue/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近项目中用到好多用异步队列处理的后台任务，有些心得，记录一下。</p>
+<p>下面引用百度百科的对<a href="https://baike.baidu.com/item/%E9%98%9F%E5%88%97/14580481" target="_blank" rel="noopener">队列</a>的解释：</p>
+<blockquote>
+<p>队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。<br>简单点讲就是：先进先出</p>
+</blockquote>
+<p>要实现一个队列，你可以根据自身服务器资源，可选数据库或者redis或者其他更高级的队列资源来实现。</p>
+<p>简单实现，大概代码是这样子的：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> $items = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从队列尾部插入数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">push</span><span class="params">($key, $value)</span></span>&#123;</span><br><span class="line">        <span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;items[$key]) <span class="keyword">or</span> <span class="keyword">$this</span>-&gt;items[$key] = [];</span><br><span class="line">        <span class="keyword">return</span> array_push(<span class="keyword">$this</span>-&gt;items[$key], $value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从队列头部取出数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     * return mixed $value 数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pop</span><span class="params">($key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;items[$key]) <span class="keyword">or</span> <span class="keyword">$this</span>-&gt;items[$key] = [];</span><br><span class="line">        <span class="keyword">return</span> array_shift(<span class="keyword">$this</span>-&gt;items[$key]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$queue = <span class="keyword">new</span> Queue();</span><br><span class="line"></span><br><span class="line">var_dump($queue-&gt;pop(<span class="string">'list_1'</span>));    <span class="comment">//输出 NULL</span></span><br><span class="line"></span><br><span class="line">$queue-&gt;push(<span class="string">'list_1'</span>, <span class="string">'1'</span>);</span><br><span class="line">$queue-&gt;push(<span class="string">'list_1'</span>, <span class="string">'2'</span>);</span><br><span class="line">$queue-&gt;push(<span class="string">'list_1'</span>, <span class="string">'3'</span>);</span><br><span class="line"></span><br><span class="line">var_dump($queue-&gt;pop(<span class="string">'list_1'</span>));    <span class="comment">//输出 string(1) "1"</span></span><br><span class="line">var_dump($queue-&gt;pop(<span class="string">'list_1'</span>));    <span class="comment">//输出 string(1) "2"</span></span><br></pre></td></tr></table></figure></p>
+<p>上面是一个直接存储在数组中的队列，只能在一个php生命周期中使用。我们可以把存储的方式改成别的，例如数据库或者redis什么的。</p>
+<p>这里我们使用redis，用到redis的有序列表（list）<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisQueue</span></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> $client;  <span class="comment">//这里使用了predis这个库连接redis</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(\Predis\Client $client)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;client = $client;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从队列尾部插入数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">push</span><span class="params">($key, $value)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;client-&gt;rpush($key, $value);  <span class="comment">//从右边入队</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从队列头部取出数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed $value 数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pop</span><span class="params">($key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;client-&gt;lpop($key);   <span class="comment">//从左边取</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你还是可以使用上面的例子测试下。</p>
+<p>当然了，还有很多情况下，我们的队列要延时出队，我们就要使用redis的另外两种数据类型：有序集合zset和哈希hlist</p>
+<p>最终代码如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisQueue</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>  $client;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(\Predis\Client $client)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;client = $client;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从队列尾部插入数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> int $delay 延迟多少秒</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed $value 数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">push</span><span class="params">($key, $value, $delay = null)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(is_null($delay))&#123;    <span class="comment">//不使用延迟的时候还是使用以前的rpush入队</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;client-&gt;rpush($key, $value);</span><br><span class="line">        &#125;</span><br><span class="line">        $time = time() + $delay;</span><br><span class="line">        <span class="keyword">if</span>($time &gt; time())&#123;     <span class="comment">//还未到该入队的时间时</span></span><br><span class="line">            $hash_key = md5(<span class="keyword">$this</span>-&gt;randString(<span class="number">16</span>).<span class="string">'_'</span>.time().<span class="string">'_'</span>.$value);       <span class="comment">//生成一个唯一key</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;client-&gt;transaction(<span class="function"><span class="keyword">function</span><span class="params">($tx)</span> <span class="title">use</span> <span class="params">($key, $time, $hash_key, $value)</span></span>&#123;   <span class="comment">//使用reids事务</span></span><br><span class="line">                <span class="comment">/** <span class="doctag">@var</span> \Predis\Client $tx */</span></span><br><span class="line">                $tx-&gt;zadd($key.<span class="string">':zset'</span>, [   </span><br><span class="line">                    $hash_key=&gt;$time    <span class="comment">//这里以生成的唯一key做 对象member 以time做分数score</span></span><br><span class="line">                ]);</span><br><span class="line">                $tx-&gt;hset($key.<span class="string">':hlist'</span>, $hash_key, $value);    <span class="comment">//并且保存唯一key和值的映射</span></span><br><span class="line">                $tx-&gt;expire($key.<span class="string">':zset'</span>, <span class="number">7</span>*<span class="number">86400</span>);     <span class="comment">//有效期7天</span></span><br><span class="line">                $tx-&gt;expire($key.<span class="string">':hlist'</span>, <span class="number">7</span>*<span class="number">86400</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取出数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $key 对列名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">receive</span><span class="params">($key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;getLock($key.<span class="string">':lock'</span>))&#123;   <span class="comment">//使用锁保证线程安全</span></span><br><span class="line">            $keys = <span class="keyword">$this</span>-&gt;client-&gt;zrangebyscore($key.<span class="string">':zset'</span>,<span class="number">0</span>, time());   <span class="comment">//按当前时间取分数小于等于当前时间的集合元素</span></span><br><span class="line">            <span class="keyword">if</span>(!<span class="keyword">empty</span>($keys)) &#123;</span><br><span class="line">                $message_datas = <span class="keyword">$this</span>-&gt;client-&gt;hmget($key.<span class="string">':hlist'</span>, $keys);    <span class="comment">//通过这些key拿到值</span></span><br><span class="line">                <span class="keyword">$this</span>-&gt;client-&gt;transaction(<span class="function"><span class="keyword">function</span><span class="params">($tx)</span> <span class="title">use</span> <span class="params">($key, $keys, $message_datas)</span></span>&#123; <span class="comment">//继续使用redis事务保证数据完整</span></span><br><span class="line">                    <span class="comment">/** <span class="doctag">@var</span> \Predis\Client $tx */</span></span><br><span class="line">                    <span class="keyword">foreach</span> ($message_datas <span class="keyword">as</span> $i =&gt; $message_data)&#123;</span><br><span class="line">                        $tx-&gt;rpush($key, $message_data); <span class="comment">//这时候才是真正的入队</span></span><br><span class="line">                        $hash_key = $keys[$i];</span><br><span class="line">                        $tx-&gt;hdel($key.<span class="string">':hlist'</span>, $hash_key);    <span class="comment">//从hash列表删除元素</span></span><br><span class="line">                        $tx-&gt;zrem($key.<span class="string">':zset'</span>, $hash_key); <span class="comment">//从集合删除元素</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;releaseLock($key.<span class="string">':lock'</span>);<span class="comment">//释放锁</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;client-&gt;lpop($key); <span class="comment">//出队</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getLock</span><span class="params">($key)</span></span>&#123;</span><br><span class="line">        $ret = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;client-&gt;incr($key) != <span class="number">1</span>)&#123;</span><br><span class="line">            $ret = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $ttl = <span class="keyword">$this</span>-&gt;client-&gt;ttl($key);</span><br><span class="line">        <span class="keyword">if</span>($ttl == <span class="number">-1</span>) &#123;    <span class="comment">//forever</span></span><br><span class="line">            <span class="keyword">$this</span>-&gt;client-&gt;expire($key, <span class="number">60</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">releaseLock</span><span class="params">($key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;client-&gt;del($key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">randString</span><span class="params">($length)</span></span>&#123;</span><br><span class="line">        $str = <span class="string">''</span>;</span><br><span class="line">        $strPol = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"</span>;</span><br><span class="line">        $max = strlen($strPol) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; $length; $i++) &#123;</span><br><span class="line">            $str .= $strPol[mt_rand(<span class="number">0</span>, $max)];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主要看上面入队（push）和出队（receive）方法，我代码写了详细的注释。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/Queue/" rel="tag"># Queue</a>
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/alpinelinux/" rel="next" title="容器的宠儿AlpineLinux的基本使用">
+                <i class="fa fa-chevron-left"></i> 容器的宠儿AlpineLinux的基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/09/elasticsearch/" rel="prev" title="玩转ElasticSearch全文搜索">
+                玩转ElasticSearch全文搜索 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heropoo</p>
+              <p class="site-description motion-element" itemprop="description">满江风雪，Heropoo的个人博客。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heropoo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

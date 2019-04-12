@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/assets/images/favicon.png?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="今天在项目中用到了百度地图，感觉也是个基本用法的常用示例，在这和大家分享下😁 效果如图：  先说说需求吧：   打开地图，自动定位到当前所在位置，并在地图上添加一个可拖拽的标注（marker）  用户可以拖拽标注选择地图上的位置，同时标注的经纬度显示在input框中（其实这个是为了看效果，一般都用隐藏域），标注的当前地址显示在地址的输入框中 用户输入地址之后自动调用百度地图的API，找到输入地址">
+<meta name="keywords" content="JavaScript,百度地图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个百度地图的常用使用示例">
+<meta property="og:url" content="https://metmoon.com/2017/09/07/一个百度地图的常用使用示例/index.html">
+<meta property="og:site_name" content="满江风雪">
+<meta property="og:description" content="今天在项目中用到了百度地图，感觉也是个基本用法的常用示例，在这和大家分享下😁 效果如图：  先说说需求吧：   打开地图，自动定位到当前所在位置，并在地图上添加一个可拖拽的标注（marker）  用户可以拖拽标注选择地图上的位置，同时标注的经纬度显示在input框中（其实这个是为了看效果，一般都用隐藏域），标注的当前地址显示在地址的输入框中 用户输入地址之后自动调用百度地图的API，找到输入地址">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://metmoon.com/assets/images/20170907200341.png">
+<meta property="og:updated_time" content="2018-01-18T05:18:40.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个百度地图的常用使用示例">
+<meta name="twitter:description" content="今天在项目中用到了百度地图，感觉也是个基本用法的常用示例，在这和大家分享下😁 效果如图：  先说说需求吧：   打开地图，自动定位到当前所在位置，并在地图上添加一个可拖拽的标注（marker）  用户可以拖拽标注选择地图上的位置，同时标注的经纬度显示在input框中（其实这个是为了看效果，一般都用隐藏域），标注的当前地址显示在地址的输入框中 用户输入地址之后自动调用百度地图的API，找到输入地址">
+<meta name="twitter:image" content="https://metmoon.com/assets/images/20170907200341.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://metmoon.com/2017/09/07/一个百度地图的常用使用示例/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>一个百度地图的常用使用示例 | 满江风雪</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">满江风雪</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">时光漫漫，何妨扬眉淡笑，心境从容？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2017/09/07/一个百度地图的常用使用示例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heropoo">
+      <meta itemprop="description" content="满江风雪，Heropoo的个人博客。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="满江风雪">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个百度地图的常用使用示例
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-07 20:07:01" itemprop="dateCreated datePublished" datetime="2017-09-07T20:07:01+08:00">2017-09-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-01-18 13:18:40" itemprop="dateModified" datetime="2018-01-18T13:18:40+08:00">2018-01-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天在项目中用到了百度地图，感觉也是个基本用法的常用示例，在这和大家分享下😁</p>
+<p>效果如图：</p>
+<p><img src="/assets/images/20170907200341.png" alt="example-pic"></p>
+<p>先说说需求吧：</p>
+<blockquote>
+<ol>
+<li>打开地图，自动<strong>定位到当前所在位置</strong>，并在地图上添加一个<strong>可拖拽</strong>的标注（marker） </li>
+<li>用户可以拖拽标注选择地图上的位置，同时标注的<strong>经纬度</strong>显示在input框中（其实这个是为了看效果，一般都用隐藏域），标注的<strong>当前地址</strong>显示在地址的输入框中</li>
+<li>用户输入地址之后自动调用百度地图的API，找到输入地址对应到地图的点并移动标注到此。当然也包括显示经纬度。</li>
+</ol>
+</blockquote>
+<p>HTML页面部分是这样子，使用bootstrap3的样式<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="form"&gt;</span><br><span class="line">    &lt;div class="form-group"&gt;</span><br><span class="line">        &lt;label class="col-lg-2 col-sm-2 control-label"&gt;地址&lt;/label&gt;</span><br><span class="line">        &lt;div class="col-lg-10"&gt;</span><br><span class="line">            &lt;input type="text" class="form-control pwd-input" name="address" id="address" value="&lt;?php echo !empty($info['address']) ? $info['address'] : '';?&gt;" placeholder="请输入地址"&gt;</span><br><span class="line">            &lt;p class="help-block"&gt;&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class="form-group"&gt;</span><br><span class="line">        &lt;label class="col-lg-2 col-sm-2 control-label"&gt;选择位置&lt;/label&gt;</span><br><span class="line">        &lt;div class="col-lg-10"&gt;</span><br><span class="line">            &lt;div class="clearfix"&gt;</span><br><span class="line">                &lt;label class="control-label pull-left" style="margin-right: 5px;"&gt;经度&lt;/label&gt;&lt;input type="text" name="lng" id="lng" value="&lt;?php echo !empty($info['lng']) ? $info['lng'] : '';?&gt;" class="form-control pull-left" style="width: 120px;margin-right: 15px;"&gt;</span><br><span class="line">                &lt;label class="control-label pull-left" style="margin-right: 5px;"&gt;维度&lt;/label&gt;&lt;input type="text" name="lat" id="lat" value="&lt;?php echo !empty($info['lat']) ? $info['lat'] : '';?&gt;" class="form-control pull-left" style="width: 120px;"&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;br&gt;</span><br><span class="line">            &lt;div id=<span class="string">"l-map"</span> style=<span class="string">"width: 600px;height: 400px;"</span>&gt;&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>重点是js：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//经纬度</span></span><br><span class="line"><span class="keyword">var</span> lat = <span class="string">'&lt;?php echo !empty($info['</span>lat<span class="string">']) ? $info['</span>lat<span class="string">'] : '</span><span class="string">';?&gt;'</span>;</span><br><span class="line"><span class="keyword">var</span> lng = <span class="string">'&lt;?php echo !empty($info['</span>lng<span class="string">']) ? $info['</span>lng<span class="string">'] : '</span><span class="string">';?&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 百度地图API功能</span></span><br><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> BMap.Map(<span class="string">"l-map"</span>);    <span class="comment">//new个地图出来</span></span><br><span class="line"><span class="keyword">var</span> point;</span><br><span class="line"><span class="keyword">var</span> marker;</span><br><span class="line"><span class="keyword">if</span>(lat &amp;&amp; lng)&#123;</span><br><span class="line">    point = <span class="keyword">new</span> BMap.Point(lng,lat);    <span class="comment">//new个点</span></span><br><span class="line">    marker = <span class="keyword">new</span> BMap.Marker(point);    <span class="comment">//new个标注</span></span><br><span class="line">    marker.enableDragging();           <span class="comment">// 可拖拽</span></span><br><span class="line">    map.addOverlay(marker);             <span class="comment">// 将标注添加到地图中</span></span><br><span class="line">    getPosition(marker);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    point = <span class="keyword">new</span> BMap.Point(<span class="number">107.475903</span>, <span class="number">31.214995</span>);</span><br><span class="line">    <span class="comment">//map.addControl(new BMap.GeolocationControl());  //定位</span></span><br><span class="line">    map.addControl(<span class="keyword">new</span> BMap.NavigationControl());  </span><br><span class="line">    <span class="keyword">var</span> geolocation = <span class="keyword">new</span> BMap.Geolocation();   <span class="comment">//获取当前位置</span></span><br><span class="line">    geolocation.getCurrentPosition(<span class="function"><span class="keyword">function</span>(<span class="params">r</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getStatus() == BMAP_STATUS_SUCCESS)&#123;</span><br><span class="line">            marker = <span class="keyword">new</span> BMap.Marker(r.point);</span><br><span class="line">            marker.enableDragging();           <span class="comment">// 可拖拽</span></span><br><span class="line">            map.addOverlay(marker);</span><br><span class="line">            map.panTo(r.point);</span><br><span class="line">            <span class="comment">//console.log('您的位置：'+r.point.lng+','+r.point.lat);</span></span><br><span class="line">            getPosition(marker);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            marker = <span class="keyword">new</span> BMap.Marker(point);</span><br><span class="line">            marker.enableDragging();           <span class="comment">// 可拖拽</span></span><br><span class="line">            map.addOverlay(marker);             <span class="comment">// 将标注添加到地图中</span></span><br><span class="line">            getPosition(marker);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,&#123;<span class="attr">enableHighAccuracy</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">map.centerAndZoom(point, <span class="number">12</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gc = <span class="keyword">new</span> BMap.Geocoder();<span class="comment">//地址解析类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//地址输入框失去焦点时搜索输入的位置</span></span><br><span class="line">$(<span class="string">"#address"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> address = $(<span class="keyword">this</span>).val();</span><br><span class="line">    parseAddress(address, <span class="string">'上海市'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//解析地址</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseAddress</span>(<span class="params">address, city</span>)</span>&#123;</span><br><span class="line">    gc.getPoint(address, <span class="function"><span class="keyword">function</span>(<span class="params">point</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(point);</span><br><span class="line">        <span class="keyword">if</span>(point)&#123;</span><br><span class="line">            <span class="comment">//放大地图 之前zoom是12</span></span><br><span class="line">            map.setZoom(<span class="number">15</span>);</span><br><span class="line">            <span class="comment">// console.log(marker);</span></span><br><span class="line">            </span><br><span class="line">            $(<span class="string">"#lng"</span>).val(point.lng);</span><br><span class="line">            $(<span class="string">"#lat"</span>).val(point.lat);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//接下来的操作想想应该时移动标注到新的位置，但是好像api没这中操作，只有先把标注从地图上取下来 换个位置再放上去</span></span><br><span class="line">            <span class="keyword">var</span> allOverlay = map.getOverlays(); <span class="comment">//获取地图覆盖物</span></span><br><span class="line">            <span class="comment">//console.log(allOverlay);</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;allOverlay.length;i++) &#123;</span><br><span class="line">                <span class="keyword">var</span> pos = allOverlay[i].getPosition();</span><br><span class="line">                <span class="comment">//删除指定经度的覆盖物</span></span><br><span class="line">                <span class="keyword">if</span> (pos &amp;&amp; pos.lng == point.lng &amp;&amp; pos.lat == point.lat) &#123;</span><br><span class="line">                    map.removeOverlay(allOverlay[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//重设标注的位置</span></span><br><span class="line">            marker.setPosition(point);</span><br><span class="line">            <span class="comment">//把标注重新放到地图上</span></span><br><span class="line">            map.addOverlay(marker);</span><br><span class="line">            <span class="comment">//移动地图到新位置</span></span><br><span class="line">            map.panTo(point);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, city);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPosition</span>(<span class="params">marker</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//添加标记点击监听</span></span><br><span class="line">    marker.addEventListener(<span class="string">"mouseup"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">        gc.getLocation(e.point, <span class="function"><span class="keyword">function</span>(<span class="params">rs</span>)</span>&#123;</span><br><span class="line">            <span class="comment">//console.log("地图中心点变更为：" + rs.lng + ", " + rs.lat);</span></span><br><span class="line">            <span class="built_in">console</span>.log(rs.point.lat + <span class="string">','</span> + rs.point.lng);</span><br><span class="line">            $(<span class="string">"#lng"</span>).val(rs.point.lng);</span><br><span class="line">            $(<span class="string">"#lat"</span>).val(rs.point.lat);</span><br><span class="line">            $(<span class="string">"#address"</span>).val(rs.address);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实基本的操作还挺顺利的，只是在一个地方碰到了坑：<strong>移动标注</strong></p>
+<p>怎么移动呢？翻了百度API没找到，最后也是通过搜素引擎查查查，才找到思路。</p>
+<p>原来标注添加标注(marker)添加到地图上是属于覆盖物(Overlay)。想移动就换个思路，把这个覆盖物移除，然后重新给标注赋予新的位置属性，然后重新添加到地图上。</p>
+<p>(。・∀・)ノ 这下搞定啦~ 赶紧关机下班，庆祝一下 🎉</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/百度地图/" rel="tag"># 百度地图</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/06/九月，加油/" rel="next" title="九月，加油！">
+                <i class="fa fa-chevron-left"></i> 九月，加油！
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/09/自己实现AJAX异步上传文件/" rel="prev" title="自己实现AJAX异步上传文件">
+                自己实现AJAX异步上传文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heropoo</p>
+              <p class="site-description motion-element" itemprop="description">满江风雪，Heropoo的个人博客。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heropoo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

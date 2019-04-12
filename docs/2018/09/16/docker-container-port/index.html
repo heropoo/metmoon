@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/assets/images/favicon.png?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。 参考：  怎么给运行中的docker容器添加新的端口 修改docker容器端口映射的方法 iptable规则查看，添加，删除和修改  方法1 修改iptables端口映射 docker的端口映射并不是在docker技术中实现的，而是通过宿主机的iptables来实现。通过控制网桥来做端口映射，类似路由器中设置路">
+<meta name="keywords" content="虚拟化,容器,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker容器动态添加端口">
+<meta property="og:url" content="https://metmoon.com/2018/09/16/docker-container-port/index.html">
+<meta property="og:site_name" content="满江风雪">
+<meta property="og:description" content="突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。 参考：  怎么给运行中的docker容器添加新的端口 修改docker容器端口映射的方法 iptable规则查看，添加，删除和修改  方法1 修改iptables端口映射 docker的端口映射并不是在docker技术中实现的，而是通过宿主机的iptables来实现。通过控制网桥来做端口映射，类似路由器中设置路">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-09T04:18:40.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker容器动态添加端口">
+<meta name="twitter:description" content="突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。 参考：  怎么给运行中的docker容器添加新的端口 修改docker容器端口映射的方法 iptable规则查看，添加，删除和修改  方法1 修改iptables端口映射 docker的端口映射并不是在docker技术中实现的，而是通过宿主机的iptables来实现。通过控制网桥来做端口映射，类似路由器中设置路">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://metmoon.com/2018/09/16/docker-container-port/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Docker容器动态添加端口 | 满江风雪</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">满江风雪</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">时光漫漫，何妨扬眉淡笑，心境从容？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://metmoon.com/2018/09/16/docker-container-port/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heropoo">
+      <meta itemprop="description" content="满江风雪，Heropoo的个人博客。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="满江风雪">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker容器动态添加端口
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-16 23:40:33" itemprop="dateCreated datePublished" datetime="2018-09-16T23:40:33+08:00">2018-09-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-09 12:18:40" itemprop="dateModified" datetime="2019-04-09T12:18:40+08:00">2019-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/zuoshenglo/article/details/78402772" target="_blank" rel="noopener">怎么给运行中的docker容器添加新的端口</a></li>
+<li><a href="https://blog.csdn.net/wesleyflagon/article/details/78961990" target="_blank" rel="noopener">修改docker容器端口映射的方法</a></li>
+<li><a href="https://blog.csdn.net/xfks55/article/details/50148389" target="_blank" rel="noopener">iptable规则查看，添加，删除和修改</a></li>
+</ul>
+<h2 id="方法1-修改iptables端口映射"><a href="#方法1-修改iptables端口映射" class="headerlink" title="方法1 修改iptables端口映射"></a>方法1 修改iptables端口映射</h2><blockquote>
+<p>docker的端口映射并不是在docker技术中实现的，而是通过宿主机的iptables来实现。通过控制网桥来做端口映射，类似路由器中设置路由端口映射。</p>
+</blockquote>
+<p>比如我们有一个容器的80端口映射到主机的8080端口，先查看iptables到底设置了什么规则：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -vnL</span><br></pre></td></tr></table></figure></p>
+<p>在结果中有一条：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Chain DOCKER</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">RETURN     all  --  0.0.0.0/0            0.0.0.0/0</span><br><span class="line">DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:172.17.0.3:80</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到docker创建了一个名为DOKCER的自定义的链条Chain。而我开放80端口的容器的ip是172.17.0.3</p>
+<p>也可以通过inspect命令查看容器ip<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerId |grep IPAddress</span><br></pre></td></tr></table></figure></p>
+<p>我们想再增加一个端口映射，比如<code>8081-&gt;81</code>，就在这个链条是再加一条规则：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -A  DOCKER -p tcp --dport 8081 -j DNAT --to-destination 172.17.0.3:81</span><br></pre></td></tr></table></figure></p>
+<p>如果加错了或者想修改：</p>
+<p>先显示行号查看<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -vnL DOCKER --line-number</span><br></pre></td></tr></table></figure></p>
+<p>删除规则3<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -D DOCKER 3</span><br></pre></td></tr></table></figure></p>
+<h2 id="方法2-修改容器配置文件"><a href="#方法2-修改容器配置文件" class="headerlink" title="方法2 修改容器配置文件"></a>方法2 修改容器配置文件</h2><p>容器的配置文件<code>/var/lib/docker/containers/[containerId]</code>目录下，<code>hostconfig.json</code>和<code>config.v2.json</code><br>修改好之后，重启容器服务。</p>
+<h2 id="方法3-把运行中的容器生成新的镜像，然后运行新的镜像"><a href="#方法3-把运行中的容器生成新的镜像，然后运行新的镜像" class="headerlink" title="方法3 把运行中的容器生成新的镜像，然后运行新的镜像"></a>方法3 把运行中的容器生成新的镜像，然后运行新的镜像</h2><ol>
+<li><p>提交一个运行中的容器为镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit containerid heropoo/example</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行<code>heropoo/example</code>镜像并添加8080映射容器80端口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8000:80  heropoo/example /bin/sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>试试吧~😎</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
+          
+            <a href="/tags/容器/" rel="tag"># 容器</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/15/bing-site-search/" rel="next" title="使用Bing搜索引擎做站内搜索">
+                <i class="fa fa-chevron-left"></i> 使用Bing搜索引擎做站内搜索
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/18/盗将行/" rel="prev" title="盗将行(转)">
+                盗将行(转) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heropoo</p>
+              <p class="site-description motion-element" itemprop="description">满江风雪，Heropoo的个人博客。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法1-修改iptables端口映射"><span class="nav-number">1.</span> <span class="nav-text">方法1 修改iptables端口映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法2-修改容器配置文件"><span class="nav-number">2.</span> <span class="nav-text">方法2 修改容器配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法3-把运行中的容器生成新的镜像，然后运行新的镜像"><span class="nav-number">3.</span> <span class="nav-text">方法3 把运行中的容器生成新的镜像，然后运行新的镜像</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heropoo</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
