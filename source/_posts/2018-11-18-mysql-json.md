@@ -147,7 +147,7 @@ mysql> select * from test_user where id=2;
 
 使用`JSON_SET()`插入新值，并覆盖已经存在的值
 ```
-mysql> UPDATE test_user SET info = JSON_INSERT(info, '$.sex', 0, '$.nick_name', '小张') where id=3;
+mysql> UPDATE test_user SET info = JSON_SET(info, '$.sex', 0, '$.nick_name', '小张') where id=3;
 ```
 看下结果
 ```

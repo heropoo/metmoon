@@ -49,7 +49,7 @@ sudo iptables -t nat -A  DOCKER -p tcp --dport 8081 -j DNAT --to-destination 172
 
 先显示行号查看
 ```sh
-sudo iptables -t nat -vnL DOCKER
+sudo iptables -t nat -vnL DOCKER --line-number
 ```
 
 删除规则3
