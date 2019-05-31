@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://metmoon.com/"/>
-  <updated>2019-05-23T06:34:20.293Z</updated>
+  <updated>2019-05-29T05:40:00.181Z</updated>
   <id>http://metmoon.com/</id>
   
   <author>
@@ -15,6 +15,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux软连接和硬链接</title>
+    <link href="http://metmoon.com/2019/05/29/2019-05-29-linux-symbolic-link/"/>
+    <id>http://metmoon.com/2019/05/29/2019-05-29-linux-symbolic-link/</id>
+    <published>2019-05-29T03:15:08.000Z</published>
+    <updated>2019-05-29T05:40:00.181Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Linux软连接和硬链接，一个经常傻傻分不清楚的概念，现在我们仔细理一理。&lt;/p&gt;
+&lt;h3 id=&quot;1-Linux链接概念&quot;&gt;&lt;a href=&quot;#1-Linux链接概念&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://metmoon.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://metmoon.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在网页上使用MathJax渲染LaTex格式数学公式</title>
+    <link href="http://metmoon.com/2019/05/27/2019-05-27-math-jax/"/>
+    <id>http://metmoon.com/2019/05/27/2019-05-27-math-jax/</id>
+    <published>2019-05-27T07:12:58.000Z</published>
+    <updated>2019-05-27T07:42:36.496Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近在看一些机器学习算法的东西，用到好多数学公式，发现有个很强大的js库可以完美的渲染LaTex格式数学公式，值得推荐下。&lt;/p&gt;
+&lt;h2 id=&quot;使用方法：&quot;&gt;&lt;a href=&quot;#使用方法：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="数学" scheme="http://metmoon.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="JavaScript" scheme="http://metmoon.com/categories/%E6%95%B0%E5%AD%A6/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://metmoon.com/tags/JavaScript/"/>
+    
+      <category term="数学" scheme="http://metmoon.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="MathJax" scheme="http://metmoon.com/tags/MathJax/"/>
+    
+      <category term="LaTex" scheme="http://metmoon.com/tags/LaTex/"/>
+    
+  </entry>
   
   <entry>
     <title>关于大文件上传</title>
@@ -549,61 +611,6 @@
     
     
       <category term="Git" scheme="http://metmoon.com/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Rust更换国内源</title>
-    <link href="http://metmoon.com/2018/01/24/2018-01-24-change-rust-mirrors/"/>
-    <id>http://metmoon.com/2018/01/24/2018-01-24-change-rust-mirrors/</id>
-    <published>2018-01-24T15:25:36.000Z</published>
-    <updated>2019-05-23T06:34:20.287Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;今天学cargo这节，&lt;code&gt;cargo build&lt;/code&gt;时安装外部依赖真的慢啊。果断找国内源,果断又是ustc(中科大, emmm以前应该努力一点考中科大~(￣▽￣)~*)&lt;/p&gt;
-&lt;p&gt;教程开始：&lt;/p&gt;
-&lt;p&gt;设置两个环境变量&lt;br&gt;&lt;figure
-        
-      
-    
-    </summary>
-    
-      <category term="Rust" scheme="http://metmoon.com/categories/Rust/"/>
-    
-    
-      <category term="Rust" scheme="http://metmoon.com/tags/Rust/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如果编程语言是一种武器(转自互联网)</title>
-    <link href="http://metmoon.com/2018/01/23/2018-01-23-If-the-programming-language-is-a-weapon/"/>
-    <id>http://metmoon.com/2018/01/23/2018-01-23-If-the-programming-language-is-a-weapon/</id>
-    <published>2018-01-23T06:58:10.000Z</published>
-    <updated>2019-05-23T06:34:20.287Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;对程序员来说，编程语言就是武器，但有的武器好用，有的武器不好用，有的武器甚至会杀了自己&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/images/uuaMZv.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="互联网" scheme="http://metmoon.com/categories/%E4%BA%92%E8%81%94%E7%BD%91/"/>
-    
-    
-      <category term="互联网" scheme="http://metmoon.com/tags/%E4%BA%92%E8%81%94%E7%BD%91/"/>
     
   </entry>
   
