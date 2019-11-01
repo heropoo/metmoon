@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://metmoon.com">
   <title>Docker基础命令 | 满江风雪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表1docker images 获取一个新的镜像1docker pull base/archlinux 删除镜像1docker rmi imageID 查找镜像1docker search php 构建12cd /path/to/Dockerfiledocker build -t imageName ./ 容器1docke">
+  <meta name="description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表 1docker images  获取一个新的镜像 1docker pull base/archlinux  删除镜像 1docker rmi imageID  查找镜像 1docker search php  构建 12cd /path/to/Dockerfiledocker build -t imageName ./">
 <meta name="keywords" content="虚拟化,容器,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker基础命令">
 <meta property="og:url" content="http://metmoon.com/2017/10/26/2017-10-26-Docker基础命令/index.html">
 <meta property="og:site_name" content="满江风雪">
-<meta property="og:description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表1docker images 获取一个新的镜像1docker pull base/archlinux 删除镜像1docker rmi imageID 查找镜像1docker search php 构建12cd /path/to/Dockerfiledocker build -t imageName ./ 容器1docke">
+<meta property="og:description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表 1docker images  获取一个新的镜像 1docker pull base/archlinux  删除镜像 1docker rmi imageID  查找镜像 1docker search php  构建 12cd /path/to/Dockerfiledocker build -t imageName ./">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.286Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker基础命令">
-<meta name="twitter:description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表1docker images 获取一个新的镜像1docker pull base/archlinux 删除镜像1docker rmi imageID 查找镜像1docker search php 构建12cd /path/to/Dockerfiledocker build -t imageName ./ 容器1docke">
+<meta name="twitter:description" content="最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁 镜像列出镜像列表 1docker images  获取一个新的镜像 1docker pull base/archlinux  删除镜像 1docker rmi imageID  查找镜像 1docker search php  构建 12cd /path/to/Dockerfiledocker build -t imageName ./">
   
     <link rel="alternative" href="/atom.xml" title="满江风雪" type="application/atom+xml">
   
@@ -186,27 +186,57 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁</p>
-<h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><p>列出镜像列表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></p>
-<p>获取一个新的镜像<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull base/archlinux</span><br></pre></td></tr></table></figure></p>
-<p>删除镜像<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi imageID</span><br></pre></td></tr></table></figure></p>
-<p>查找镜像<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search php</span><br></pre></td></tr></table></figure></p>
-<p>构建<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /path/to/Dockerfile</span><br><span class="line">docker build -t imageName ./</span><br></pre></td></tr></table></figure></p>
-<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  base/archlinux /bin/echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
-<p>运行交互式的容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure></p>
-<pre><code>* -t:在新容器内指定一个伪终端或终端。
-* -i:允许你对容器内的标准输入 (STDIN) 进行交互。
-</code></pre><p>分配端口<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -P php7.0-app    <span class="comment">#自动分配</span></span><br><span class="line">docker run -p 5000:80       <span class="comment">#容器内部的 80 端口映射到主机的 5000 端口上</span></span><br></pre></td></tr></table></figure></p>
-<p>查看正在运行的容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker container ls <span class="comment">#或者</span></span><br></pre></td></tr></table></figure></p>
-<p>查看端口<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>查看日志<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs </span><br><span class="line">docker -f containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>查看进程<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>查看Docker的底层信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>停止容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>启动容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
-<p>正在运行的容器，我们可以使用 <code>docker restart</code> 命令来重启</p>
-<p>查看最后一次创建的容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure></p>
-<p>移除容器<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm containerID/contaienrName</span><br></pre></td></tr></table></figure></p>
+<h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><p>列出镜像列表</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
+<p>获取一个新的镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull base/archlinux</span><br></pre></td></tr></table></figure>
+
+<p>删除镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi imageID</span><br></pre></td></tr></table></figure>
+
+<p>查找镜像</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search php</span><br></pre></td></tr></table></figure>
+
+<p>构建</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /path/to/Dockerfile</span><br><span class="line">docker build -t imageName ./</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  base/archlinux /bin/echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行交互式的容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure>
+
+<pre><code>* -t:在新容器内指定一个伪终端或终端。
+* -i:允许你对容器内的标准输入 (STDIN) 进行交互。</code></pre><p>分配端口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -P php7.0-app    <span class="comment">#自动分配</span></span><br><span class="line">docker run -p 5000:80       <span class="comment">#容器内部的 80 端口映射到主机的 5000 端口上</span></span><br></pre></td></tr></table></figure>
+
+<p>查看正在运行的容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker container ls <span class="comment">#或者</span></span><br></pre></td></tr></table></figure>
+
+<p>查看端口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>查看日志</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs </span><br><span class="line">docker -f containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>查看进程</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>查看Docker的底层信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>停止容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>启动容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start containerID/contaienrName</span><br></pre></td></tr></table></figure>
+
+<p>正在运行的容器，我们可以使用 <code>docker restart</code> 命令来重启</p>
+<p>查看最后一次创建的容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure>
+
+<p>移除容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm containerID/contaienrName</span><br></pre></td></tr></table></figure>
       
 
       
@@ -502,6 +532,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -511,14 +549,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,19 +632,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,7 +652,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,7 +676,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

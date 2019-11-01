@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://metmoon.com/"/>
-  <updated>2019-05-29T05:40:00.181Z</updated>
+  <updated>2019-09-16T03:07:46.735Z</updated>
   <id>http://metmoon.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://metmoon.com/2019/05/29/2019-05-29-linux-symbolic-link/"/>
     <id>http://metmoon.com/2019/05/29/2019-05-29-linux-symbolic-link/</id>
     <published>2019-05-29T03:15:08.000Z</published>
-    <updated>2019-05-29T05:40:00.181Z</updated>
+    <updated>2019-09-16T03:07:46.735Z</updated>
     
     <summary type="html">
     
@@ -48,7 +48,7 @@
     <link href="http://metmoon.com/2019/05/27/2019-05-27-math-jax/"/>
     <id>http://metmoon.com/2019/05/27/2019-05-27-math-jax/</id>
     <published>2019-05-27T07:12:58.000Z</published>
-    <updated>2019-05-27T07:42:36.496Z</updated>
+    <updated>2019-11-01T02:40:27.313Z</updated>
     
     <summary type="html">
     
@@ -56,8 +56,7 @@
       
         
         
-          &lt;p&gt;最近在看一些机器学习算法的东西，用到好多数学公式，发现有个很强大的js库可以完美的渲染LaTex格式数学公式，值得推荐下。&lt;/p&gt;
-&lt;h2 id=&quot;使用方法：&quot;&gt;&lt;a href=&quot;#使用方法：&quot; class=&quot;headerlink&quot;
+          &lt;script type=&quot;text/javascript&quot;
         
       
     
@@ -83,7 +82,7 @@
     <link href="http://metmoon.com/2019/05/23/2019-05-23-upload-large-file/"/>
     <id>http://metmoon.com/2019/05/23/2019-05-23-upload-large-file/</id>
     <published>2019-05-23T02:06:28.000Z</published>
-    <updated>2019-05-23T06:34:20.293Z</updated>
+    <updated>2019-09-16T03:07:46.735Z</updated>
     
     <summary type="html">
     
@@ -118,7 +117,7 @@
     <link href="http://metmoon.com/2019/05/22/2019-05-22-nginx-web-conf/"/>
     <id>http://metmoon.com/2019/05/22/2019-05-22-nginx-web-conf/</id>
     <published>2019-05-22T10:35:30.000Z</published>
-    <updated>2019-05-23T06:34:20.292Z</updated>
+    <updated>2019-09-16T03:07:46.735Z</updated>
     
     <summary type="html">
     
@@ -145,7 +144,7 @@
     <link href="http://metmoon.com/2019/04/09/2019-04-09-elasticsearch/"/>
     <id>http://metmoon.com/2019/04/09/2019-04-09-elasticsearch/</id>
     <published>2019-04-09T04:19:42.000Z</published>
-    <updated>2019-05-23T06:34:20.292Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -178,7 +177,7 @@
     <link href="http://metmoon.com/2019/03/29/2019-03-29-php-queue/"/>
     <id>http://metmoon.com/2019/03/29/2019-03-29-php-queue/</id>
     <published>2019-03-29T07:40:41.000Z</published>
-    <updated>2019-05-23T06:34:20.291Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -211,7 +210,7 @@
     <link href="http://metmoon.com/2019/01/17/2019-01-17-alpinelinux/"/>
     <id>http://metmoon.com/2019/01/17/2019-01-17-alpinelinux/</id>
     <published>2019-01-17T06:48:41.000Z</published>
-    <updated>2019-05-23T06:34:20.291Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -239,7 +238,7 @@
     <link href="http://metmoon.com/2019/01/02/2019-01-02-php-pcntl/"/>
     <id>http://metmoon.com/2019/01/02/2019-01-02-php-pcntl/</id>
     <published>2019-01-02T02:48:08.000Z</published>
-    <updated>2019-05-23T06:34:20.291Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -268,7 +267,7 @@
     <link href="http://metmoon.com/2018/12/29/2018-12-29-php-composer-version/"/>
     <id>http://metmoon.com/2018/12/29/2018-12-29-php-composer-version/</id>
     <published>2018-12-29T07:14:57.000Z</published>
-    <updated>2019-05-23T06:34:20.291Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -296,7 +295,7 @@
     <link href="http://metmoon.com/2018/11/19/2018-11-19-get-ssh-public-key-from-private-key/"/>
     <id>http://metmoon.com/2018/11/19/2018-11-19-get-ssh-public-key-from-private-key/</id>
     <published>2018-11-19T15:59:52.000Z</published>
-    <updated>2019-05-23T06:34:20.290Z</updated>
+    <updated>2019-09-16T03:07:46.734Z</updated>
     
     <summary type="html">
     
@@ -305,7 +304,8 @@
         
         
           &lt;p&gt;从SSH私钥中重新生成公钥&lt;/p&gt;
-&lt;p&gt;假如我们的私钥是&lt;code&gt;id_rsa&lt;/code&gt;&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
+&lt;p&gt;假如我们的私钥是&lt;code&gt;id_rsa&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
         
       
     
@@ -323,7 +323,7 @@
     <link href="http://metmoon.com/2018/11/18/2018-11-18-mysql-json/"/>
     <id>http://metmoon.com/2018/11/18/2018-11-18-mysql-json/</id>
     <published>2018-11-18T10:11:06.000Z</published>
-    <updated>2019-05-23T06:34:20.290Z</updated>
+    <updated>2019-09-16T03:07:46.733Z</updated>
     
     <summary type="html">
     
@@ -352,7 +352,7 @@
     <link href="http://metmoon.com/2018/11/02/2018-11-02-jupyter/"/>
     <id>http://metmoon.com/2018/11/02/2018-11-02-jupyter/</id>
     <published>2018-11-02T11:07:09.000Z</published>
-    <updated>2019-05-23T06:34:20.290Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -361,7 +361,8 @@
         
         
           &lt;p&gt;安装Jupyter笔记本，做个笔记&lt;/p&gt;
-&lt;p&gt;通过pip安装&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
+&lt;p&gt;通过pip安装&lt;/p&gt;
+&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
         
       
     
@@ -381,7 +382,7 @@
     <link href="http://metmoon.com/2018/10/27/2018-10-27-fix-gitment/"/>
     <id>http://metmoon.com/2018/10/27/2018-10-27-fix-gitment/</id>
     <published>2018-10-27T08:17:34.000Z</published>
-    <updated>2019-05-23T06:34:20.289Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -411,7 +412,7 @@
     <link href="http://metmoon.com/2018/10/16/2018-10-16-yii2-activerecord-to-json/"/>
     <id>http://metmoon.com/2018/10/16/2018-10-16-yii2-activerecord-to-json/</id>
     <published>2018-10-16T09:53:45.000Z</published>
-    <updated>2019-05-23T06:34:20.289Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -439,7 +440,7 @@
     <link href="http://metmoon.com/2018/09/18/2018-09-18-%E7%9B%97%E5%B0%86%E8%A1%8C/"/>
     <id>http://metmoon.com/2018/09/18/2018-09-18-盗将行/</id>
     <published>2018-09-18T10:10:52.000Z</published>
-    <updated>2019-05-23T06:34:20.289Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -466,7 +467,7 @@
     <link href="http://metmoon.com/2018/09/16/2018-09-16-docker-container-port/"/>
     <id>http://metmoon.com/2018/09/16/2018-09-16-docker-container-port/</id>
     <published>2018-09-16T15:40:33.000Z</published>
-    <updated>2019-05-23T06:34:20.289Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -499,7 +500,7 @@
     <link href="http://metmoon.com/2018/09/15/2018-09-16-bing-site-search/"/>
     <id>http://metmoon.com/2018/09/15/2018-09-16-bing-site-search/</id>
     <published>2018-09-15T12:14:05.000Z</published>
-    <updated>2019-05-23T06:34:20.288Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -528,7 +529,7 @@
     <link href="http://metmoon.com/2018/08/02/2018-08-22-composer-mirrors/"/>
     <id>http://metmoon.com/2018/08/02/2018-08-22-composer-mirrors/</id>
     <published>2018-08-02T04:11:06.000Z</published>
-    <updated>2019-05-23T06:34:20.288Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -559,7 +560,7 @@
     <link href="http://metmoon.com/2018/05/01/2018-05-01-git-webhook/"/>
     <id>http://metmoon.com/2018/05/01/2018-05-01-git-webhook/</id>
     <published>2018-05-01T02:16:43.000Z</published>
-    <updated>2019-05-23T06:34:20.288Z</updated>
+    <updated>2019-09-16T03:07:46.732Z</updated>
     
     <summary type="html">
     
@@ -592,7 +593,7 @@
     <link href="http://metmoon.com/2018/03/31/2018-03-31-git/"/>
     <id>http://metmoon.com/2018/03/31/2018-03-31-git/</id>
     <published>2018-03-31T13:47:05.000Z</published>
-    <updated>2019-05-23T06:34:20.288Z</updated>
+    <updated>2019-09-16T03:07:46.731Z</updated>
     
     <summary type="html">
     

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://metmoon.com">
   <title>安装Jupyter笔记本 | 满江风雪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安装Jupyter笔记本，做个笔记 通过pip安装1sudo pip3 install jupyter 创建Jupyter默认配置文件1jupyter notebook --generate-config 生成SHA1加密的密钥，如’sha1:XXXXXX’1234ipython--------------------------------------from notebook.auth imp">
+  <meta name="description" content="安装Jupyter笔记本，做个笔记 通过pip安装 1sudo pip3 install jupyter  创建Jupyter默认配置文件 1jupyter notebook --generate-config  生成SHA1加密的密钥，如’sha1:XXXXXX’ 1234ipython--------------------------------------from notebook.aut">
 <meta name="keywords" content="jupyter,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安装Jupyter笔记本">
 <meta property="og:url" content="http://metmoon.com/2018/11/02/2018-11-02-jupyter/index.html">
 <meta property="og:site_name" content="满江风雪">
-<meta property="og:description" content="安装Jupyter笔记本，做个笔记 通过pip安装1sudo pip3 install jupyter 创建Jupyter默认配置文件1jupyter notebook --generate-config 生成SHA1加密的密钥，如’sha1:XXXXXX’1234ipython--------------------------------------from notebook.auth imp">
+<meta property="og:description" content="安装Jupyter笔记本，做个笔记 通过pip安装 1sudo pip3 install jupyter  创建Jupyter默认配置文件 1jupyter notebook --generate-config  生成SHA1加密的密钥，如’sha1:XXXXXX’ 1234ipython--------------------------------------from notebook.aut">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.290Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安装Jupyter笔记本">
-<meta name="twitter:description" content="安装Jupyter笔记本，做个笔记 通过pip安装1sudo pip3 install jupyter 创建Jupyter默认配置文件1jupyter notebook --generate-config 生成SHA1加密的密钥，如’sha1:XXXXXX’1234ipython--------------------------------------from notebook.auth imp">
+<meta name="twitter:description" content="安装Jupyter笔记本，做个笔记 通过pip安装 1sudo pip3 install jupyter  创建Jupyter默认配置文件 1jupyter notebook --generate-config  生成SHA1加密的密钥，如’sha1:XXXXXX’ 1234ipython--------------------------------------from notebook.aut">
   
     <link rel="alternative" href="/atom.xml" title="满江风雪" type="application/atom+xml">
   
@@ -186,12 +186,24 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>安装Jupyter笔记本，做个笔记</p>
-<p>通过pip安装<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install jupyter</span><br></pre></td></tr></table></figure></p>
-<p>创建Jupyter默认配置文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure></p>
-<p>生成SHA1加密的密钥，如’sha1:XXXXXX’<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipython</span><br><span class="line">--------------------------------------</span><br><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br></pre></td></tr></table></figure></p>
-<p>修改配置文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim .jupyter/jupyter_notebook_config.py</span><br><span class="line">--------------------------------------</span><br><span class="line">c.NotebookApp.password = u<span class="string">'sha1:XXXXXX'</span></span><br></pre></td></tr></table></figure></p>
-<p>运行jupyter<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure></p>
-<p>可选的运行参数<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --ip=0.0.0.0 --no-browser --allow-root</span><br></pre></td></tr></table></figure></p>
+<p>通过pip安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install jupyter</span><br></pre></td></tr></table></figure>
+
+<p>创建Jupyter默认配置文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+
+<p>生成SHA1加密的密钥，如’sha1:XXXXXX’</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipython</span><br><span class="line">--------------------------------------</span><br><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim .jupyter/jupyter_notebook_config.py</span><br><span class="line">--------------------------------------</span><br><span class="line">c.NotebookApp.password = u<span class="string">'sha1:XXXXXX'</span></span><br></pre></td></tr></table></figure>
+
+<p>运行jupyter</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+
+<p>可选的运行参数</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --ip=0.0.0.0 --no-browser --allow-root</span><br></pre></td></tr></table></figure>
+
 <p>打开浏览器输入 <a href="http://localhost:8888" target="_blank" rel="noopener">http://localhost:8888</a></p>
 
       
@@ -485,6 +497,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -494,14 +514,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,19 +597,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,7 +617,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -629,7 +641,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

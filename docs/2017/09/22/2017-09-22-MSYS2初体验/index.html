@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -9,14 +9,14 @@
   <title>MSYS2初体验 | 满江风雪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="作为一名windows下面开发者，之前工作Cygwin做为辅助。前些天突然发现了一个叫MSYS2的家伙。 发现这家伙还不错，这是百度百科的介绍：  MSYS2 （Minimal SYStem 2） 是一个MSYS的独立改写版本，主要用于 shell 命令行开发环境。同时它也是一个在Cygwin （POSIX 兼容性层） 和 MinGW-w64（从”MinGW-生成”）基础上产生的，追求更好的互操作">
-<meta name="keywords" content="Linux,Win10,MSYS2">
+<meta name="keywords" content="Win10,Linux,MSYS2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MSYS2初体验">
 <meta property="og:url" content="http://metmoon.com/2017/09/22/2017-09-22-MSYS2初体验/index.html">
 <meta property="og:site_name" content="满江风雪">
 <meta property="og:description" content="作为一名windows下面开发者，之前工作Cygwin做为辅助。前些天突然发现了一个叫MSYS2的家伙。 发现这家伙还不错，这是百度百科的介绍：  MSYS2 （Minimal SYStem 2） 是一个MSYS的独立改写版本，主要用于 shell 命令行开发环境。同时它也是一个在Cygwin （POSIX 兼容性层） 和 MinGW-w64（从”MinGW-生成”）基础上产生的，追求更好的互操作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.285Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MSYS2初体验">
 <meta name="twitter:description" content="作为一名windows下面开发者，之前工作Cygwin做为辅助。前些天突然发现了一个叫MSYS2的家伙。 发现这家伙还不错，这是百度百科的介绍：  MSYS2 （Minimal SYStem 2） 是一个MSYS的独立改写版本，主要用于 shell 命令行开发环境。同时它也是一个在Cygwin （POSIX 兼容性层） 和 MinGW-w64（从”MinGW-生成”）基础上产生的，追求更好的互操作">
@@ -194,19 +194,31 @@
 <p>安装就下载二进制安装程序安装就可以了。</p>
 <p>安装之后急切地 <code>pacman -Sy</code> 刷新软件包数据，官网的源还有点慢。换<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">中科大</a>的源吧。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/pacman.d</span><br><span class="line">ls</span><br><span class="line">-------------------</span><br><span class="line">gnupg mirrorlist.mingw32  mirrorlist.mingw64  mirrorlist.msys</span><br></pre></td></tr></table></figure>
+
 <p>三个<code>mirrorlist</code>开头的文件就是源的配置文件</p>
 <p>编辑 /etc/pacman.d/mirrorlist.mingw32 ，在文件开头添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686</span><br></pre></td></tr></table></figure>
+
 <p>编辑 /etc/pacman.d/mirrorlist.mingw64 ，在文件开头添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64</span><br></pre></td></tr></table></figure>
+
 <p>编辑 /etc/pacman.d/mirrorlist.msys ，在文件开头添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch</span><br></pre></td></tr></table></figure>
+
 <p>然后执行 <code>pacman -Sy</code> 刷新软件包数据即可。</p>
-<p>还有一点，cygwin切换系统磁盘是<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /cygdrive/d/   <span class="comment">#比如切换到d盘</span></span><br></pre></td></tr></table></figure></p>
-<p>MYSYS2是：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d</span><br></pre></td></tr></table></figure></p>
+<p>还有一点，cygwin切换系统磁盘是</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /cygdrive/d/   <span class="comment">#比如切换到d盘</span></span><br></pre></td></tr></table></figure>
+
+<p>MYSYS2是：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d</span><br></pre></td></tr></table></figure>
+
 <p>使用windows原生命令比如ping会中文乱码，这么解决：</p>
-<p>新建 /bin/win：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="variable">$@</span> |iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure></p>
-<p>使用：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/win ping baidu.com</span><br></pre></td></tr></table></figure></p>
+<p>新建 /bin/win：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="variable">$@</span> |iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/win ping baidu.com</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -241,11 +253,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Win10</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Win10</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -503,6 +515,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -512,14 +532,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,19 +615,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,7 +635,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,7 +659,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

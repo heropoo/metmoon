@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://metmoon.com">
   <title>百度UEditor自定义上传地址 | 满江风雪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
+  <meta name="description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl 12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
 <meta name="keywords" content="PHP,UEditor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度UEditor自定义上传地址">
 <meta property="og:url" content="http://metmoon.com/2017/10/26/2017-10-26-百度ueditor自定义上传地址/index.html">
 <meta property="og:site_name" content="满江风雪">
-<meta property="og:description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
+<meta property="og:description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl 12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.286Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度UEditor自定义上传地址">
-<meta name="twitter:description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
+<meta name="twitter:description" content="之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。 在ue实例化的时候你服务端上传的请求地址赋值给serverUrl 12345678910111213141516171819var ue;ue = UE.getEditor(&apos;editor&apos;, &amp;#123;    toolbars: [		//这个是工具栏配置，自己定义和今天主题无关        [">
   
     <link rel="alternative" href="/atom.xml" title="满江风雪" type="application/atom+xml">
   
@@ -186,15 +186,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。</p>
-<p>在ue实例化的时候你服务端上传的请求地址赋值给<code>serverUrl</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ue;</span><br><span class="line">ue = UE.getEditor(<span class="string">'editor'</span>, &#123;</span><br><span class="line">    toolbars: [		<span class="comment">//这个是工具栏配置，自己定义和今天主题无关</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">'fullscreen'</span>, <span class="string">'source'</span>, <span class="string">'|'</span>, <span class="string">'undo'</span>, <span class="string">'redo'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'bold'</span>, <span class="string">'italic'</span>, <span class="string">'underline'</span>, <span class="string">'fontborder'</span>, <span class="string">'strikethrough'</span>, <span class="string">'superscript'</span>, <span class="string">'subscript'</span>, <span class="string">'removeformat'</span>, <span class="string">'formatmatch'</span>, <span class="string">'autotypeset'</span>, <span class="string">'blockquote'</span>, <span class="string">'pasteplain'</span>, <span class="string">'|'</span>, <span class="string">'forecolor'</span>, <span class="string">'backcolor'</span>, <span class="string">'insertorderedlist'</span>, <span class="string">'insertunorderedlist'</span>, <span class="string">'selectall'</span>, <span class="string">'cleardoc'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'rowspacingtop'</span>, <span class="string">'rowspacingbottom'</span>, <span class="string">'lineheight'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'customstyle'</span>, <span class="string">'paragraph'</span>, <span class="string">'fontfamily'</span>, <span class="string">'fontsize'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'directionalityltr'</span>, <span class="string">'directionalityrtl'</span>, <span class="string">'indent'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'justifyleft'</span>, <span class="string">'justifycenter'</span>, <span class="string">'justifyright'</span>, <span class="string">'justifyjustify'</span>, <span class="string">'|'</span>, <span class="string">'touppercase'</span>, <span class="string">'tolowercase'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'link'</span>, <span class="string">'unlink'</span>, <span class="string">'anchor'</span>, <span class="string">'|'</span>, <span class="string">'imagenone'</span>, <span class="string">'imageleft'</span>, <span class="string">'imageright'</span>, <span class="string">'imagecenter'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'simpleupload'</span>, <span class="string">'|'</span>, <span class="string">'pagebreak'</span>, <span class="string">'template'</span>, <span class="string">'background'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'horizontal'</span>, <span class="string">'date'</span>, <span class="string">'time'</span>, <span class="string">'spechars'</span>, <span class="string">'snapscreen'</span>, <span class="string">'wordimage'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'inserttable'</span>, <span class="string">'deletetable'</span>, <span class="string">'insertparagraphbeforetable'</span>, <span class="string">'insertrow'</span>, <span class="string">'deleterow'</span>, <span class="string">'insertcol'</span>, <span class="string">'deletecol'</span>, <span class="string">'mergecells'</span>, <span class="string">'mergeright'</span>, <span class="string">'mergedown'</span>, <span class="string">'splittocells'</span>, <span class="string">'splittorows'</span>, <span class="string">'splittocols'</span>, <span class="string">'charts'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'preview'</span></span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    serverUrl: <span class="string">'http://your-server-address'</span>  <span class="comment">//这里是你服务端上传的请求地址</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在ue实例化的时候你服务端上传的请求地址赋值给<code>serverUrl</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ue;</span><br><span class="line">ue = UE.getEditor(<span class="string">'editor'</span>, &#123;</span><br><span class="line">    toolbars: [		<span class="comment">//这个是工具栏配置，自己定义和今天主题无关</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">'fullscreen'</span>, <span class="string">'source'</span>, <span class="string">'|'</span>, <span class="string">'undo'</span>, <span class="string">'redo'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'bold'</span>, <span class="string">'italic'</span>, <span class="string">'underline'</span>, <span class="string">'fontborder'</span>, <span class="string">'strikethrough'</span>, <span class="string">'superscript'</span>, <span class="string">'subscript'</span>, <span class="string">'removeformat'</span>, <span class="string">'formatmatch'</span>, <span class="string">'autotypeset'</span>, <span class="string">'blockquote'</span>, <span class="string">'pasteplain'</span>, <span class="string">'|'</span>, <span class="string">'forecolor'</span>, <span class="string">'backcolor'</span>, <span class="string">'insertorderedlist'</span>, <span class="string">'insertunorderedlist'</span>, <span class="string">'selectall'</span>, <span class="string">'cleardoc'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'rowspacingtop'</span>, <span class="string">'rowspacingbottom'</span>, <span class="string">'lineheight'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'customstyle'</span>, <span class="string">'paragraph'</span>, <span class="string">'fontfamily'</span>, <span class="string">'fontsize'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'directionalityltr'</span>, <span class="string">'directionalityrtl'</span>, <span class="string">'indent'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'justifyleft'</span>, <span class="string">'justifycenter'</span>, <span class="string">'justifyright'</span>, <span class="string">'justifyjustify'</span>, <span class="string">'|'</span>, <span class="string">'touppercase'</span>, <span class="string">'tolowercase'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'link'</span>, <span class="string">'unlink'</span>, <span class="string">'anchor'</span>, <span class="string">'|'</span>, <span class="string">'imagenone'</span>, <span class="string">'imageleft'</span>, <span class="string">'imageright'</span>, <span class="string">'imagecenter'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'simpleupload'</span>, <span class="string">'|'</span>, <span class="string">'pagebreak'</span>, <span class="string">'template'</span>, <span class="string">'background'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'horizontal'</span>, <span class="string">'date'</span>, <span class="string">'time'</span>, <span class="string">'spechars'</span>, <span class="string">'snapscreen'</span>, <span class="string">'wordimage'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'inserttable'</span>, <span class="string">'deletetable'</span>, <span class="string">'insertparagraphbeforetable'</span>, <span class="string">'insertrow'</span>, <span class="string">'deleterow'</span>, <span class="string">'insertcol'</span>, <span class="string">'deletecol'</span>, <span class="string">'mergecells'</span>, <span class="string">'mergeright'</span>, <span class="string">'mergedown'</span>, <span class="string">'splittocells'</span>, <span class="string">'splittorows'</span>, <span class="string">'splittocols'</span>, <span class="string">'charts'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'preview'</span></span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    serverUrl: <span class="string">'http://your-server-address'</span>  <span class="comment">//这里是你服务端上传的请求地址</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>在上面自定义了服务端地址之后，我们刷新页面，ue实例化的时候会自动请求你的地址并且带着query参数，大概是这样：<code>http://your-server-address?action=config</code>。这是ue实例化会请求配置文件，简单点你可以直接返回ue插件文件夹中<code>ueditor/1.4.3.3/php/config.json</code>的内容就可以了。当然了具体配置你是可以自己按自己需求改动。</p>
 <p>接下来上传图片，随便上传一张图片，会发现ue的请求地址是<code>http://your-server-address?action=uploadimage</code>。这样是不是恍然大悟：</p>
 <blockquote>
 <p>   action参数是config，你就给他返回配置内容;<br>   action参数是uploadimage就是图片上传，你就保存图片文件，返回成功或者失败的结果。</p>
 </blockquote>
 <p>上传结果返回格式是这样的：</p>
-<p>失败的情况<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"Failed"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"error msg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>成功的情况<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">	"original": "aaa.jpg",	//图片源文件名</span><br><span class="line">	"type": ".jpg",		//图片后缀</span><br><span class="line">	"size": 10240000,	//图片大小</span><br><span class="line">	"title": "aaa",		//图片img标签上的属性title</span><br><span class="line">	"url": "/upload/fsf3r.jpg"			//图片上传之后的url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>失败的情况</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"Failed"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"error msg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成功的情况</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">	"original": "aaa.jpg",	//图片源文件名</span><br><span class="line">	"type": ".jpg",		//图片后缀</span><br><span class="line">	"size": 10240000,	//图片大小</span><br><span class="line">	"title": "aaa",		//图片img标签上的属性title</span><br><span class="line">	"url": "/upload/fsf3r.jpg"			//图片上传之后的url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>好了就这样</p>
 
       
@@ -488,6 +494,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -497,14 +511,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,19 +594,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,7 +614,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,7 +638,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

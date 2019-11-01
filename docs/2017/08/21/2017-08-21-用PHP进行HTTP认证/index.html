@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="PHP的HTTP认证机制，就是用header()函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量PHP_AUTH_USER，PHP_AUTH_PW和AUTH_TYPE被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 $_SERVER 或者">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://metmoon.com/assets/images/20170821120459.png">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.283Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用PHP进行HTTP认证">
 <meta name="twitter:description" content="PHP的HTTP认证机制，就是用header()函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量PHP_AUTH_USER，PHP_AUTH_PW和AUTH_TYPE被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 $_SERVER 或者">
@@ -190,6 +190,7 @@
         <p>PHP的HTTP认证机制，就是用<code>header()</code>函数来向客户端浏览器发送“Authentication Required”信息，使其弹出一个用户名／密码输入窗口。当用户输入用户名和密码后，包含有URL的PHP脚本将会加上预定义变量<code>PHP_AUTH_USER</code>，<code>PHP_AUTH_PW</code>和<code>AUTH_TYPE</code>被再次调用，这三个变量分别被设定为用户名，密码和认证类型。预定义变量保存在 <code>$_SERVER</code> 或者 <code>$HTTP_SERVER_VARS</code> 数组中。支持“Basic”和“Digest”（自 PHP 5.1.0 起）认证方法。这是php官网的解释。<br>大家看示例体会。😁</p>
 <p>参考连接：<a href="http://php.net/manual/zh/features.http-auth.php" target="_blank" rel="noopener">http://php.net/manual/zh/features.http-auth.php</a></p>
 <h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>])) &#123;</span><br><span class="line">    header(<span class="string">'WWW-Authenticate: Basic realm="My Realm"'</span>);</span><br><span class="line">    header(<span class="string">'HTTP/1.0 401 Unauthorized'</span>);</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'401 Unauthorized'</span>.<span class="string">'&lt;br&gt; &lt;button onclick="window.location.reload();"&gt;Login Again&lt;/button&gt;'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>] !== <span class="string">'James Bond'</span> || $_SERVER[<span class="string">'PHP_AUTH_PW'</span>] !== <span class="string">'007'</span>)&#123;</span><br><span class="line">        header(<span class="string">'WWW-Authenticate: Basic realm="My Realm"'</span>);</span><br><span class="line">        header(<span class="string">'HTTP/1.0 401 Unauthorized'</span>);</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'401 Unauthorized'</span>.<span class="string">'&lt;br&gt; &lt;button onclick="window.location.reload();"&gt;Login Again&lt;/button&gt;'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面是你的业务代码</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="/assets/images/20170821120459.png" alt="example-pic"></p>
 <p>这样就会弹出一个登陆框，输入用户名：<code>James Bond</code> 密码：<code>007</code> 登陆吧！</p>
 <p>成功了没，哈哈，大家觉得是不是很好玩~</p>
@@ -485,6 +486,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -494,14 +503,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,19 +586,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,7 +606,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -629,7 +630,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

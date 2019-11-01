@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="满江风雪">
 <meta property="og:description" content="Linux软连接和硬链接，一个经常傻傻分不清楚的概念，现在我们仔细理一理。 1.Linux链接概念Linux链接分两种，一种被称为硬链接（Hard Link），另一种被称为符号链接（Symbolic Link）。默认情况下，ln命令产生硬链接。  【硬连接】  硬连接指通过索引节点来进行连接。在Linux的文件系统中，保存在磁盘分区中的文件不管是什么类型都给它分配一个编号，称为索引节点号(Inod">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-29T05:40:00.181Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux软连接和硬链接">
 <meta name="twitter:description" content="Linux软连接和硬链接，一个经常傻傻分不清楚的概念，现在我们仔细理一理。 1.Linux链接概念Linux链接分两种，一种被称为硬链接（Hard Link），另一种被称为符号链接（Symbolic Link）。默认情况下，ln命令产生硬链接。  【硬连接】  硬连接指通过索引节点来进行连接。在Linux的文件系统中，保存在磁盘分区中的文件不管是什么类型都给它分配一个编号，称为索引节点号(Inod">
@@ -196,7 +196,10 @@
 </ul>
 <p>另外一种连接称之为符号连接（Symbolic Link），也叫软连接。软链接文件有类似于Windows的快捷方式。它实际上是一个特殊的文件。在符号连接中，文件实际上是一个文本文件，其中包含的有另一文件的位置信息。</p>
 <h3 id="2-通过实验加深理解"><a href="#2-通过实验加深理解" class="headerlink" title="2.通过实验加深理解"></a>2.通过实验加深理解</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Linux]$ touch f1 <span class="comment">#创建一个测试文件f1</span></span><br><span class="line">[root@Linux]$ ln f1 f2 <span class="comment">#创建f1的一个硬连接文件f2</span></span><br><span class="line">[root@Linux]$ ln -s f1 f3 <span class="comment">#创建f1的一个符号连接文件f3</span></span><br><span class="line">[root@Linux]$ ls -li <span class="comment"># -i参数显示文件的inode节点信息</span></span><br><span class="line">total 0</span><br><span class="line">9797648 -rw-r--r-- 2 root root 0 Apr 21 08:11 f1</span><br><span class="line">9797648 -rw-r--r-- 2 root root 0 Apr 21 08:11 f2</span><br><span class="line">9797649 lrwxrwxrwx 1 root root 2 Apr 21 08:11 f3 -&gt; f1</span><br></pre></td></tr></table></figure>
-<p>从上面的结果中可以看出，硬连接文件f2与原文件f1的inode节点相同，均为9797648，然而符号连接文件的inode节点不同。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Linux]$ <span class="built_in">echo</span> <span class="string">"I am f1 file"</span> &gt;&gt;f1</span><br><span class="line">[root@Linux]$ cat f1</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f2</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f3</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ rm -f f1</span><br><span class="line">[root@Linux]$ cat f2</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f3</span><br><span class="line">cat: f3: No such file or directory</span><br></pre></td></tr></table></figure></p>
+
+<p>从上面的结果中可以看出，硬连接文件f2与原文件f1的inode节点相同，均为9797648，然而符号连接文件的inode节点不同。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Linux]$ <span class="built_in">echo</span> <span class="string">"I am f1 file"</span> &gt;&gt;f1</span><br><span class="line">[root@Linux]$ cat f1</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f2</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f3</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ rm -f f1</span><br><span class="line">[root@Linux]$ cat f2</span><br><span class="line">I am f1 file</span><br><span class="line">[root@Linux]$ cat f3</span><br><span class="line">cat: f3: No such file or directory</span><br></pre></td></tr></table></figure>
+
 <p>通过上面的测试可以看出：当删除原始文件f1后，硬连接f2不受影响，但是符号连接f1文件无效。</p>
 <h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h3><p>依此您可以做一些相关的测试，可以得到以下全部结论：</p>
 <ul>
@@ -489,6 +492,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -498,14 +509,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -589,19 +592,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,7 +612,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,7 +636,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

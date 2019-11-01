@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="满江风雪">
 <meta property="og:description" content="现在docker的容器技术很流行，对于我们这种整天被各种万恶的开发环境坑的开发来说是个解放。但是当我们在拉取docker镜像的时候，会发现普遍基于debian或者ubuntu的镜像都是体积很大，动辄几十或者上百兆。当然了docker镜像在构建的时候会删除旭东无用的东西并且使用精简系统模板。尽管这样做还是很大，起码也得有个几十兆吧。所以使用一个本身体积就小的操作系统做基础模板来构建才是关键。Alpi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.291Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器的宠儿AlpineLinux的基本使用">
 <meta name="twitter:description" content="现在docker的容器技术很流行，对于我们这种整天被各种万恶的开发环境坑的开发来说是个解放。但是当我们在拉取docker镜像的时候，会发现普遍基于debian或者ubuntu的镜像都是体积很大，动辄几十或者上百兆。当然了docker镜像在构建的时候会删除旭东无用的东西并且使用精简系统模板。尽管这样做还是很大，起码也得有个几十兆吧。所以使用一个本身体积就小的操作系统做基础模板来构建才是关键。Alpi">
@@ -187,18 +187,35 @@
       
         <p>现在docker的容器技术很流行，对于我们这种整天被各种万恶的开发环境坑的开发来说是个解放。但是当我们在拉取docker镜像的时候，会发现普遍基于debian或者ubuntu的镜像都是体积很大，动辄几十或者上百兆。当然了docker镜像在构建的时候会删除旭东无用的东西并且使用精简系统模板。尽管这样做还是很大，起码也得有个几十兆吧。所以使用一个本身体积就小的操作系统做基础模板来构建才是关键。AlpineLinux是一个使用busybox的linux操作系统，而他的体积只需要4兆多。所以对我这种喜欢轻量级的人还说，这真是好东西啊！</p>
 <p>哈哈~废话不多说了，说说这个系统的基本使用吧</p>
-<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><p>更新软件包索引文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk update</span><br></pre></td></tr></table></figure></p>
-<p>如果感觉网速很慢，那可以先换个中国的源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#中科大的源 速度杠杠的</span><br><span class="line">sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories</span><br></pre></td></tr></table></figure></p>
+<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><p>更新软件包索引文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk update</span><br></pre></td></tr></table></figure>
+
+<p>如果感觉网速很慢，那可以先换个中国的源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#中科大的源 速度杠杠的</span><br><span class="line">sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories</span><br></pre></td></tr></table></figure>
+
 <p>下面我们以安装nginx为例</p>
-<p>安装软件包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add nginx</span><br></pre></td></tr></table></figure></p>
-<p>安装软件包到最新<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add --update nginx</span><br></pre></td></tr></table></figure></p>
-<p>查找软件包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk search nginx</span><br></pre></td></tr></table></figure></p>
-<p>卸载软件包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk del nginx</span><br></pre></td></tr></table></figure></p>
-<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><p>启动Nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/nginx start</span><br></pre></td></tr></table></figure></p>
-<p>添加nginx到启动服务中，下次开机自动运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update add nginx</span><br></pre></td></tr></table></figure></p>
-<p>把nginx从启动服务中移除，下次开机不会自动运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update del nginx</span><br></pre></td></tr></table></figure></p>
-<h2 id="一些网络工具所在软件包"><a href="#一些网络工具所在软件包" class="headerlink" title="一些网络工具所在软件包"></a>一些网络工具所在软件包</h2><pre><code>telnet  =&gt;  busybox-extras
-</code></pre>
+<p>安装软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装软件包到最新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk add --update nginx</span><br></pre></td></tr></table></figure>
+
+<p>查找软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk search nginx</span><br></pre></td></tr></table></figure>
+
+<p>卸载软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apk del nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><p>启动Nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/nginx start</span><br></pre></td></tr></table></figure>
+
+<p>添加nginx到启动服务中，下次开机自动运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update add nginx</span><br></pre></td></tr></table></figure>
+
+<p>把nginx从启动服务中移除，下次开机不会自动运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update del nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="一些网络工具所在软件包"><a href="#一些网络工具所在软件包" class="headerlink" title="一些网络工具所在软件包"></a>一些网络工具所在软件包</h2><pre><code>telnet  =&gt;  busybox-extras</code></pre>
       
 
       
@@ -490,6 +507,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -499,14 +524,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,19 +607,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,7 +627,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,7 +651,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

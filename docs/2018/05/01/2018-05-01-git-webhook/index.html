@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="满江风雪">
 <meta property="og:description" content="现在开发项目大多使用git作为版本控制器，而且现在大多数的代码托管平台都支持自定义webhook脚本。正好利用这个脚本，结合git的workflow，我们可以轻松的做到项目代码的自动发布部署。 最简单的流程比如你的项目有两个分支，一个是代码已经经过测试可用于部署到服务器的master分支，一个用于开发的dev分支。那么我们上线的过程就是merge dev的代码到master分支。那么我们可以设置一">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.288Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用PHP写Git的自动部署webhook脚本">
 <meta name="twitter:description" content="现在开发项目大多使用git作为版本控制器，而且现在大多数的代码托管平台都支持自定义webhook脚本。正好利用这个脚本，结合git的workflow，我们可以轻松的做到项目代码的自动发布部署。 最简单的流程比如你的项目有两个分支，一个是代码已经经过测试可用于部署到服务器的master分支，一个用于开发的dev分支。那么我们上线的过程就是merge dev的代码到master分支。那么我们可以设置一">
@@ -191,10 +191,13 @@
 <li>编写<code>webhook.php</code></li>
 </ul>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// todo 在此可以写校验权限密码之类的代码</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$path = dirname(<span class="keyword">__DIR__</span>);</span><br><span class="line">$log_file = $path.<span class="string">'/runtime/logs/webhook-pull-error-output.log'</span>;	<span class="comment">//错误日志文件的路径</span></span><br><span class="line"></span><br><span class="line">$descriptorspec = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(<span class="string">"pipe"</span>, <span class="string">"r"</span>),  <span class="comment">// 标准输入，子进程从此管道中读取数据</span></span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">"pipe"</span>, <span class="string">"w"</span>),  <span class="comment">// 标准输出，子进程向此管道中写入数据</span></span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">"file"</span>, $log_file, <span class="string">"a"</span>) <span class="comment">// 标准错误，写入到一个文件</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$cwd = $path;</span><br><span class="line">$env = <span class="keyword">array</span>(<span class="string">'PATH'</span> =&gt; $_SERVER[<span class="string">'PATH'</span>]);</span><br><span class="line"></span><br><span class="line">$process = proc_open(<span class="string">'sudo git pull origin master'</span>, $descriptorspec, $pipes, $cwd, $env);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;pre&gt;'</span>;</span><br><span class="line"><span class="keyword">if</span> (is_resource($process)) &#123;</span><br><span class="line">    <span class="comment">// $pipes 现在看起来是这样的：</span></span><br><span class="line">    <span class="comment">// 0 =&gt; 可以向子进程标准输入写入的句柄</span></span><br><span class="line">    <span class="comment">// 1 =&gt; 可以从子进程标准输出读取的句柄</span></span><br><span class="line">    <span class="comment">// 错误输出将被追加到文件 /tmp/error-output.txt</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> stream_get_contents($pipes[<span class="number">1</span>]);</span><br><span class="line">    fclose($pipes[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 切记：在调用 proc_close 之前关闭所有的管道以避免死锁。</span></span><br><span class="line">    $return_value = proc_close($process);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> PHP_EOL.<span class="string">"command returned $return_value\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>添加php脚本的执行用户sudoers中</li>
 </ul>
-<p>比如你使用nginx+php-fpm的服务器架构，你的php-fpm的用户是www-data<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">visudo</span><br><span class="line">--------------------------------</span><br><span class="line">...</span><br><span class="line"><span class="comment">#Defaults   !visiblepw   #注释掉这句 这句是限制sudo只能在命令行执行的</span></span><br><span class="line">www-data ALL=(ALL:ALL) NOPASSWD: /usr/bin/git</span><br></pre></td></tr></table></figure></p>
+<p>比如你使用nginx+php-fpm的服务器架构，你的php-fpm的用户是www-data</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">visudo</span><br><span class="line">--------------------------------</span><br><span class="line">...</span><br><span class="line"><span class="comment">#Defaults   !visiblepw   #注释掉这句 这句是限制sudo只能在命令行执行的</span></span><br><span class="line">www-data ALL=(ALL:ALL) NOPASSWD: /usr/bin/git</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>push代码到master分支测试下吧~ 登陆服务器看看代码是不是已经同步好了　</li>
 </ul>
@@ -498,6 +501,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -507,14 +518,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,19 +601,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,7 +621,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,7 +645,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

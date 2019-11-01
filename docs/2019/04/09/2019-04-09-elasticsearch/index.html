@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://metmoon.com">
   <title>玩转ElasticSearch全文搜索 | 满江风雪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟：12FROM el">
+  <meta name="description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟： 12FROM e">
 <meta name="keywords" content="PHP,Docker,全文搜索,ElasticSearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="玩转ElasticSearch全文搜索">
 <meta property="og:url" content="http://metmoon.com/2019/04/09/2019-04-09-elasticsearch/index.html">
 <meta property="og:site_name" content="满江风雪">
-<meta property="og:description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟：12FROM el">
+<meta property="og:description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟： 12FROM e">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T06:34:20.292Z">
+<meta property="og:updated_time" content="2019-09-16T03:07:46.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="玩转ElasticSearch全文搜索">
-<meta name="twitter:description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟：12FROM el">
+<meta name="twitter:description" content="玩转ElasticSearch全文搜索，做个笔记。 运行ElasticSearch服务为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。 我们使用官方的elasticsearch:5.6.16-alpine作为基础镜像，另外添加一个中文分词插件elasticsearch-ik 我们的Dockerfile内容如下，很简单，只需两行哟： 12FROM e">
   
     <link rel="alternative" href="/atom.xml" title="满江风雪" type="application/atom+xml">
   
@@ -188,33 +188,64 @@
         <p>玩转ElasticSearch全文搜索，做个笔记。</p>
 <h2 id="运行ElasticSearch服务"><a href="#运行ElasticSearch服务" class="headerlink" title="运行ElasticSearch服务"></a>运行ElasticSearch服务</h2><p>为了省去繁杂的安装，跳过万恶的环境，我们使用Docker容器来跑ElasticSearch的服务。</p>
 <p>我们使用官方的<code>elasticsearch:5.6.16-alpine</code>作为基础镜像，另外添加一个中文分词插件<code>elasticsearch-ik</code></p>
-<p>我们的Dockerfile内容如下，很简单，只需两行哟：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM elasticsearch:5.6.16-alpine</span><br><span class="line">RUN elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.6.16/elasticsearch-analysis-ik-5.6.16.zip</span><br></pre></td></tr></table></figure></p>
-<p>构建镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t heropoo/elasticsearch-ik .</span><br></pre></td></tr></table></figure></p>
-<p>运行容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; heropoo/elasticsearch-ik</span><br></pre></td></tr></table></figure></p>
+<p>我们的Dockerfile内容如下，很简单，只需两行哟：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM elasticsearch:5.6.16-alpine</span><br><span class="line">RUN elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.6.16/elasticsearch-analysis-ik-5.6.16.zip</span><br></pre></td></tr></table></figure>
+
+<p>构建镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t heropoo/elasticsearch-ik .</span><br></pre></td></tr></table></figure>
+
+<p>运行容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; heropoo/elasticsearch-ik</span><br></pre></td></tr></table></figure>
+
 <p>因为ElasticSearch提供了REST API，我们直接可以用浏览器访问 <a href="http://localhost:9200" target="_blank" rel="noopener">http://localhost:9200</a> 看看服务是否正常。</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>Elastic 本质上是一个分布式数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。单个 Elastic 实例称为一个节点（node）。一组节点构成一个集群（cluster）。</p>
 <h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><p>Elastic 会索引所有字段，经过处理后写入一个反向索引。查找数据的时候，直接查找该索引。所以，Elastic 数据管理的顶层单位就叫做 Index（索引）。</p>
-<p>查看当前节点的所有 Index<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &apos;http://localhost:9200/_cat/indices?v&apos;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Document"><a href="#Document" class="headerlink" title="Document"></a>Document</h3><p>Index 里面单条的记录称为 Document（文档）。许多条 Document 构成了一个 Index。Document 使用 JSON 格式表示。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>查看当前节点的所有 Index</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &apos;http://localhost:9200/_cat/indices?v&apos;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Document"><a href="#Document" class="headerlink" title="Document"></a>Document</h3><p>Index 里面单条的记录称为 Document（文档）。许多条 Document 构成了一个 Index。Document 使用 JSON 格式表示。<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>同一个 Index 里面的 Document，不要求有相同的字段结构，但是最好保持相同，这样有利于提高搜索效率。</p>
 <h3 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h3><p>不同的 Type 应该有相似的字段结构，举例来说，id字段不能在这个组是字符串，在另一个组是数值。这是与关系型数据库的表的一个区别。性质完全不同的数据（比如products和logs）应该存成两个 Index，而不是一个 Index 里面的两个 Type（虽然可以做到）。</p>
-<p>下面的命令可以列出每个 Index 所包含的 Type<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/_mapping?pretty=true&apos;</span><br></pre></td></tr></table></figure></p>
+<p>下面的命令可以列出每个 Index 所包含的 Type</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/_mapping?pretty=true&apos;</span><br></pre></td></tr></table></figure>
+
 <p>pretty参数是优化显示结果易于查看</p>
 <h2 id="Index操作"><a href="#Index操作" class="headerlink" title="Index操作"></a>Index操作</h2><h3 id="查看当前节点的所有-Index"><a href="#查看当前节点的所有-Index" class="headerlink" title="查看当前节点的所有 Index"></a>查看当前节点的所有 Index</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &apos;http://localhost:9200/_cat/indices?v&apos;</span><br></pre></td></tr></table></figure>
+
 <h3 id="新建Index"><a href="#新建Index" class="headerlink" title="新建Index"></a>新建Index</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;http://localhost:9200/weather&apos;</span><br></pre></td></tr></table></figure>
+
 <h3 id="删除Index"><a href="#删除Index" class="headerlink" title="删除Index"></a>删除Index</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X DELETE &apos;http://localhost:9200/weather&apos;</span><br></pre></td></tr></table></figure>
+
 <h3 id="新建一个-Index，指定需要分词的字段"><a href="#新建一个-Index，指定需要分词的字段" class="headerlink" title="新建一个 Index，指定需要分词的字段"></a>新建一个 Index，指定需要分词的字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;localhost:9200/accounts&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;person&quot;: &#123;</span><br><span class="line">      &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;user&quot;: &#123;</span><br><span class="line">          &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">          &quot;analyzer&quot;: &quot;ik_max_word&quot;,</span><br><span class="line">          &quot;search_analyzer&quot;: &quot;ik_max_word&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;title&quot;: &#123;</span><br><span class="line">          &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">          &quot;analyzer&quot;: &quot;ik_max_word&quot;,</span><br><span class="line">          &quot;search_analyzer&quot;: &quot;ik_max_word&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;desc&quot;: &#123;</span><br><span class="line">          &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">          &quot;analyzer&quot;: &quot;ik_max_word&quot;,</span><br><span class="line">          &quot;search_analyzer&quot;: &quot;ik_max_word&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
 <p>上面代码中，首先新建一个名称为accounts的 Index，里面有一个名称为person的 Type。person有三个字段 user、title、desc 这三个字段都是中文，而且类型都是文本（text），所以需要指定中文分词器，不能使用默认的英文分词器。</p>
-<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><h3 id="新增记录"><a href="#新增记录" class="headerlink" title="新增记录"></a>新增记录</h3><p>向指定的 /Index/Type 发送 PUT 请求，就可以在 Index 里面新增一条记录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;localhost:9200/accounts/person/1&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<p>新增记录的时候，也可以不指定 Id，这时要改成 POST 请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &apos;localhost:9200/accounts/person&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;李四&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;软件工程师&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><h3 id="新增记录"><a href="#新增记录" class="headerlink" title="新增记录"></a>新增记录</h3><p>向指定的 /Index/Type 发送 PUT 请求，就可以在 Index 里面新增一条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;localhost:9200/accounts/person/1&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
+<p>新增记录的时候，也可以不指定 Id，这时要改成 POST 请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &apos;localhost:9200/accounts/person&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;李四&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;软件工程师&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
 <p>其实PUT就是存在时修改，不存在时创建。</p>
-<h3 id="查看记录"><a href="#查看记录" class="headerlink" title="查看记录"></a>查看记录</h3><p>向/Index/Type/Id发出 GET 请求，就可以查看这条记录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/1?pretty=true&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看记录"><a href="#查看记录" class="headerlink" title="查看记录"></a>查看记录</h3><p>向/Index/Type/Id发出 GET 请求，就可以查看这条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/1?pretty=true&apos;</span><br></pre></td></tr></table></figure>
+
 <h3 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X DELETE &apos;localhost:9200/accounts/person/1&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h3><p>参考上面创建操作，用PUT方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;localhost:9200/accounts/person/1&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三1&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师1&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理1&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h3><p>参考上面创建操作，用PUT方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &apos;localhost:9200/accounts/person/1&apos; -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;user&quot;: &quot;张三1&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;工程师1&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;数据库管理1&quot;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
 <h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><h3 id="返回所有记录"><a href="#返回所有记录" class="headerlink" title="返回所有记录"></a>返回所有记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;</span><br></pre></td></tr></table></figure>
+
 <h3 id="全文搜索"><a href="#全文搜索" class="headerlink" title="全文搜索"></a>全文搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot; : &#123; &quot;match&quot; : &#123; &quot;desc&quot; : &quot;数据库&quot; &#125;&#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>如果有多个搜索关键字， Elastic 认为它们是or关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot; : &#123; &quot;match&quot; : &#123; &quot;desc&quot; : &quot;软件 系统&quot; &#125;&#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<p>如果要执行多个关键词的and搜索，必须使用布尔查询<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;bool&quot;: &#123;</span><br><span class="line">      &quot;must&quot;: [</span><br><span class="line">        &#123; &quot;match&quot;: &#123; &quot;desc&quot;: &quot;软件&quot; &#125; &#125;,</span><br><span class="line">        &#123; &quot;match&quot;: &#123; &quot;desc&quot;: &quot;系统&quot; &#125; &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>如果有多个搜索关键字， Elastic 认为它们是or关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot; : &#123; &quot;match&quot; : &#123; &quot;desc&quot; : &quot;软件 系统&quot; &#125;&#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
+<p>如果要执行多个关键词的and搜索，必须使用布尔查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl &apos;localhost:9200/accounts/person/_search&apos;  -d &apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;bool&quot;: &#123;</span><br><span class="line">      &quot;must&quot;: [</span><br><span class="line">        &#123; &quot;match&quot;: &#123; &quot;desc&quot;: &quot;软件&quot; &#125; &#125;,</span><br><span class="line">        &#123; &quot;match&quot;: &#123; &quot;desc&quot;: &quot;系统&quot; &#125; &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+
 <p>搞定~</p>
 <p>参考：<a href="http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></p>
 
@@ -517,6 +548,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -526,14 +565,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Archlinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,19 +648,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -641,7 +668,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -661,7 +692,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:
