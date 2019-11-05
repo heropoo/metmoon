@@ -166,19 +166,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2018-01-24-change-rust-mirrors" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-change-rust-mirrors" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/2018-01-24-change-rust-mirrors/">Rust更换国内源</a>
+      <a class="article-title" href="/2018/01/24/change-rust-mirrors/">Rust更换国内源</a>
     </h1>
   
 
         
-        <a href="/2018/01/24/2018-01-24-change-rust-mirrors/" class="archive-article-date">
+        <a href="/2018/01/24/change-rust-mirrors/" class="archive-article-date">
   	<time datetime="2018-01-24T15:25:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-24</time>
 </a>
         
@@ -189,14 +189,14 @@
         <p>今天学cargo这节，<code>cargo build</code>时安装外部依赖真的慢啊。果断找国内源,果断又是ustc(中科大, emmm以前应该努力一点考中科大<del>(￣▽￣)</del>*)</p>
 <p>教程开始：</p>
 <p>设置两个环境变量</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static</span><br><span class="line"><span class="built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static</span><br><span class="line"><span class="hljs-built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup</span><br></pre></td></tr></table></figure>
 
 <p>或者直接写入<code>~/.bashrc</code></p>
 <p>使用ustcu的源下载安装rust</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSf https://mirrors.ustc.edu.cn/rust-static/rustup.sh | sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSf https://mirrors.ustc.edu.cn/rust-static/rustup.sh | sh</span><br></pre></td></tr></table></figure>
 
 <p>编辑<code>~/.cargo/config</code>写入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[registry]</span><br><span class="line">index = &quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br><span class="line">[source.crates-io]</span><br><span class="line">registry = &quot;https://github.com/rust-lang/crates.io-index&quot;</span><br><span class="line">replace-with = &apos;ustc&apos;</span><br><span class="line">[source.ustc]</span><br><span class="line">registry = &quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[registry]</span><br><span class="line">index = &quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br><span class="line">[source.crates-io]</span><br><span class="line">registry = &quot;https://github.com/rust-lang/crates.io-index&quot;</span><br><span class="line">replace-with = &apos;ustc&apos;</span><br><span class="line">[source.ustc]</span><br><span class="line">registry = &quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br></pre></td></tr></table></figure>
 
 <p>现在cargo安装外部依赖是不是贼溜~😉</p>
 
@@ -233,7 +233,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/24/2018-01-24-change-rust-mirrors/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/24/change-rust-mirrors/">展开全文 >></a>
         </p>
       
 
@@ -263,19 +263,19 @@
 
 
   
-    <article id="post-2018-01-23-If-the-programming-language-is-a-weapon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-If-the-programming-language-is-a-weapon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/23/2018-01-23-If-the-programming-language-is-a-weapon/">如果编程语言是一种武器(转自互联网)</a>
+      <a class="article-title" href="/2018/01/23/If-the-programming-language-is-a-weapon/">如果编程语言是一种武器(转自互联网)</a>
     </h1>
   
 
         
-        <a href="/2018/01/23/2018-01-23-If-the-programming-language-is-a-weapon/" class="archive-article-date">
+        <a href="/2018/01/23/If-the-programming-language-is-a-weapon/" class="archive-article-date">
   	<time datetime="2018-01-23T06:58:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
 </a>
         
@@ -350,7 +350,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/23/2018-01-23-If-the-programming-language-is-a-weapon/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/23/If-the-programming-language-is-a-weapon/">展开全文 >></a>
         </p>
       
 
@@ -380,19 +380,19 @@
 
 
   
-    <article id="post-2018-01-20-cn-mirrors" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-cn-mirrors" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/20/2018-01-20-cn-mirrors/">整理几个常用的国内源</a>
+      <a class="article-title" href="/2018/01/20/cn-mirrors/">整理几个常用的国内源</a>
     </h1>
   
 
         
-        <a href="/2018/01/20/2018-01-20-cn-mirrors/" class="archive-article-date">
+        <a href="/2018/01/20/cn-mirrors/" class="archive-article-date">
   	<time datetime="2018-01-20T14:20:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-20</time>
 </a>
         
@@ -478,7 +478,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/20/2018-01-20-cn-mirrors/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/20/cn-mirrors/">展开全文 >></a>
         </p>
       
 
@@ -508,19 +508,19 @@
 
 
   
-    <article id="post-2018-01-01-2018-happy-new-year" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2018-happy-new-year" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/2018-01-01-2018-happy-new-year/">2018,新年快乐！</a>
+      <a class="article-title" href="/2018/01/01/2018-happy-new-year/">2018,新年快乐！</a>
     </h1>
   
 
         
-        <a href="/2018/01/01/2018-01-01-2018-happy-new-year/" class="archive-article-date">
+        <a href="/2018/01/01/2018-happy-new-year/" class="archive-article-date">
   	<time datetime="2017-12-31T16:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
 </a>
         
@@ -565,7 +565,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/01/2018-01-01-2018-happy-new-year/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/01/2018-happy-new-year/">展开全文 >></a>
         </p>
       
 
@@ -595,19 +595,19 @@
 
 
   
-    <article id="post-2017-11-16-使用docker玩转php开发环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-使用docker玩转php开发环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/16/2017-11-16-使用docker玩转php开发环境/">使用docker玩转php开发环境</a>
+      <a class="article-title" href="/2017/11/16/使用docker玩转php开发环境/">使用docker玩转php开发环境</a>
     </h1>
   
 
         
-        <a href="/2017/11/16/2017-11-16-使用docker玩转php开发环境/" class="archive-article-date">
+        <a href="/2017/11/16/使用docker玩转php开发环境/" class="archive-article-date">
   	<time datetime="2017-11-16T07:25:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-16</time>
 </a>
         
@@ -617,11 +617,11 @@
       
         <p>还是忙里偷闲研究了下怎么用docker这个东东来整php开发。做点笔记😁</p>
 <p>先看<code>Dockerfile</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用基于alpine linux 的镜像，体积小，下载快</span><br><span class="line">FROM php:7.0-cli-alpine</span><br><span class="line"></span><br><span class="line"># 使用中科大的源加快下载速度</span><br><span class="line">RUN sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories</span><br><span class="line"></span><br><span class="line"># 安装下基本的php扩展</span><br><span class="line">RUN docker-php-ext-install pdo pdo_mysql mysqli</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用基于alpine linux 的镜像，体积小，下载快</span><br><span class="line">FROM php:7.0-cli-alpine</span><br><span class="line"></span><br><span class="line"># 使用中科大的源加快下载速度</span><br><span class="line">RUN sed -i &apos;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&apos; /etc/apk/repositories</span><br><span class="line"></span><br><span class="line"># 安装下基本的php扩展</span><br><span class="line">RUN docker-php-ext-install pdo pdo_mysql mysqli</span><br></pre></td></tr></table></figure>
 
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t heropoo/php-cli-alpine .  <span class="comment">#先切换到你的Dockerfile目录</span></span><br></pre></td></tr></table></figure>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t heropoo/php-cli-alpine .  <span class="hljs-comment">#先切换到你的Dockerfile目录</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name php-cli-server -p 8080:80  -v //c/Users/ttt/www:/usr/src/www -w /usr/src/www php:7.0-cli-alpine php -S 0.0.0.0:80</span><br></pre></td></tr></table></figure>
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name php-cli-server -p 8080:80  -v //c/Users/ttt/www:/usr/src/www -w /usr/src/www php:7.0-cli-alpine php -S 0.0.0.0:80</span><br></pre></td></tr></table></figure>
 
 <p>这句好长啊，解释下各个参数：</p>
 <blockquote>
@@ -686,7 +686,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/16/2017-11-16-使用docker玩转php开发环境/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/11/16/使用docker玩转php开发环境/">展开全文 >></a>
         </p>
       
 
@@ -716,19 +716,19 @@
 
 
   
-    <article id="post-2017-10-26-百度ueditor自定义上传地址" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-百度ueditor自定义上传地址" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/26/2017-10-26-百度ueditor自定义上传地址/">百度UEditor自定义上传地址</a>
+      <a class="article-title" href="/2017/10/26/百度ueditor自定义上传地址/">百度UEditor自定义上传地址</a>
     </h1>
   
 
         
-        <a href="/2017/10/26/2017-10-26-百度ueditor自定义上传地址/" class="archive-article-date">
+        <a href="/2017/10/26/百度ueditor自定义上传地址/" class="archive-article-date">
   	<time datetime="2017-10-26T03:03:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-26</time>
 </a>
         
@@ -738,7 +738,7 @@
       
         <p>之前有个小朋友问我百度UEditor怎么自定义服务端上传地址, 正好也用过，现在做下笔记吧。</p>
 <p>在ue实例化的时候你服务端上传的请求地址赋值给<code>serverUrl</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ue;</span><br><span class="line">ue = UE.getEditor(<span class="string">'editor'</span>, &#123;</span><br><span class="line">    toolbars: [		<span class="comment">//这个是工具栏配置，自己定义和今天主题无关</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">'fullscreen'</span>, <span class="string">'source'</span>, <span class="string">'|'</span>, <span class="string">'undo'</span>, <span class="string">'redo'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'bold'</span>, <span class="string">'italic'</span>, <span class="string">'underline'</span>, <span class="string">'fontborder'</span>, <span class="string">'strikethrough'</span>, <span class="string">'superscript'</span>, <span class="string">'subscript'</span>, <span class="string">'removeformat'</span>, <span class="string">'formatmatch'</span>, <span class="string">'autotypeset'</span>, <span class="string">'blockquote'</span>, <span class="string">'pasteplain'</span>, <span class="string">'|'</span>, <span class="string">'forecolor'</span>, <span class="string">'backcolor'</span>, <span class="string">'insertorderedlist'</span>, <span class="string">'insertunorderedlist'</span>, <span class="string">'selectall'</span>, <span class="string">'cleardoc'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'rowspacingtop'</span>, <span class="string">'rowspacingbottom'</span>, <span class="string">'lineheight'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'customstyle'</span>, <span class="string">'paragraph'</span>, <span class="string">'fontfamily'</span>, <span class="string">'fontsize'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'directionalityltr'</span>, <span class="string">'directionalityrtl'</span>, <span class="string">'indent'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'justifyleft'</span>, <span class="string">'justifycenter'</span>, <span class="string">'justifyright'</span>, <span class="string">'justifyjustify'</span>, <span class="string">'|'</span>, <span class="string">'touppercase'</span>, <span class="string">'tolowercase'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'link'</span>, <span class="string">'unlink'</span>, <span class="string">'anchor'</span>, <span class="string">'|'</span>, <span class="string">'imagenone'</span>, <span class="string">'imageleft'</span>, <span class="string">'imageright'</span>, <span class="string">'imagecenter'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'simpleupload'</span>, <span class="string">'|'</span>, <span class="string">'pagebreak'</span>, <span class="string">'template'</span>, <span class="string">'background'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'horizontal'</span>, <span class="string">'date'</span>, <span class="string">'time'</span>, <span class="string">'spechars'</span>, <span class="string">'snapscreen'</span>, <span class="string">'wordimage'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'inserttable'</span>, <span class="string">'deletetable'</span>, <span class="string">'insertparagraphbeforetable'</span>, <span class="string">'insertrow'</span>, <span class="string">'deleterow'</span>, <span class="string">'insertcol'</span>, <span class="string">'deletecol'</span>, <span class="string">'mergecells'</span>, <span class="string">'mergeright'</span>, <span class="string">'mergedown'</span>, <span class="string">'splittocells'</span>, <span class="string">'splittorows'</span>, <span class="string">'splittocols'</span>, <span class="string">'charts'</span>, <span class="string">'|'</span>,</span><br><span class="line">            <span class="string">'preview'</span></span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    serverUrl: <span class="string">'http://your-server-address'</span>  <span class="comment">//这里是你服务端上传的请求地址</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> ue;</span><br><span class="line">ue = UE.getEditor(<span class="hljs-string">'editor'</span>, &#123;</span><br><span class="line">    toolbars: [		<span class="hljs-comment">//这个是工具栏配置，自己定义和今天主题无关</span></span><br><span class="line">        [</span><br><span class="line">            <span class="hljs-string">'fullscreen'</span>, <span class="hljs-string">'source'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'undo'</span>, <span class="hljs-string">'redo'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'bold'</span>, <span class="hljs-string">'italic'</span>, <span class="hljs-string">'underline'</span>, <span class="hljs-string">'fontborder'</span>, <span class="hljs-string">'strikethrough'</span>, <span class="hljs-string">'superscript'</span>, <span class="hljs-string">'subscript'</span>, <span class="hljs-string">'removeformat'</span>, <span class="hljs-string">'formatmatch'</span>, <span class="hljs-string">'autotypeset'</span>, <span class="hljs-string">'blockquote'</span>, <span class="hljs-string">'pasteplain'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'forecolor'</span>, <span class="hljs-string">'backcolor'</span>, <span class="hljs-string">'insertorderedlist'</span>, <span class="hljs-string">'insertunorderedlist'</span>, <span class="hljs-string">'selectall'</span>, <span class="hljs-string">'cleardoc'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'rowspacingtop'</span>, <span class="hljs-string">'rowspacingbottom'</span>, <span class="hljs-string">'lineheight'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'customstyle'</span>, <span class="hljs-string">'paragraph'</span>, <span class="hljs-string">'fontfamily'</span>, <span class="hljs-string">'fontsize'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'directionalityltr'</span>, <span class="hljs-string">'directionalityrtl'</span>, <span class="hljs-string">'indent'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'justifyleft'</span>, <span class="hljs-string">'justifycenter'</span>, <span class="hljs-string">'justifyright'</span>, <span class="hljs-string">'justifyjustify'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'touppercase'</span>, <span class="hljs-string">'tolowercase'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'link'</span>, <span class="hljs-string">'unlink'</span>, <span class="hljs-string">'anchor'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'imagenone'</span>, <span class="hljs-string">'imageleft'</span>, <span class="hljs-string">'imageright'</span>, <span class="hljs-string">'imagecenter'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'simpleupload'</span>, <span class="hljs-string">'|'</span>, <span class="hljs-string">'pagebreak'</span>, <span class="hljs-string">'template'</span>, <span class="hljs-string">'background'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'horizontal'</span>, <span class="hljs-string">'date'</span>, <span class="hljs-string">'time'</span>, <span class="hljs-string">'spechars'</span>, <span class="hljs-string">'snapscreen'</span>, <span class="hljs-string">'wordimage'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'inserttable'</span>, <span class="hljs-string">'deletetable'</span>, <span class="hljs-string">'insertparagraphbeforetable'</span>, <span class="hljs-string">'insertrow'</span>, <span class="hljs-string">'deleterow'</span>, <span class="hljs-string">'insertcol'</span>, <span class="hljs-string">'deletecol'</span>, <span class="hljs-string">'mergecells'</span>, <span class="hljs-string">'mergeright'</span>, <span class="hljs-string">'mergedown'</span>, <span class="hljs-string">'splittocells'</span>, <span class="hljs-string">'splittorows'</span>, <span class="hljs-string">'splittocols'</span>, <span class="hljs-string">'charts'</span>, <span class="hljs-string">'|'</span>,</span><br><span class="line">            <span class="hljs-string">'preview'</span></span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    serverUrl: <span class="hljs-string">'http://your-server-address'</span>  <span class="hljs-comment">//这里是你服务端上传的请求地址</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>在上面自定义了服务端地址之后，我们刷新页面，ue实例化的时候会自动请求你的地址并且带着query参数，大概是这样：<code>http://your-server-address?action=config</code>。这是ue实例化会请求配置文件，简单点你可以直接返回ue插件文件夹中<code>ueditor/1.4.3.3/php/config.json</code>的内容就可以了。当然了具体配置你是可以自己按自己需求改动。</p>
 <p>接下来上传图片，随便上传一张图片，会发现ue的请求地址是<code>http://your-server-address?action=uploadimage</code>。这样是不是恍然大悟：</p>
@@ -747,10 +747,10 @@
 </blockquote>
 <p>上传结果返回格式是这样的：</p>
 <p>失败的情况</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"Failed"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"error msg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="hljs-attr">"state"</span>: <span class="hljs-string">"Failed"</span>,</span><br><span class="line">	<span class="hljs-attr">"msg"</span>: <span class="hljs-string">"error msg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>成功的情况</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">	<span class="attr">"msg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">	"original": "aaa.jpg",	//图片源文件名</span><br><span class="line">	"type": ".jpg",		//图片后缀</span><br><span class="line">	"size": 10240000,	//图片大小</span><br><span class="line">	"title": "aaa",		//图片img标签上的属性title</span><br><span class="line">	"url": "/upload/fsf3r.jpg"			//图片上传之后的url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="hljs-attr">"state"</span>: <span class="hljs-string">"SUCCESS"</span>,</span><br><span class="line">	<span class="hljs-attr">"msg"</span>: <span class="hljs-string">"ok"</span>,</span><br><span class="line">	<span class="hljs-attr">"original"</span>: <span class="hljs-string">"aaa.jpg"</span>,	<span class="hljs-comment">//图片源文件名</span></span><br><span class="line">	<span class="hljs-attr">"type"</span>: <span class="hljs-string">".jpg"</span>,		<span class="hljs-comment">//图片后缀</span></span><br><span class="line">	<span class="hljs-attr">"size"</span>: <span class="hljs-number">10240000</span>,	<span class="hljs-comment">//图片大小</span></span><br><span class="line">	<span class="hljs-attr">"title"</span>: <span class="hljs-string">"aaa"</span>,		<span class="hljs-comment">//图片img标签上的属性title</span></span><br><span class="line">	<span class="hljs-attr">"url"</span>: <span class="hljs-string">"/upload/fsf3r.jpg"</span>			<span class="hljs-comment">//图片上传之后的url</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>好了就这样</p>
 
@@ -791,7 +791,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/26/2017-10-26-百度ueditor自定义上传地址/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/26/百度ueditor自定义上传地址/">展开全文 >></a>
         </p>
       
 
@@ -821,19 +821,19 @@
 
 
   
-    <article id="post-2017-10-26-Docker基础命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Docker基础命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/26/2017-10-26-Docker基础命令/">Docker基础命令</a>
+      <a class="article-title" href="/2017/10/26/Docker基础命令/">Docker基础命令</a>
     </h1>
   
 
         
-        <a href="/2017/10/26/2017-10-26-Docker基础命令/" class="archive-article-date">
+        <a href="/2017/10/26/Docker基础命令/" class="archive-article-date">
   	<time datetime="2017-10-26T02:27:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-26</time>
 </a>
         
@@ -843,56 +843,56 @@
       
         <p>最近忙里偷闲研究了下docker这个很火的东东。做点笔记😁</p>
 <h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><p>列出镜像列表</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
 <p>获取一个新的镜像</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull base/archlinux</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull base/archlinux</span><br></pre></td></tr></table></figure>
 
 <p>删除镜像</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi imageID</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi imageID</span><br></pre></td></tr></table></figure>
 
 <p>查找镜像</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search php</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search php</span><br></pre></td></tr></table></figure>
 
 <p>构建</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /path/to/Dockerfile</span><br><span class="line">docker build -t imageName ./</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /path/to/Dockerfile</span><br><span class="line">docker build -t imageName ./</span><br></pre></td></tr></table></figure>
 
-<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  base/archlinux /bin/echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  base/archlinux /bin/echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
 
 <p>运行交互式的容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t base/archlinux /bin/bash</span><br></pre></td></tr></table></figure>
 
 <pre><code>* -t:在新容器内指定一个伪终端或终端。
 * -i:允许你对容器内的标准输入 (STDIN) 进行交互。</code></pre><p>分配端口</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -P php7.0-app    <span class="comment">#自动分配</span></span><br><span class="line">docker run -p 5000:80       <span class="comment">#容器内部的 80 端口映射到主机的 5000 端口上</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -P php7.0-app    <span class="hljs-comment">#自动分配</span></span><br><span class="line">docker run -p 5000:80       <span class="hljs-comment">#容器内部的 80 端口映射到主机的 5000 端口上</span></span><br></pre></td></tr></table></figure>
 
 <p>查看正在运行的容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker container ls <span class="comment">#或者</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker container ls <span class="hljs-comment">#或者</span></span><br></pre></td></tr></table></figure>
 
 <p>查看端口</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>查看日志</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs </span><br><span class="line">docker -f containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs </span><br><span class="line">docker -f containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>查看进程</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>查看Docker的底层信息</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>停止容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>启动容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start containerID/contaienrName</span><br></pre></td></tr></table></figure>
 
 <p>正在运行的容器，我们可以使用 <code>docker restart</code> 命令来重启</p>
 <p>查看最后一次创建的容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure>
 
 <p>移除容器</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm containerID/contaienrName</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm containerID/contaienrName</span><br></pre></td></tr></table></figure>
       
 
       
@@ -934,7 +934,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/26/2017-10-26-Docker基础命令/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/26/Docker基础命令/">展开全文 >></a>
         </p>
       
 
@@ -964,19 +964,19 @@
 
 
   
-    <article id="post-2017-09-29-搭建Git服务器、编写自动部署脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-搭建Git服务器、编写自动部署脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/29/2017-09-29-搭建Git服务器、编写自动部署脚本/">搭建Git服务器、编写自动部署脚本</a>
+      <a class="article-title" href="/2017/09/29/搭建Git服务器、编写自动部署脚本/">搭建Git服务器、编写自动部署脚本</a>
     </h1>
   
 
         
-        <a href="/2017/09/29/2017-09-29-搭建Git服务器、编写自动部署脚本/" class="archive-article-date">
+        <a href="/2017/09/29/搭建Git服务器、编写自动部署脚本/" class="archive-article-date">
   	<time datetime="2017-09-29T05:51:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-29</time>
 </a>
         
@@ -987,43 +987,43 @@
         <p>今天试了下在linux服务器上搭建Git服务器，并且编写一个简单的自动部署脚本。</p>
 <p>主要参考 <a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="noopener">廖雪峰-GIT教程-搭建Git服务器</a></p>
 <p>现在开始吧！</p>
-<h3 id="创建一个git用户，用来运行git服务"><a href="#创建一个git用户，用来运行git服务" class="headerlink" title="创建一个git用户，用来运行git服务"></a>创建一个<code>git</code>用户，用来运行<code>git</code>服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser git</span><br></pre></td></tr></table></figure>
+<h3 id="创建一个git用户，用来运行git服务"><a href="#创建一个git用户，用来运行git服务" class="headerlink" title="创建一个git用户，用来运行git服务"></a>创建一个<code>git</code>用户，用来运行<code>git</code>服务</h3><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser git</span><br></pre></td></tr></table></figure>
 
 <h3 id="创建证书登录"><a href="#创建证书登录" class="headerlink" title="创建证书登录"></a>创建证书登录</h3><p>收集所有需要登录的用户的公钥，就是他们自己的<code>id_rsa.pub</code>文件，把所有公钥导入到<code>/home/git/.ssh/authorized_keys</code>文件里，一行一个。</p>
 <h3 id="初始化Git仓库"><a href="#初始化Git仓库" class="headerlink" title="初始化Git仓库"></a>初始化Git仓库</h3><p>先选定一个目录作为Git仓库，假定是<code>/home/git/sample.git</code>，在<code>/home/git</code>目录下输入命令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init --bare sample.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init --bare sample.git</span><br></pre></td></tr></table></figure>
 
 <p>Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以<code>.git</code>结尾。然后，把owner改为<code>git</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R git:git sample.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R git:git sample.git</span><br></pre></td></tr></table></figure>
 
 <h3 id="禁用git用户shell登录"><a href="#禁用git用户shell登录" class="headerlink" title="禁用git用户shell登录"></a>禁用git用户shell登录</h3><p>通过编辑<code>/etc/passwd</code>文件完成，找到你的git用户的一行,例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</span><br></pre></td></tr></table></figure>
 
 <p>把<code>/bin/bash</code>改为<code>/usr/bin/git-shell</code>,例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
 
 <p>这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。</p>
-<h3 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@server:sample.git</span><br></pre></td></tr></table></figure>
+<h3 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h3><figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="hljs-built_in">clone</span> git@server:sample.git</span><br></pre></td></tr></table></figure>
 
 <p>server是你的服务器域名或ip地址</p>
 <p>如果git仓库和web目录在同一台服务器主机上:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> /home/git/sample.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="hljs-built_in">clone</span> /home/git/sample.git</span><br></pre></td></tr></table></figure>
 
 <p>如果不是在git用户的家目录中创建的,比如<code>/srv/gits/sample.git</code>：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@server:/srv/gits/sample.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="hljs-built_in">clone</span> git@server:/srv/gits/sample.git</span><br></pre></td></tr></table></figure>
 
 <p>如果clone成功，那么你的git服务器就搭建成功了。</p>
 <p>接下来：</p>
 <h3 id="自动同步钩子脚本"><a href="#自动同步钩子脚本" class="headerlink" title="自动同步钩子脚本"></a>自动同步钩子脚本</h3><p>因为我是web目录和git是同一台服务器</p>
 <p>编辑 <code>/home/git/sample.git/hooks/post-receive</code>, <code>post-receive</code>就是在git服务器收到代码推送后(<code>push</code>完成之后)执行的脚本。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">while read oldrev newrev refname</span><br><span class="line">do</span><br><span class="line">    branch=$(git rev-parse --symbolic --abbrev-ref $refname)</span><br><span class="line">    if [ &quot;master&quot; == &quot;$branch&quot; ]; then</span><br><span class="line">        # Do something</span><br><span class="line">        echo &quot;post-receive in branch master&quot; &gt;&gt; /tmp/git-sample.log</span><br><span class="line">        unset GIT_DIR</span><br><span class="line">        wwwPath=/var/www/html/sample</span><br><span class="line">        cd $wwwPath &amp;&amp; /usr/bin/git pull origin master</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">while read oldrev newrev refname</span><br><span class="line">do</span><br><span class="line">    branch=$(git rev-parse --symbolic --abbrev-ref $refname)</span><br><span class="line">    if [ &quot;master&quot; == &quot;$branch&quot; ]; then</span><br><span class="line">        # Do something</span><br><span class="line">        echo &quot;post-receive in branch master&quot; &gt;&gt; /tmp/git-sample.log</span><br><span class="line">        unset GIT_DIR</span><br><span class="line">        wwwPath=/var/www/html/sample</span><br><span class="line">        cd $wwwPath &amp;&amp; /usr/bin/git pull origin master</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>从脚本内容可以看出，我们在判断当前<code>push</code>的分支是<code>master</code>时执行<code>git pull origin master</code>操作。</p>
 <p>给执行权限</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R git:git /home/git/sample.git/hooks/post-receive</span><br><span class="line">chmod +x /home/git/sample.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R git:git /home/git/sample.git/hooks/post-receive</span><br><span class="line">chmod +x /home/git/sample.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
 
 <p>因为是git仓库和web目录在同一台服务器主机上,这里clone使用的是:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> /home/git/sample.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="hljs-built_in">clone</span> /home/git/sample.git</span><br></pre></td></tr></table></figure>
 
 <p>因为同步脚本的执行用户是git，所以要保证项目目录要赋予git写权限。容易出问题的也是权限问题。</p>
 <p>好了，试试吧~</p>
@@ -1069,7 +1069,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/29/2017-09-29-搭建Git服务器、编写自动部署脚本/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/29/搭建Git服务器、编写自动部署脚本/">展开全文 >></a>
         </p>
       
 
@@ -1099,19 +1099,19 @@
 
 
   
-    <article id="post-2017-09-22-MSYS2初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-MSYS2初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/2017-09-22-MSYS2初体验/">MSYS2初体验</a>
+      <a class="article-title" href="/2017/09/22/MSYS2初体验/">MSYS2初体验</a>
     </h1>
   
 
         
-        <a href="/2017/09/22/2017-09-22-MSYS2初体验/" class="archive-article-date">
+        <a href="/2017/09/22/MSYS2初体验/" class="archive-article-date">
   	<time datetime="2017-09-22T08:07:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-22</time>
 </a>
         
@@ -1127,31 +1127,31 @@
 <p>看起来还不错，这是<a href="http://www.msys2.org/" target="_blank" rel="noopener">官网</a></p>
 <p>安装就下载二进制安装程序安装就可以了。</p>
 <p>安装之后急切地 <code>pacman -Sy</code> 刷新软件包数据，官网的源还有点慢。换<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">中科大</a>的源吧。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/pacman.d</span><br><span class="line">ls</span><br><span class="line">-------------------</span><br><span class="line">gnupg mirrorlist.mingw32  mirrorlist.mingw64  mirrorlist.msys</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /etc/pacman.d</span><br><span class="line">ls</span><br><span class="line">-------------------</span><br><span class="line">gnupg mirrorlist.mingw32  mirrorlist.mingw64  mirrorlist.msys</span><br></pre></td></tr></table></figure>
 
 <p>三个<code>mirrorlist</code>开头的文件就是源的配置文件</p>
 <p>编辑 /etc/pacman.d/mirrorlist.mingw32 ，在文件开头添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686</span><br></pre></td></tr></table></figure>
 
 <p>编辑 /etc/pacman.d/mirrorlist.mingw64 ，在文件开头添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64</span><br></pre></td></tr></table></figure>
 
 <p>编辑 /etc/pacman.d/mirrorlist.msys ，在文件开头添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch</span><br></pre></td></tr></table></figure>
 
 <p>然后执行 <code>pacman -Sy</code> 刷新软件包数据即可。</p>
 <p>还有一点，cygwin切换系统磁盘是</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /cygdrive/d/   <span class="comment">#比如切换到d盘</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /cygdrive/d/   <span class="hljs-comment">#比如切换到d盘</span></span><br></pre></td></tr></table></figure>
 
 <p>MYSYS2是：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /d</span><br></pre></td></tr></table></figure>
 
 <p>使用windows原生命令比如ping会中文乱码，这么解决：</p>
 <p>新建 /bin/win：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="variable">$@</span> |iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#!/bin/bash</span></span><br><span class="line"><span class="hljs-variable">$@</span> |iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure>
 
 <p>使用：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/win ping baidu.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/win ping baidu.com</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1166,11 +1166,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Win10</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Win10</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1195,7 +1195,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/2017-09-22-MSYS2初体验/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/22/MSYS2初体验/">展开全文 >></a>
         </p>
       
 
@@ -1225,19 +1225,19 @@
 
 
   
-    <article id="post-2017-09-17-win10子系统ubuntu更换源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-win10子系统ubuntu更换源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/17/2017-09-17-win10子系统ubuntu更换源/">Win10子系统ubuntu更换源</a>
+      <a class="article-title" href="/2017/09/17/win10子系统ubuntu更换源/">Win10子系统ubuntu更换源</a>
     </h1>
   
 
         
-        <a href="/2017/09/17/2017-09-17-win10子系统ubuntu更换源/" class="archive-article-date">
+        <a href="/2017/09/17/win10子系统ubuntu更换源/" class="archive-article-date">
   	<time datetime="2017-09-17T04:04:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
 </a>
         
@@ -1257,14 +1257,14 @@
 <p><img src="/assets/images/20170917192021.png" alt="pic"></p>
 <p>发现里面最新的是 Quantal(12.10) 看来不能直接复制</p>
 <p>在你的子系统bash中执行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/apt/sources.list</span><br><span class="line">-------------------------</span><br><span class="line">deb http://archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse</span><br><span class="line">deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse</span><br><span class="line">deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse</span><br><span class="line">-------------------------</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/apt/sources.list</span><br><span class="line">-------------------------</span><br><span class="line">deb http://archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse</span><br><span class="line">deb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse</span><br><span class="line">deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse</span><br><span class="line">-------------------------</span><br></pre></td></tr></table></figure>
 
 <p>索性最新版ubuntu16.04代号叫xenial</p>
 <p>那直接把url换换就行了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bk     <span class="comment"># 改配置文件，先备份是个好习惯</span></span><br><span class="line">sudo vim /etc/apt/sources.list   <span class="comment"># 把内容换成下面的就行了，其实就是url变了</span></span><br><span class="line">-------------------------</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse</span><br><span class="line">-------------------------</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bk     <span class="hljs-comment"># 改配置文件，先备份是个好习惯</span></span><br><span class="line">sudo vim /etc/apt/sources.list   <span class="hljs-comment"># 把内容换成下面的就行了，其实就是url变了</span></span><br><span class="line">-------------------------</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse</span><br><span class="line">-------------------------</span><br></pre></td></tr></table></figure>
 
 <p>搞定了，测试下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
 
 <p>没问题就可以了。</p>
 
@@ -1305,7 +1305,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/17/2017-09-17-win10子系统ubuntu更换源/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/17/win10子系统ubuntu更换源/">展开全文 >></a>
         </p>
       
 
@@ -1468,14 +1468,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -1488,11 +1480,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Win10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MSYS2</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">UEditor</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1505,10 +1509,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">UEditor</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1556,6 +1556,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
@@ -1564,19 +1568,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">pcntl</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1588,11 +1588,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Queue</a>
+                <a href="javascript:void(0)" class="js-tag color2">AlpineLinux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
