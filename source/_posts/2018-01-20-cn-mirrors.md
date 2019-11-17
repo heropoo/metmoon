@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "整理几个常用的国内源"
+title:  "整理几个常用的国内源（持续更新）"
 date:   2018-01-20 22:20:41
 author: "Heropoo"
 categories: 
@@ -10,8 +10,12 @@ tags:
     - JavaScript
     - PHP
     - Docker
+    - Rust
+    - Go
 excerpt: "整理几个常用的国内源"
 ---
+
+最后更新：2019-11-17
 
 ### Linux以及一些开源软件
 
@@ -37,11 +41,20 @@ excerpt: "整理几个常用的国内源"
 * 淘宝NPM镜像 [http://npm.taobao.org/](http://npm.taobao.org/)
 
 ### php composer
-* Composer中文网 [http://www.phpcomposer.com/](http://www.phpcomposer.com/)
+* 阿里云：https://developer.aliyun.com/composer
 * LaravelChina社区提供的镜像地址： https://packagist.laravel-china.org
+* 安畅网络：https://php.cnpkg.org/
+* Composer中文网： https://pkg.phpcomposer.com/
+
+### Rust
+* 中科大 [Rust Toolchain反向代理](http://mirrors.ustc.edu.cn/help/rust-static.html)
+* 中科大 [Rust Crates 源](http://mirrors.ustc.edu.cn/help/crates.io-index.html)
+
+### Go
+* 阿里云Go Module代理仓库服务 https://mirrors.aliyun.com/goproxy/
 
 ### Docker
-* DaoCloud [http://a42abd64.m.daocloud.io](http://a42abd64.m.daocloud.io)
-* 阿里云 要注册独立分配 [传送门](https://yq.aliyun.com/articles/29941)
+* DaoCloud https://www.daocloud.io/mirror
+* 阿里云 要注册独立分配 https://yq.aliyun.com/articles/29941
 
 大概就整理这么多了，至于各个镜像的更换方法大家根据自己的应用自行百度吧~
