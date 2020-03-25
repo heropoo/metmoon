@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>满江风雪</title>
+  
+  <subtitle>时光漫漫，何妨扬眉淡笑，心境从容？</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://metmoon.com/"/>
+  <updated>2020-03-25T02:17:40.272Z</updated>
+  <id>http://metmoon.com/</id>
+  
+  <author>
+    <name>Heropoo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux软连接和硬链接</title>
+    <link href="http://metmoon.com/2019/05/29/linux-symbolic-link/"/>
+    <id>http://metmoon.com/2019/05/29/linux-symbolic-link/</id>
+    <published>2019-05-29T03:15:08.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Linux软连接和硬链接，一个经常傻傻分不清楚的概念，现在我们仔细理一理。&lt;/p&gt;
+&lt;h3 id=&quot;1-Linux链接概念&quot;&gt;&lt;a href=&quot;#1-Linux链接概念&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://metmoon.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://metmoon.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在网页上使用MathJax渲染LaTex格式数学公式</title>
+    <link href="http://metmoon.com/2019/05/27/math-jax/"/>
+    <id>http://metmoon.com/2019/05/27/math-jax/</id>
+    <published>2019-05-27T07:12:58.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script type=&quot;text/javascript&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="数学" scheme="http://metmoon.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="JavaScript" scheme="http://metmoon.com/categories/%E6%95%B0%E5%AD%A6/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://metmoon.com/tags/JavaScript/"/>
+    
+      <category term="数学" scheme="http://metmoon.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="MathJax" scheme="http://metmoon.com/tags/MathJax/"/>
+    
+      <category term="LaTex" scheme="http://metmoon.com/tags/LaTex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于大文件上传</title>
+    <link href="http://metmoon.com/2019/05/23/upload-large-file/"/>
+    <id>http://metmoon.com/2019/05/23/upload-large-file/</id>
+    <published>2019-05-23T02:06:28.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近在做视频上传，我们使用切片上传大文件，做个笔记。&lt;/p&gt;
+&lt;h2 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://metmoon.com/categories/JavaScript/"/>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/JavaScript/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="JavaScript" scheme="http://metmoon.com/tags/JavaScript/"/>
+    
+      <category term="HTML5" scheme="http://metmoon.com/tags/HTML5/"/>
+    
+      <category term="AJAX" scheme="http://metmoon.com/tags/AJAX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>常用nginx web配置</title>
+    <link href="http://metmoon.com/2019/05/22/nginx-web-conf/"/>
+    <id>http://metmoon.com/2019/05/22/nginx-web-conf/</id>
+    <published>2019-05-22T10:35:30.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;常用nginx对于web项目配置整理，做个笔记。&lt;/p&gt;
+&lt;h2 id=&quot;php-web项目配置&quot;&gt;&lt;a href=&quot;#php-web项目配置&quot; class=&quot;headerlink&quot; title=&quot;php web项目配置&quot;&gt;&lt;/a&gt;php
+        
+      
+    
+    </summary>
+    
+      <category term="nginx" scheme="http://metmoon.com/categories/nginx/"/>
+    
+    
+      <category term="nginx" scheme="http://metmoon.com/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>玩转ElasticSearch全文搜索</title>
+    <link href="http://metmoon.com/2019/04/09/elasticsearch/"/>
+    <id>http://metmoon.com/2019/04/09/elasticsearch/</id>
+    <published>2019-04-09T04:19:42.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;玩转ElasticSearch全文搜索，做个笔记。&lt;/p&gt;
+&lt;h2 id=&quot;运行ElasticSearch服务&quot;&gt;&lt;a href=&quot;#运行ElasticSearch服务&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="全文搜索" scheme="http://metmoon.com/categories/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Docker" scheme="http://metmoon.com/tags/Docker/"/>
+    
+      <category term="全文搜索" scheme="http://metmoon.com/tags/%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2/"/>
+    
+      <category term="ElasticSearch" scheme="http://metmoon.com/tags/ElasticSearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Redis实现PHP异步队列</title>
+    <link href="http://metmoon.com/2019/03/29/php-queue/"/>
+    <id>http://metmoon.com/2019/03/29/php-queue/</id>
+    <published>2019-03-29T07:40:41.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近项目中用到好多用异步队列处理的后台任务，有些心得，记录一下。&lt;/p&gt;
+&lt;p&gt;下面引用百度百科的对&lt;a href=&quot;https://baike.baidu.com/item/%E9%98%9F%E5%88%97/14580481&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Queue" scheme="http://metmoon.com/categories/Queue/"/>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/Queue/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Queue" scheme="http://metmoon.com/tags/Queue/"/>
+    
+      <category term="Redis" scheme="http://metmoon.com/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>容器的宠儿AlpineLinux的基本使用</title>
+    <link href="http://metmoon.com/2019/01/17/alpinelinux/"/>
+    <id>http://metmoon.com/2019/01/17/alpinelinux/</id>
+    <published>2019-01-17T06:48:41.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;现在docker的容器技术很流行，对于我们这种整天被各种万恶的开发环境坑的开发来说是个解放。但是当我们在拉取docker镜像的时候，会发现普遍基于debian或者ubuntu的镜像都是体积很大，动辄几十或者上百兆。当然了docker镜像在构建的时候会删除旭东无用的东西并且使
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://metmoon.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://metmoon.com/tags/Linux/"/>
+    
+      <category term="AlpineLinux" scheme="http://metmoon.com/tags/AlpineLinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP多进程之pcntl扩展的使用</title>
+    <link href="http://metmoon.com/2019/01/02/php-pcntl/"/>
+    <id>http://metmoon.com/2019/01/02/php-pcntl/</id>
+    <published>2019-01-02T02:48:08.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;PHP实现多进程的模块是pcntl，而且只有在linux下才使用这个拓展，不过现在服务器都基本使用linux，我们还是可以用起来的。&lt;/p&gt;
+&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="pcntl" scheme="http://metmoon.com/tags/pcntl/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于PHP Composer 版本号前置~与^符号的区别(转)</title>
+    <link href="http://metmoon.com/2018/12/29/php-composer-version/"/>
+    <id>http://metmoon.com/2018/12/29/php-composer-version/</id>
+    <published>2018-12-29T07:14:57.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;code&gt;~&lt;/code&gt;和&lt;code&gt;^&lt;/code&gt;的意思很接近，在&lt;code&gt;x.y&lt;/code&gt;的情况下是一样的，都是代表&lt;code&gt;x.y &amp;lt;= 版本号 &amp;lt;
+        
+      
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Composer" scheme="http://metmoon.com/tags/Composer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从SSH私钥中重新生成公钥</title>
+    <link href="http://metmoon.com/2018/11/19/get-ssh-public-key-from-private-key/"/>
+    <id>http://metmoon.com/2018/11/19/get-ssh-public-key-from-private-key/</id>
+    <published>2018-11-19T15:59:52.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;从SSH私钥中重新生成公钥&lt;/p&gt;
+&lt;p&gt;假如我们的私钥是&lt;code&gt;id_rsa&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="SSH" scheme="http://metmoon.com/categories/SSH/"/>
+    
+    
+      <category term="SSH" scheme="http://metmoon.com/tags/SSH/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL5.7的JSON基本操作</title>
+    <link href="http://metmoon.com/2018/11/18/mysql-json/"/>
+    <id>http://metmoon.com/2018/11/18/mysql-json/</id>
+    <published>2018-11-18T10:11:06.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;MySQL从5.7版本开始就支持JSON格式的数据，操作用起来挺方便的。&lt;/p&gt;
+&lt;h3 id=&quot;建表&quot;&gt;&lt;a href=&quot;#建表&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="MySQL" scheme="http://metmoon.com/categories/MySQL/"/>
+    
+    
+      <category term="MySQL" scheme="http://metmoon.com/tags/MySQL/"/>
+    
+      <category term="JSON" scheme="http://metmoon.com/tags/JSON/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安装Jupyter笔记本</title>
+    <link href="http://metmoon.com/2018/11/02/jupyter/"/>
+    <id>http://metmoon.com/2018/11/02/jupyter/</id>
+    <published>2018-11-02T11:07:09.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;安装Jupyter笔记本，做个笔记&lt;/p&gt;
+&lt;p&gt;通过pip安装&lt;/p&gt;
+&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://metmoon.com/categories/python/"/>
+    
+    
+      <category term="jupyter" scheme="http://metmoon.com/tags/jupyter/"/>
+    
+      <category term="python" scheme="http://metmoon.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>修复gitment评论</title>
+    <link href="http://metmoon.com/2018/10/27/fix-gitment/"/>
+    <id>http://metmoon.com/2018/10/27/fix-gitment/</id>
+    <published>2018-10-27T08:17:34.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近几个月博客外挂的gitment评论老是挂，也一直没时间修复。这几天想办法修好了。就说说修复的过程吧。&lt;/p&gt;
+&lt;p&gt;从我开始用gitment的评论系统，总共出现过两次问题：&lt;/p&gt;
+&lt;h2 id=&quot;1-github-issue-label的字符长度限制&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="github-issue" scheme="http://metmoon.com/categories/github-issue/"/>
+    
+    
+      <category term="github-issue" scheme="http://metmoon.com/tags/github-issue/"/>
+    
+      <category term="gitment" scheme="http://metmoon.com/tags/gitment/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Yii2查询数据对象ActiveRecord的json序列化问题</title>
+    <link href="http://metmoon.com/2018/10/16/yii2-activerecord-to-json/"/>
+    <id>http://metmoon.com/2018/10/16/yii2-activerecord-to-json/</id>
+    <published>2018-10-16T09:53:45.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;今天在使用&lt;code&gt;json_encode&lt;/code&gt;函数序列化Yii2查询得到的数据模型对象（通常继承&lt;code&gt;ActiveRecord&lt;/code&gt;类）时，发现返回结果是&lt;code&gt;{}&lt;/code&gt;,而不是预期的数据库字段键值对这种形式：&lt;code&gt;{&amp;quot
+        
+      
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Yii2" scheme="http://metmoon.com/tags/Yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>盗将行(转)</title>
+    <link href="http://metmoon.com/2018/09/18/%E7%9B%97%E5%B0%86%E8%A1%8C/"/>
+    <id>http://metmoon.com/2018/09/18/盗将行/</id>
+    <published>2018-09-18T10:10:52.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;野史记载:宋徽宗二十年（1120年），朝野动荡，边疆不稳。时有盗者，取官济民，凡京中贪官，无一幸免，民咸敬之，却无人知其真面目。然自徽宗二十三年，此盗未曾出现，至徽宗二十六年，此盗入南京王府，未取它物，仅盗走一玉簪，自此匿迹……&lt;/p&gt;
+&lt;p&gt;野史记载:宋钦宗元年（1126
+        
+      
+    
+    </summary>
+    
+      <category term="听风雨" scheme="http://metmoon.com/categories/%E5%90%AC%E9%A3%8E%E9%9B%A8/"/>
+    
+    
+      <category term="听风雨" scheme="http://metmoon.com/tags/%E5%90%AC%E9%A3%8E%E9%9B%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker容器动态添加端口</title>
+    <link href="http://metmoon.com/2018/09/16/docker-container-port/"/>
+    <id>http://metmoon.com/2018/09/16/docker-container-port/</id>
+    <published>2018-09-16T15:40:33.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;突然遇到一个问题怎么给一个已经在运行的docker容器添加端口，找了找资料，记个笔记。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/zuoshenglo/article/details/78402772&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="http://metmoon.com/categories/Docker/"/>
+    
+    
+      <category term="虚拟化" scheme="http://metmoon.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+      <category term="容器" scheme="http://metmoon.com/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+      <category term="Docker" scheme="http://metmoon.com/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Bing搜索引擎做站内搜索</title>
+    <link href="http://metmoon.com/2018/09/15/bing-site-search/"/>
+    <id>http://metmoon.com/2018/09/15/bing-site-search/</id>
+    <published>2018-09-15T12:14:05.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;因为自己的博客百度未收录╮(╯-╰)╭，本来之前用的谷歌，但是谷歌毕竟翻墙才能用。决定还是换微软的Bing搜索引擎来做站内搜索吧。&lt;/p&gt;
+&lt;p&gt;大概是这样的效果&lt;br&gt;&lt;img src=&quot;/assets/images/20180916201818.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="搜索引擎" scheme="http://metmoon.com/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+    
+    
+      <category term="搜索引擎" scheme="http://metmoon.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+    
+      <category term="站内搜索" scheme="http://metmoon.com/tags/%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Composer官方镜像太慢或者被墙无法使用时的几种解决方案</title>
+    <link href="http://metmoon.com/2018/08/02/composer-mirrors/"/>
+    <id>http://metmoon.com/2018/08/02/composer-mirrors/</id>
+    <published>2018-08-02T04:11:06.000Z</published>
+    <updated>2020-03-25T02:17:40.272Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Composer官方镜像太慢或者被墙无法使用时的几种解决方案&lt;/p&gt;
+&lt;h3 id=&quot;使用代理&quot;&gt;&lt;a href=&quot;#使用代理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Composer" scheme="http://metmoon.com/categories/Composer/"/>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/Composer/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Composer" scheme="http://metmoon.com/tags/Composer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用PHP写Git的自动部署webhook脚本</title>
+    <link href="http://metmoon.com/2018/05/01/git-webhook/"/>
+    <id>http://metmoon.com/2018/05/01/git-webhook/</id>
+    <published>2018-05-01T02:16:43.000Z</published>
+    <updated>2020-03-25T02:17:40.268Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;现在开发项目大多使用git作为版本控制器，而且现在大多数的代码托管平台都支持自定义webhook脚本。正好利用这个脚本，结合git的workflow，我们可以轻松的做到项目代码的自动发布部署。&lt;/p&gt;
+&lt;h3 id=&quot;最简单的流程&quot;&gt;&lt;a href=&quot;#最简单的流程&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="http://metmoon.com/categories/Git/"/>
+    
+      <category term="PHP" scheme="http://metmoon.com/categories/Git/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://metmoon.com/tags/PHP/"/>
+    
+      <category term="Git" scheme="http://metmoon.com/tags/Git/"/>
+    
+      <category term="Webhook" scheme="http://metmoon.com/tags/Webhook/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git的一些基本操作【持续更新】</title>
+    <link href="http://metmoon.com/2018/03/31/git/"/>
+    <id>http://metmoon.com/2018/03/31/git/</id>
+    <published>2018-03-31T13:47:05.000Z</published>
+    <updated>2020-03-25T02:17:40.268Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;经常用git，但好多命令总是记不住，每次都百度。现在整理下做个笔记吧。&lt;/p&gt;
+&lt;h3 id=&quot;分支操作&quot;&gt;&lt;a href=&quot;#分支操作&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="http://metmoon.com/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="http://metmoon.com/tags/Git/"/>
+    
+  </entry>
+  
+</feed>
