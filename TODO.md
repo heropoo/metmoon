@@ -8,6 +8,7 @@ linux
 php
 - [ ] php7.0-7.4新特性 
 - [ ] php7.4 ffi
+- [ ] swoole协程、task、定时器
 
 c/c++
 - [ ] 链表 hash 数
