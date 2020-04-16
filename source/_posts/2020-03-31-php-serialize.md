@@ -13,7 +13,6 @@ excerpt: "最近在项目种经常用redis缓存序列化的数据，有点心�
 最近在项目种经常用`redis`缓存数据序列化的数据，有点心得，我们现在聊一聊php的序列化操作
 
 我们经常使用的是一对学列化函数`serialize`和`unserialize`。常用的操作很简单，就是：
-
 1. 使用`serialize`序列化我们的变量使其变成字符串。
 ```php
 $data = ['id'=>1, 'name'=>'xiaoming', 'sex'=>1];
@@ -32,6 +31,7 @@ $redis->set('test_user1', $dataString);
 $dataString = $redis->get('test_user1');
 $data = unserialize($dataString);
 ```
+
 
 我们再看看php各种数据类型序列化之后的结果如何：
 1. 整型int
@@ -75,7 +75,6 @@ echo serialize([1]);
 ```
 
 7. 对象object
-
 ```php
 class A{}
 $a = new A();
@@ -101,7 +100,6 @@ echo serialize($d);
 ```
 
 8. 资源resource
-
 ```php
 $f = fopen("/tmp/t.txt", "r");  //假如文件/tmp/t.txt存在
 echo serialize($f);
