@@ -6,8 +6,9 @@ linux
 - [ ] k8s
 
 php
+- [x] getopt获取参数
 - [ ] php7.0-7.4新特性 
-- [ ] php7.4 ffi
+- [x] php7.4 ffi
 - [ ] swoole协程、task、定时器
 
 c/c++
