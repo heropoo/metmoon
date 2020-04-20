@@ -9,7 +9,7 @@ tags:
     - PHP
     - vscode
     - Docker
-    - 容器a
+    - 容器
     - IDE
 excerpt: "前些日子试了下vscode配合docker容器开发，体验特别不错，比敲docker命令舒爽多了。在这里和大家分享一下。"
 ---
