@@ -6,6 +6,10 @@ linux
 - [ ] k8s
 
 php
+- [ ] php文件系统
+- [ ] php组件
+- [ ] 乐观锁、悲观锁
+- [ ] 正则表达式
 - [ ] php7.0-7.4新特性 
 - [ ] php7.4 ffi
 - [ ] swoole协程、task、定时器
