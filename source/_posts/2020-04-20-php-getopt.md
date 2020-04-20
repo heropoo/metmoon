@@ -20,7 +20,7 @@ excerpt: "分享一个php的冷知识 - 从命令行参数列表中获取选项"
 ```php
 getopt ( string $options [, array $longopts [, int &$optind ]] ) : array|bool false
 ```
-解析传入脚本的选项
+解析传入脚本的选项，成功返回数组，解析失败返回false
 
 ## 参数
 - `options` 该字符串中的每个字符会被当做选项字符，匹配传入脚本的选项以单个连字符(-)开头。 比如，一个选项字符串 "x" 识别了一个选项 -x。 只允许 a-z、A-Z 和 0-9。
