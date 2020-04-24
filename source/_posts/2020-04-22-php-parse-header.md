@@ -13,7 +13,7 @@ excerpt: "现在写接口经常会使用header来传递一些验证信息，我�
 
 现在写接口经常会使用header来传递一些验证信息，我们用各种php框架可以轻松的获取到，但是它底层是怎么做的呢？我们今天来聊一聊。
 
-我们知道，在php中获取`get`参数（Query String Parameters）可以使用`$_GET`全局变量，获取`post`参数使用`$_POST`全局变量。但是我们想要获取`header`，好像缺没有一个类似`$_HEADER`的全局变量来供我们使用。那我们想要获取到`header`信息该怎么办呢？也不卖关子了，我们可以从`$_SERVER`这个全局变量中获取到。接下来我们来进行这个操作：
+我们知道，在php中获取`get`参数（Query String Parameters）可以使用`$_GET`全局变量，获取`post`参数使用`$_POST`全局变量。但是我们想要获取`header`，好像却没有一个类似`$_HEADER`的全局变量来供我们使用。那我们想要获取到`header`信息该怎么办呢？也不卖关子了，我们可以从`$_SERVER`这个全局变量中获取到。接下来我们来进行这个操作：
 
 我们写一个简单的php文件测试一下：
 ```php
@@ -48,7 +48,7 @@ string(6) "123456"
 curl -H "test_token: 654321" -H "token: 123456" http://localhost/header.php
 ```
 
-测试发现，我们在输出中只找到了`HTTP_TOKEN`，缺没有找到我们预想的`HTTP_TEST_TOKEN`。不要着急，我们把下划线`_`换成连字符`-`试试：
+测试发现，我们在输出中只找到了`HTTP_TOKEN`，却没有找到我们预想的`HTTP_TEST_TOKEN`。不要着急，我们把下划线`_`换成连字符`-`试试：
 ```
 curl -H "test-token: 654321" -H "token: 123456" http://localhost/header.php
 ```
