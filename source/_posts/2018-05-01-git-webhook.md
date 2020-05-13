@@ -5,7 +5,6 @@ date:   2018-05-01 10:16:43
 author: "Heropoo"
 categories: 
     - Git
-    - PHP
 tags:
     - Git
     - PHP
