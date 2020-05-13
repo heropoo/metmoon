@@ -4,9 +4,10 @@ title:  "从SSH私钥中重新生成公钥"
 date:   2018-11-19 23:59:52
 author: "heropoo"
 categories: 
-    - SSH
+    - Linux
 tags: 
     - SSH
+    - Linux
 
 excerpt: "从SSH私钥中重新生成公钥"
 ---
