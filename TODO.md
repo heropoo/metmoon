@@ -19,6 +19,12 @@ php
 - [x] php7.4 ffi
 - [ ] swoole协程、task、定时器
 
+rust
+- [ ] 入门教程
+
+go
+- [ ] 入门教程
+
 c/c++
 - [ ] 链表 hash 数
 - [ ] 堆 栈
