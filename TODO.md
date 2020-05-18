@@ -1,3 +1,7 @@
+数据库
+- [ ] pgsql入门
+- [ ] pgsql & mysql
+
 linux 
 - [ ] linux文件描述符 2 1 & stdin stdout stderr
 - [ ] linux权限rwx、特殊权限等
