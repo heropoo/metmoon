@@ -5,7 +5,6 @@ date:   2019-05-23 10:06:28
 author: "Heropoo"
 categories: 
     - JavaScript
-    - PHP
 tags:
     - JavaScript
     - HTML5

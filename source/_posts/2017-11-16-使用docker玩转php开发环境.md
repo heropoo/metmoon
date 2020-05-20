@@ -5,7 +5,6 @@ date:   2017-11-16 15:25:01
 author: "Heropoo"
 categories: 
     - Docker
-    - PHP
 tags:
     - 虚拟化
     - 容器

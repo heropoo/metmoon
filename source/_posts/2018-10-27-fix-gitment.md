@@ -4,7 +4,7 @@ title:  "修复gitment评论"
 date:   2018-10-27 16:17:34
 author: "heropoo"
 categories: 
-    - github-issue
+    - 其他
 tags: 
     - github-issue
     - gitment

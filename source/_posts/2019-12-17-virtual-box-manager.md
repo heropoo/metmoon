@@ -6,8 +6,9 @@ author: "Heropoo"
 categories: 
     - Linux
 tags:
-    - Linux
     - 虚拟化
+    - Linux
+    - VirtualBox
 excerpt: "最近一时头脑发热找了本汇编的书在啃，书中是使用手动操作VirtualBox挂载硬盘调试的不太方便，遂使用命令搞起"
 ---
 最近一时头脑发热找了本汇编的书在啃，书中是使用手动操作`VirtualBox`挂载硬盘调试的不太方便，遂使用命令搞起，效果还不错。

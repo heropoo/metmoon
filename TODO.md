@@ -1,3 +1,7 @@
+数据库
+- [ ] pgsql入门
+- [ ] pgsql & mysql
+
 linux 
 - [ ] linux文件描述符 2 1 & stdin stdout stderr
 - [ ] linux权限rwx、特殊权限等
@@ -6,7 +10,8 @@ linux
 - [ ] k8s
 
 php
-- [ ] 生成器
+- [ ] Event(libevent)
+- [ ] 生成器 -> php协程
 - [ ] 过滤器
 - [ ] 流
 - [x] getopt获取参数
@@ -17,6 +22,12 @@ php
 - [ ] php7.0-7.4新特性 
 - [x] php7.4 ffi
 - [ ] swoole协程、task、定时器
+
+rust
+- [ ] 入门教程
+
+go
+- [ ] 入门教程
 
 c/c++
 - [ ] 链表 hash 数

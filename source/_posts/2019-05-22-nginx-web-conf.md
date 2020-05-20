@@ -7,6 +7,7 @@ categories:
     - nginx
 tags:
     - nginx
+    - PHP
 excerpt: "常用nginx对于web项目配置整理"
 ---
 常用nginx对于web项目配置整理，做个笔记。

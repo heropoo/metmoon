@@ -4,7 +4,7 @@ title:  "玩转ElasticSearch全文搜索"
 date:   2019-04-09 12:19:42
 author: "Heropoo"
 categories: 
-    - 全文搜索
+    - 搜索引擎
 tags:
     - 全文搜索
     - ElasticSearch
