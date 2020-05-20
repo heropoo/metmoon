@@ -10,7 +10,7 @@ if ($content['password'] != '123qwe') {
     die();
 }
 
-$cmd = "sudo git pull";
+$cmd = "sudo git pull && npm run build";
 
 $descriptorspec = array(
     0 => array("pipe", "r"),  // 标准输入，子进程从此管道中读取数据
