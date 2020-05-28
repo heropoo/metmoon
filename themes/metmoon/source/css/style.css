@@ -1,3 +1,9 @@
 body{
     padding-top: 50px;
 }
+
+pre{
+    font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
+    font-size: 12px;
+    white-space: pre;
+}
