@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="满江风雪, Heropoo, 技术分享, 技术博客, 后端开发, 编程, 教程, PHP, js, python, go, rust, docker, nginx" />
+   
+  <meta name="description" content="满江风雪，Heropoo的个人博客" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Linux进程管理命令ps |  满江风雪
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-linux-ps" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Linux进程管理命令ps
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/16/linux-ps/" class="article-date">
+  <time datetime="2020-04-16T03:07:33.000Z" itemprop="datePublished">2020-04-16</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><code>Linux</code>中的<code>ps</code>命令是<code>Process Status</code>的缩写。<code>ps</code>命令用来列出系统中当前运行的那些进程。<code>ps</code>命令列出的是当前那些进程的快照，就是执行<code>ps</code>命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用<code>top</code>命令。</p>
+<p>要对进程进行监测和控制，首先必须要了解当前进程的情况，也就是需要查看当前进程，而<code>ps</code>命令就是最基本同时也是非常强大的进程查看命令。使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵死、哪些进程占用了过多的资源等等。总之大部分信息都是可以通过执行该命令得到的。</p>
+<p><code>ps</code>为我们提供了进程的一次性的查看，它所提供的查看结果并不动态连续的；如果想对进程时间监控，应该用 <code>top</code>工具。</p>
+<p><code>kill</code>命令用于杀死进程。</p>
+<h2 id="linux上进程有5种状态"><a href="#linux上进程有5种状态" class="headerlink" title="linux上进程有5种状态:"></a>linux上进程有5种状态:</h2><ul>
+<li>1.运行(正在运行或在运行队列中等待) </li>
+<li>2.中断(休眠中, 受阻, 在等待某个条件的形成或接受到信号) </li>
+<li>3.不可中断(收到信号不唤醒和不可运行, 进程必须等待直到有中断发生) </li>
+<li>4.僵死(进程已终止, 但进程描述符存在, 直到父进程调用<code>wait4()</code>系统调用后释放) </li>
+<li>5.停止(进程收到<code>SIGSTOP</code>, <code>SIGSTP</code>, <code>SIGTIN</code>, <code>SIGTOU</code>信号后停止运行运行) </li>
+</ul>
+<h2 id="ps工具标识进程的5种状态码"><a href="#ps工具标识进程的5种状态码" class="headerlink" title="ps工具标识进程的5种状态码:"></a>ps工具标识进程的5种状态码:</h2><ul>
+<li><code>D</code>不可中断<code>uninterruptible sleep (usually IO)</code> </li>
+<li><code>R</code>运行<code>runnable (on run queue)</code> </li>
+<li><code>S</code>中断<code>sleeping</code> </li>
+<li><code>T</code>停止<code>traced or stopped</code> </li>
+<li><code>Z</code>僵死<code>a defunct (”zombie”) process</code> </li>
+</ul>
+<h2 id="命令格式："><a href="#命令格式：" class="headerlink" title="命令格式："></a>命令格式：</h2><blockquote>
+<p>ps[参数]</p>
+</blockquote>
+<h2 id="命令功能："><a href="#命令功能：" class="headerlink" title="命令功能："></a>命令功能：</h2><p>用来显示当前进程的状态</p>
+<h2 id="命令参数："><a href="#命令参数：" class="headerlink" title="命令参数："></a>命令参数：</h2><ul>
+<li><code>a</code> 显示所有进程</li>
+<li><code>-a</code> 显示同一终端下的所有程序</li>
+<li><code>-A</code> 显示所有进程</li>
+<li><code>c</code> 显示进程的真实名称</li>
+<li><code>-N</code> 反向选择</li>
+<li><code>-e</code> 等于“-A”</li>
+<li><code>e</code> 显示环境变量</li>
+<li><code>f</code> 显示程序间的关系</li>
+<li><code>-H</code> 显示树状结构</li>
+<li><code>r</code> 显示当前终端的进程</li>
+<li><code>T</code> 显示当前终端的所有程序</li>
+<li><code>u</code> 指定用户的所有进程</li>
+<li><code>-au</code> 显示较详细的信息</li>
+<li><code>-aux</code> 显示所有包含其他使用者的行程 </li>
+<li><code>-C &lt;命令&gt;</code> 列出指定命令的状况</li>
+<li><code>-p &lt;PID&gt;</code> 列出指定PID的状况</li>
+<li><code>--lines&lt;行数&gt;</code> 每页显示的行数</li>
+<li><code>--width&lt;字符数&gt;</code> 每页显示的字符数</li>
+</ul>
+<h2 id="使用实例："><a href="#使用实例：" class="headerlink" title="使用实例："></a>使用实例：</h2><h3 id="实例1：显示所有进程信息"><a href="#实例1：显示所有进程信息" class="headerlink" title="实例1：显示所有进程信息"></a>实例1：显示所有进程信息</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -A</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -A</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">    1 pts/0    00:00:00 bash</span><br><span class="line">   11 pts/1    00:00:00 bash</span><br><span class="line">   23 pts/1    00:00:00 ps</span><br><span class="line">  ……省略部分结果</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例2：显示指定用户信息"><a href="#实例2：显示指定用户信息" class="headerlink" title="实例2：显示指定用户信息"></a>实例2：显示指定用户信息</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -u root</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -u root</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">    1 pts/0    00:00:00 bash</span><br><span class="line">   11 pts/1    00:00:00 bash</span><br><span class="line">   24 pts/1    00:00:00 ps</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例3：显示所有进程信息，连同命令行</li>
+</ul>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -ef</span><br><span class="line">UID        PID  PPID  C STIME TTY          TIME CMD</span><br><span class="line">root         1     0  0 15:16 pts/0    00:00:00 bash</span><br><span class="line">root        11     0  0 15:16 pts/1    00:00:00 bash</span><br><span class="line">root      4759    11  0 15:27 pts/1    00:00:00 php test.php</span><br><span class="line">root      4762    11  0 15:28 pts/1    00:00:00 ps -ef</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例4：-ps-与grep-常用组合用法，查找特定进程"><a href="#实例4：-ps-与grep-常用组合用法，查找特定进程" class="headerlink" title="实例4： ps 与grep 常用组合用法，查找特定进程"></a>实例4： ps 与grep 常用组合用法，查找特定进程</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep ssh</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -ef |grep php</span><br><span class="line">root      4759    11  0 15:27 pts/1    00:00:00 php test.php</span><br><span class="line">root      4764    11  0 15:29 pts/1    00:00:00 grep --color=auto php</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例5：将目前属于您自己这次登入的-PID-与相关信息列示出来"><a href="#实例5：将目前属于您自己这次登入的-PID-与相关信息列示出来" class="headerlink" title="实例5：将目前属于您自己这次登入的 PID 与相关信息列示出来"></a>实例5：将目前属于您自己这次登入的 PID 与相关信息列示出来</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -l</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -l</span><br><span class="line">F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">4 S     0    11     0  0  80   0 -  4627 -      pts/1    00:00:00 bash</span><br><span class="line">4 S     0  4759    11  0  80   0 - 33443 -      pts/1    00:00:00 php</span><br><span class="line">0 R     0  4765    11  0  80   0 -  6487 -      pts/1    00:00:00 ps</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>各相关信息的意义：</p>
+<ul>
+<li><code>F</code> 代表这个程序的旗标 (flag)， <code>4</code> 代表使用者为<code>super user</code></li>
+<li><code>S</code> 代表这个程序的状态 (STAT)，关于各 <code>STAT</code> 的意义将在内文介绍</li>
+<li><code>UID</code> 程序被该 UID 所拥有</li>
+<li><code>PID</code> 就是这个程序的 ID </li>
+<li><code>PPID</code> 则是其上级父程序的ID</li>
+<li><code>C</code> CPU 使用的资源百分比</li>
+<li><code>PRI</code> 这个是 <code>Priority</code> (优先执行序) 的缩写，详细后面介绍</li>
+<li><code>NI</code> 这个是 <code>Nice</code> 值，在下一小节我们会持续介绍</li>
+<li><code>ADDR</code> 这个是<code>kernel function</code>，指出该程序在内存的那个部分。如果是个<code>running</code>的程序，一般就是”-“</li>
+<li><code>SZ</code> 使用掉的内存大小</li>
+<li><code>WCHAN</code> 目前这个程序是否正在运作当中，若为 <code>-</code> 表示正在运作</li>
+<li><code>TTY</code> 登入者的终端机位置</li>
+<li><code>TIME</code> 使用掉的 <code>CPU</code> 时间。</li>
+<li><code>CMD</code> 所下达的指令为何</li>
+</ul>
+<p>在预设的情况下， <code>ps</code> 仅会列出与目前所在的 <code>bash shell</code> 有关的 <code>PID</code> 而已，所以， 当我使用 <code>ps -l</code> 的时候，只有三个 PID。</p>
+<h3 id="实例6：列出目前所有的正在内存当中的程序"><a href="#实例6：列出目前所有的正在内存当中的程序" class="headerlink" title="实例6：列出目前所有的正在内存当中的程序"></a>实例6：列出目前所有的正在内存当中的程序</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps aux</span><br><span class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         1  0.0  0.1  18508  2612 pts/0    Ss+  15:16   0:00 bash</span><br><span class="line">root        11  0.0  0.1  18508  3216 pts/1    Ss   15:16   0:00 bash</span><br><span class="line">root      4759  0.0  0.7 133772 14652 pts/1    S    15:27   0:00 php test.php</span><br><span class="line">root      4766  0.0  0.1  34404  2836 pts/1    R+   15:35   0:00 ps aux</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><p><code>USER</code>：该 process 属于那个使用者账号的</p>
+</li>
+<li><p><code>PID</code> ：该 process 的ID</p>
+</li>
+<li><p><code>%CPU</code>：该 process 使用掉的 CPU 资源百分比</p>
+</li>
+<li><p><code>%MEM</code>：该 process 所占用的物理内存百分比</p>
+</li>
+<li><p><code>VSZ</code> ：该 process 使用掉的虚拟内存量 (Kbytes)</p>
+</li>
+<li><p><code>RSS</code> ：该 process 占用的固定的内存量 (Kbytes)</p>
+</li>
+<li><p><code>TTY</code> ：该 process 是在那个终端机上面运作，若与终端机无关，则显示 ?，另外， tty1-tty6 是本机上面的登入者程序，若为 pts/0 等等的，则表示为由网络连接进主机的程序。</p>
+</li>
+<li><p><code>STAT</code>：该程序目前的状态，主要的状态有</p>
+<ul>
+<li><code>R</code> ：该程序目前正在运作，或者是可被运作</li>
+<li><code>S</code> ：该程序目前正在睡眠当中 (可说是 idle 状态)，但可被某些讯号 (signal) 唤醒。</li>
+<li><code>T</code> ：该程序目前正在侦测或者是停止了</li>
+<li><code>Z</code> ：该程序应该已经终止，但是其父程序却无法正常的终止他，造成 zombie (疆尸) 程序的状态</li>
+</ul>
+</li>
+<li><p><code>START</code>：该 process 被触发启动的时间</p>
+</li>
+<li><p><code>TIME</code> ：该 process 实际使用 CPU 运作的时间</p>
+</li>
+<li><p><code>COMMAND</code>：该程序的实际指令</p>
+</li>
+</ul>
+<h3 id="实例7：列出类似程序树的程序显示"><a href="#实例7：列出类似程序树的程序显示" class="headerlink" title="实例7：列出类似程序树的程序显示"></a>实例7：列出类似程序树的程序显示</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -axjf</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -axjf</span><br><span class="line"> PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND</span><br><span class="line">    0    11    11    11 pts/1     4767 Ss       0   0:00 bash</span><br><span class="line">   11  4759  4759    11 pts/1     4767 S        0   0:00  \_ php test.php</span><br><span class="line">   11  4767  4767    11 pts/1     4767 R+       0   0:00  \_ ps -axjf</span><br><span class="line">    0     1     1     1 pts/0        1 Ss+      0   0:00 bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例8：找出与-cron-与-syslog-这两个服务有关的-PID-号码"><a href="#实例8：找出与-cron-与-syslog-这两个服务有关的-PID-号码" class="headerlink" title="实例8：找出与 cron 与 syslog 这两个服务有关的 PID 号码"></a>实例8：找出与 cron 与 syslog 这两个服务有关的 PID 号码</h3><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | egrep &#x27;(php|test)&#x27;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps aux | egrep &#x27;(php|test)&#x27;</span><br><span class="line">root      4759  0.0  0.7 133772 14652 pts/1    S    15:27   0:00 php test.php</span><br><span class="line">root      4773  0.0  0.0  11464   992 pts/1    S+   15:41   0:00 grep -E --color=auto (php|test)</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他实例："><a href="#其他实例：" class="headerlink" title="其他实例："></a>其他实例：</h3><p>1.可以用 <code>|</code> 管道和 <code>more</code> 连接起来分页查看</p>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux |more</span><br></pre></td></tr></table></figure>
+
+<p>2.输出指定的字段</p>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -o pid,ppid,pgrp,session,tpgid,comm</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@c210f4addccc:~# ps -o pid,ppid,pgrp,session,tpgid,comm</span><br><span class="line">  PID  PPID  PGRP  SESS TPGID COMMAND</span><br><span class="line">   11     0    11    11  4774 bash</span><br><span class="line"> 4759    11  4759    11  4774 php</span><br><span class="line"> 4774    11  4774    11  4774 ps</span><br></pre></td></tr></table></figure>
+
+
+<p>参考 </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/peida/archive/2012/12/19/2824418.html">https://www.cnblogs.com/peida/archive/2012/12/19/2824418.html</a></li>
+</ul>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+      
+      
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://metmoon.com/2020/04/16/linux-ps/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程管理</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/04/20/php-getopt/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            php冷知识 - 从命令行参数列表中获取选项
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/04/13/vscode-remote-container/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">VSCode玩转远程开发之Docker容器</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: '',
+        app_key: '',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'monsterid',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+    <div id="ElegantComment"></div>
+    <script src="//p.metmoon.com/dist/elegant-comment.js"></script>
+    <script>
+      let elegantComment = new ElegantComment({ele: 'ElegantComment', app_id: '0x007', app_key: '123123'});
+      elegantComment.render();
+    </script>
+  
+
+  
+  
+  
+
+  
+
+</article>
+
+</section>
+      <footer class="footer">
+  
+  <div class="outer" style="margin-bottom: 3rem;">
+    <div>友情连接</div>
+    <div>
+      <a target="_blank" rel="noopener" href="https://friday-go.cc/">南丞嘚吧嘚</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://blog.yanlongli.com/">烟笼里</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://xueyuanjun.com/">学院君</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://www.iacblog.com/">PHP开源Hub</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://www.haorooms.com/">Haorooms</a> &nbsp;&nbsp;
+    </div>
+  </div>
+
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2017-2021
+        Heropoo
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://js.users.51.la/20712403.js'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/assets/images/favicon.png" alt="满江风雪"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/assets/images/alipay.png">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/assets/images/wxpay.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<!-- 复制 -->
+
+  
+<link rel="stylesheet" href="/css/clipboard.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+
+
+    
+  </div>
+</body>
+
+</html>

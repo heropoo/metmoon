@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+   
+  <meta name="keywords" content="满江风雪, Heropoo, 技术分享, 技术博客, 后端开发, 编程, 教程, PHP, js, python, go, rust, docker, nginx" />
+   
+  <meta name="description" content="满江风雪，Heropoo的个人博客" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Redis加锁的几种实现 |  满江风雪
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="满江风雪" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-redis-lock" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Redis加锁的几种实现
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/24/redis-lock/" class="article-date">
+  <time datetime="2020-04-24T07:49:37.000Z" itemprop="datePublished">2020-04-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <p>我们经常在工作中会碰到一些重复请求、并发等问题，而给资源加锁是一种不错的手段。我们今天就整理下使用<code>redis</code>作为分布式锁的几种实现。</p>
+<p><code>redis</code>可以用于几个命令是：<code>INCR</code>、<code>SETNX</code>和<code>SET</code>。</p>
+<h2 id="1-使用INCR加锁"><a href="#1-使用INCR加锁" class="headerlink" title="1. 使用INCR加锁"></a>1. 使用<code>INCR</code>加锁</h2><p>这种加锁的思路是， <code>key</code> 不存在，那么 <code>key</code> 的值会先被初始化为 0 ，然后再执行 <code>INCR</code> 操作进行加一。然后其它用户在执行 <code>INCR</code> 操作进行加一时，如果返回的数大于 <code>1</code> ，说明这个锁正在被使用当中。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment">  1、 客户端A请求服务器获取key的值为1表示获取了锁</span></span><br><span class="line"><span class="comment">  2、 客户端B也去请求服务器获取key的值为2表示获取锁失败</span></span><br><span class="line"><span class="comment">  3、 客户端A执行代码完成，删除锁</span></span><br><span class="line"><span class="comment">  4、 客户端B在等待一段时间后在去请求的时候获取key的值为1表示获取锁成功</span></span><br><span class="line"><span class="comment">  5、 客户端B执行代码完成，删除锁</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="variable">$res</span> = <span class="variable">$redis</span>-&gt;incr(<span class="variable">$key</span>);  <span class="comment">// 自增1</span></span><br><span class="line"><span class="variable">$redis</span>-&gt;expire(<span class="variable">$key</span>, <span class="variable">$ttl</span>); <span class="comment">// 设置锁的有效期</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span> == <span class="number">1</span>)&#123;  </span><br><span class="line">    <span class="comment">// 获取资源成功</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 资源被其他请求占用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-使用SETNX加锁"><a href="#2-使用SETNX加锁" class="headerlink" title="2. 使用SETNX加锁"></a>2. 使用<code>SETNX</code>加锁</h2><p>这种加锁的思路是，如果 <code>key</code> 不存在，将 <code>key</code> 设置为 <code>value</code>，如果 <code>key</code> 已存在，则 <code>SETNX</code> 不做任何动作。 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> 1、 客户端A请求服务器设置key的值，如果设置成功就表示加锁成功</span></span><br><span class="line"><span class="comment"> 2、 客户端B也去请求服务器设置key的值，如果返回失败，那么就代表加锁失败</span></span><br><span class="line"><span class="comment"> 3、 客户端A执行代码完成，删除锁</span></span><br><span class="line"><span class="comment"> 4、 客户端B在等待一段时间后在去请求设置key的值，设置成功</span></span><br><span class="line"><span class="comment"> 5、 客户端B执行代码完成，删除锁</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="variable">$res</span> = <span class="variable">$redis</span>-&gt;setNX(<span class="variable">$key</span>, <span class="variable">$value</span>); <span class="comment">// 当key不存在时设置key=value</span></span><br><span class="line"><span class="variable">$redis</span>-&gt;expire(<span class="variable">$key</span>, <span class="variable">$ttl</span>); <span class="comment">// 设置锁的有效期</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>)&#123;  </span><br><span class="line">    <span class="comment">// 获取资源成功</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 资源被其他请求占用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面两种方法都有一个问题，会发现，都需要设置 <code>key</code> 过期时间。那么为什么要设置<code>key</code>过期时间呢？如果请求执行因为某些原因意外退出了，导致创建了锁但是没有删除锁，那么这个锁将一直存在（redis不设置key的过期时间，默认是永久的），以至于一直处于加锁状态。于是乎我们需要给锁加一个过期时间以防不测。</p>
+<p>但是借助 <code>Expire</code> 来设置就不是原子性操作了。所以还可以通过<code>redis</code>事务来确保原子性。那上面的代码就要优化成：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种方式的加锁</span></span><br><span class="line"><span class="variable">$redis</span>-&gt;multi();    <span class="comment">// 标记一个事务块的开始</span></span><br><span class="line"><span class="variable">$res</span> = <span class="variable">$redis</span>-&gt;incr(<span class="variable">$key</span>);  </span><br><span class="line"><span class="variable">$redis</span>-&gt;expire(<span class="variable">$key</span>, <span class="variable">$ttl</span>);</span><br><span class="line"><span class="variable">$redis</span>-&gt;exec();   <span class="comment">// 提交事务</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span> == <span class="number">1</span>)&#123;  </span><br><span class="line">    <span class="comment">// 获取资源成功</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 资源被其他请求占用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种方式的加锁</span></span><br><span class="line"><span class="variable">$redis</span>-&gt;multi();    <span class="comment">// 标记一个事务块的开始</span></span><br><span class="line"><span class="variable">$res</span> = <span class="variable">$redis</span>-&gt;setNX(<span class="variable">$key</span>, <span class="variable">$value</span>); </span><br><span class="line"><span class="variable">$redis</span>-&gt;expire(<span class="variable">$key</span>, <span class="variable">$ttl</span>); </span><br><span class="line"><span class="variable">$redis</span>-&gt;exec();   <span class="comment">// 提交事务</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>)&#123;  </span><br><span class="line">    <span class="comment">// 获取资源成功</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 资源被其他请求占用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码看起来是不是很繁琐。好在<code>redis</code>官方从版本 2.6.12 开始 <code>SET</code> 命令本身已经包含了设置过期时间的功能。</p>
+<h2 id="3-使用SET加锁"><a href="#3-使用SET加锁" class="headerlink" title="3. 使用SET加锁"></a>3. 使用<code>SET</code>加锁</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*** </span></span><br><span class="line"><span class="comment"> 1、 客户端A请求服务器设置key的值，如果设置成功就表示加锁成功</span></span><br><span class="line"><span class="comment"> 2、 客户端B也去请求服务器设置key的值，如果返回失败，那么就代表加锁失败</span></span><br><span class="line"><span class="comment"> 3、 客户端A执行代码完成，删除锁</span></span><br><span class="line"><span class="comment"> 4、 客户端B在等待一段时间后在去请求设置key的值，设置成功</span></span><br><span class="line"><span class="comment"> 5、 客户端B执行代码完成，删除锁</span></span><br><span class="line"><span class="comment">**/</span>    </span><br><span class="line"></span><br><span class="line"><span class="variable">$res</span> = <span class="variable">$redis</span>-&gt;set(<span class="variable">$key</span>, <span class="variable">$value</span>, [<span class="string">&#x27;nx&#x27;</span>, <span class="string">&#x27;ex&#x27;</span> =&gt; <span class="variable">$ttl</span>]);  <span class="comment">//nx代表当key不存在时设置 ex代表设置过期时间</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>)&#123;  </span><br><span class="line">    <span class="comment">// 获取资源成功</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 资源被其他请求占用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-其他问题"><a href="#4-其他问题" class="headerlink" title="4. 其他问题"></a>4. 其他问题</h2><p>虽然上面一步已经满足了我们的需求，但是还是要考虑其它问题？</p>
+<ul>
+<li>1、 redis发现锁失败了要怎么办？中断请求还是循环请求？</li>
+<li>2、 循环请求的话，如果有一个获取了锁，其它的在去获取锁的时候，是不是容易发生抢锁的可能？</li>
+<li>3、 锁提前过期后，客户端A还没执行完，然后客户端B获取到了锁，这时候客户端A执行完了，会不会在删锁的时候把B的锁给删掉？</li>
+</ul>
+<h2 id="5-解决办法"><a href="#5-解决办法" class="headerlink" title="5. 解决办法"></a>5. 解决办法</h2><ul>
+<li>针对问题1：使用循环请求，循环请求去获取锁</li>
+<li>针对问题2：针对第二个问题，在循环请求获取锁的时候，加入睡眠功能，等待几毫秒在执行循环</li>
+<li>针对问题3：在加锁的时候存入的key是随机的。这样的话，每次在删除key的时候判断下存入的key里的value和自己存的是否一样<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;  <span class="comment">//针对问题1，使用循环</span></span><br><span class="line">    <span class="variable">$timeout</span> = <span class="number">10</span>;</span><br><span class="line">    <span class="variable">$roomid</span> = <span class="number">10001</span>;</span><br><span class="line">    <span class="variable">$key</span> = <span class="string">&#x27;room_lock&#x27;</span>;</span><br><span class="line">    <span class="variable">$value</span> = <span class="string">&#x27;room_&#x27;</span>.<span class="variable">$roomid</span>;  <span class="comment">//分配一个随机的值针对问题3</span></span><br><span class="line">    <span class="variable">$isLock</span> = <span class="variable">$redis</span>-&gt;set(<span class="variable">$key</span>, <span class="variable">$value</span>, <span class="string">&#x27;ex&#x27;</span>, <span class="variable">$timeout</span>, <span class="string">&#x27;nx&#x27;</span>);<span class="comment">//ex 秒</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$isLock</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$redis</span>-&gt;get(<span class="variable">$key</span>) == <span class="variable">$value</span>) &#123;  <span class="comment">//防止提前过期，误删其它请求创建的锁</span></span><br><span class="line">            <span class="comment">//执行内部代码</span></span><br><span class="line">            <span class="variable">$redos</span>-&gt;del(<span class="variable">$key</span>);</span><br><span class="line">            <span class="keyword">continue</span>;<span class="comment">//执行成功删除key并跳出循环</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        usleep(<span class="number">5000</span>); <span class="comment">//睡眠，降低抢锁频率，缓解redis压力，针对问题2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">while</span>(!<span class="variable">$isLock</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://ukagaka.github.io/php/2017/09/21/redisLock.html">http://ukagaka.github.io/php/2017/09/21/redisLock.html</a></li>
+</ul>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+      
+      
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://metmoon.com/2020/04/24/redis-lock/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%93%E5%AD%98/" rel="tag">缓存</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/04/29/php-func-ob/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            php冷知识 - 输出控制函数
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/04/22/php-parse-header/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PHP解析header头部信息</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: '',
+        app_key: '',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'monsterid',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+    <div id="ElegantComment"></div>
+    <script src="//p.metmoon.com/dist/elegant-comment.js"></script>
+    <script>
+      let elegantComment = new ElegantComment({ele: 'ElegantComment', app_id: '0x007', app_key: '123123'});
+      elegantComment.render();
+    </script>
+  
+
+  
+  
+  
+
+  
+
+</article>
+
+</section>
+      <footer class="footer">
+  
+  <div class="outer" style="margin-bottom: 3rem;">
+    <div>友情连接</div>
+    <div>
+      <a target="_blank" rel="noopener" href="https://friday-go.cc/">南丞嘚吧嘚</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://blog.yanlongli.com/">烟笼里</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://xueyuanjun.com/">学院君</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://www.iacblog.com/">PHP开源Hub</a> &nbsp;&nbsp;
+      <a target="_blank" rel="noopener" href="https://www.haorooms.com/">Haorooms</a> &nbsp;&nbsp;
+    </div>
+  </div>
+
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2017-2021
+        Heropoo
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://js.users.51.la/20712403.js'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/assets/images/favicon.png" alt="满江风雪"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/assets/images/alipay.png">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/assets/images/wxpay.png">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<!-- 复制 -->
+
+  
+<link rel="stylesheet" href="/css/clipboard.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+
+
+    
+  </div>
+</body>
+
+</html>

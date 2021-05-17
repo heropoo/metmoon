@@ -4,7 +4,7 @@ name: Hexo
 on:
   push:
     branches:
-      - master
+      - master123
 
 jobs:
   build:
